@@ -55,7 +55,10 @@ namespace PersonalWeb.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { IsException = true, msg = $"錯誤：{ex.Message}" });
+                return Json(new { IsException = true, msg = $"錯誤26" +
+                    $"656" +
+                    $"5" +
+                    $"6：{ex.Message}" });
             }
         }
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5udMis/1A7l5easAhisWXbIdezSw1YjoHZLYXPpXfXTYGvMATZIGgNyjYlNIaEnsNp003uhFnXihzLIzOgAJ/Q==",
+  "dgSpecHash": "SzlJDab9jV0hWaeKriA2UOV3QjQiJDH2eY+LCz5hpMf5OR5fgry1YQkawMo9ZYZ4mR47fOww2cCSBCb8AA6rGQ==",
   "success": true,
-  "projectFilePath": "D:\\Repository\\SpareManagement\\SpareManagement.csproj",
+  "projectFilePath": "D:\\Repository\\SpareManagement\\source\\SpareManagement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shihc\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\shihc\\.nuget\\packages\\jquery\\1.7.0\\jquery.1.7.0.nupkg.sha512",

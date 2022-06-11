@@ -598,11 +598,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Repository\\SpareManagement\\SpareManagement.csproj",
+      "projectUniqueName": "D:\\Repository\\SpareManagement\\source\\SpareManagement.csproj",
       "projectName": "SpareManagement",
-      "projectPath": "D:\\Repository\\SpareManagement\\SpareManagement.csproj",
+      "projectPath": "D:\\Repository\\SpareManagement\\source\\SpareManagement.csproj",
       "packagesPath": "C:\\Users\\shihc\\.nuget\\packages\\",
-      "outputPath": "D:\\Repository\\SpareManagement\\obj\\",
+      "outputPath": "D:\\Repository\\SpareManagement\\source\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
