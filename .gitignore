@@ -1,3 +1,4 @@
+
 *.suo
 *.pdb
 *.dll
@@ -5,3 +6,4 @@
 *.log
 *.txt
 #*.xml
+source/.vs/SpareManagement/v16/.suo
