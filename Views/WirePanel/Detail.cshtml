@@ -1,0 +1,93 @@
+﻿@model WirePanelListViewModel
+
+@{
+}
+
+<h3>線板材明細　(@Html.DisplayNameFor(model => model.Details.First().PartNo): @Model.Details.First().PartNo)</h3>
+<div id="mydiv">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().SerialNo)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Status)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PurchaseId)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Placement)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().IsNeedInspect)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().InspectDate)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().NextInspectDate)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().IsOverdueInspect)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Details.First().IsTemporary)</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Details)
+            {
+                var trid = @item.SerialNo + "tr";
+                var overdueStyle = "";
+
+                if (@item.IsOverdueInspect == "是")
+                {
+                    overdueStyle = "background-color:#fcdcdc";
+                }
+
+                <tr id="@trid" style="@overdueStyle">
+                    <td id="partNo" class="row-data">@item.PartNo</td>
+                    <td class="row-data">@item.Name</td>
+                    <td id="serialNo" class="row-data">@item.SerialNo</td>
+                    <td class="row-data">@item.Status</td>
+                    <td class="row-data">@item.PurchaseId</td>
+                    <td class="row-data">@item.Spec</td>
+                    <td class="row-data">@item.Placement</td>
+                    <td class="row-data">@item.IsNeedInspect</td>
+                    <td class="row-data">@item.InspectDate</td>
+                    <td class="row-data">@item.NextInspectDate</td>
+                    <td class="row-data">@item.IsOverdueInspect</td>
+                    <td class="row-data">@item.IsTemporary</td>
+                    <td>
+                        @{
+                            if (item.StatusId == 1)
+                            {
+                                <input id="@item.SerialNo" type="button" onclick="onEditClick(this)" style="text-decoration:none;margin:5px;" class="btn btn-primary btn-sm" value="Edit" />
+                            }
+                            else
+                            {
+                                <input id="@item.SerialNo" type="button" disabled style="text-decoration:none;margin:5px;" class="btn btn-primary btn-sm" value="Edit" />
+                            }
+                        }
+                        <input id="@item.SerialNo" type="button" onclick="onHistoryClick(this)" style="text-decoration:none;margin:5px;" class="btn btn-danger btn-sm" value="History" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    function onEditClick(e) {
+
+        var _trid = "#" + e.id + "tr";
+
+        var _partNo = $(_trid).find('#partNo').html();
+        var _serialNo = $(_trid).find('#serialNo').html();
+
+        var _url = "/WirePanel/Edit?partNo=" + _partNo + "&serialNo=" + _serialNo;
+
+        location.href = _url;
+    }
+
+    function onHistoryClick(e) {
+
+        var _url = "/History/History?categoryId=4&partNo=" + e.id;
+
+        location.href = _url;
+
+        //window.open(_url, '_blank');
+    }
+
+</script>

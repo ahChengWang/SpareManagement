@@ -1,0 +1,49 @@
+﻿@model WirePanelListViewModel
+
+
+<table class="table">
+    <thead style="background-color: slategrey; color: white;">
+        <tr>
+            <th scope="col">物料編號</th>
+            <th scope="col">名稱</th>
+            <th scope="col">採購編號</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().IsKeySpare)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().IsCommercial)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Equipment)</th>
+            @*<th scope="col">@Html.DisplayNameFor(model => model.Details.First().Placement)</th>*@
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Count)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Inventory)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().SafetyCount)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Memo)</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Details)
+        {
+            <tr>
+                <td class="row-data">@item.PartNo</td>
+                <td class="row-data">@item.Name</td>
+                <td class="row-data">@item.PurchaseId</td>
+                <td class="row-data">@item.Spec</td>
+                <td class="row-data">@item.IsKeySpare</td>
+                <td class="row-data">@item.IsCommercial</td>
+                <td class="row-data">@item.Equipment</td>
+                @*<td class="row-data">@item.Placement</td>*@
+                <td class="row-data">@item.Count</td>
+                <td class="row-data">@item.Inventory</td>
+                <td class="row-data">@item.SafetyCount</td>
+                <td class="row-data">@item.Memo</td>
+                <td>
+                    <input id="@item.PartNo" type="button" onclick="onDetailClick(this)" style="text-decoration:none;" class="btn btn-outline-success btn-sm" value="Detail" />
+
+                    @*<a href="Expendables/History?categoryId=1&partNo=@item.PartNo" target=_blank style="text-decoration:none;">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                        </a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

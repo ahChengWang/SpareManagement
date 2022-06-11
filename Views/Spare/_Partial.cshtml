@@ -1,0 +1,27 @@
+﻿@model BasicInfoViewModel
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PurchaseId)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Placement)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().CreateDate)</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Details)
+        {
+            <tr>
+                <td class="row-data">@item.PartNo</td>
+                <td class="row-data">@item.Name</td>
+                <td class="row-data">@item.PurchaseId</td>
+                <td class="row-data">@item.Placement</td>
+                <td class="row-data">@item.CreateDate</td>
+            </tr>
+        }
+    </tbody>
+</table>

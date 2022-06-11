@@ -1,0 +1,115 @@
+﻿using SpareManagement.DomainService.Entity;
+using SpareManagement.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace SpareManagement.DomainService
+{
+    public class ReleaseDomainService
+    {
+        private readonly BasicInformationRepository _basicInformationRepository;
+        private readonly ExpendablesDomainService _expendablesDomainService;
+        private readonly ComponentsDomainService _componentsDomainService;
+        private readonly JigsDomainService _jigsDomainService;
+        private readonly WirePanelDomainService _wirePanelDomainService;
+
+        public ReleaseDomainService(BasicInformationRepository basicInformationRepository,
+            ExpendablesDomainService expendablesDomainService,
+            ComponentsDomainService componentsDomainService,
+            JigsDomainService jigsDomainService,
+            WirePanelDomainService wirePanelDomainService)
+        {
+            _basicInformationRepository = basicInformationRepository;
+            _expendablesDomainService = expendablesDomainService;
+            _componentsDomainService = componentsDomainService;
+            _jigsDomainService = jigsDomainService;
+            _wirePanelDomainService = wirePanelDomainService;
+        }
+
+        public string Release(ReleaseEntity entity)
+        {
+            try
+            {
+                var _result = Validate(entity);
+
+                if (_result.Item1 != "")
+                    return _result.Item1;
+
+                var basicDataList = _basicInformationRepository.SelectByConditions(partNoList: _result.Item2.Select(s => s.PartNo).ToList());
+                var _processResult = "";
+
+                //var _nonExistPartNo = string.Join(',', _result.Item2.Select(s => s.PartNo).Where(w => !basicDataList.Select(s => s.PartNo).Contains(w)));
+
+                //if (basicDataList.Count() == 0 || _nonExistPartNo != "")
+                //    return $"{_nonExistPartNo} 物料編號不存在";
+
+                var _releaseExpendables = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "C");
+                var _releaseComponents = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "E");
+                var _releaseJigs = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "T");
+                var _releaseWirePanel = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "B");
+
+                if (_releaseExpendables.Any())
+                    _processResult +=
+                        _expendablesDomainService.ProcessRelease(_releaseExpendables, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+
+                if (_releaseComponents.Any())
+                    _processResult +=
+                        _componentsDomainService.ProcessRelease(_releaseComponents, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+
+                if (_releaseJigs.Any())
+                    _processResult +=
+                        _jigsDomainService.ProcessRelease(_releaseJigs, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+
+                if (_releaseWirePanel.Any())
+                    _processResult +=
+                        _wirePanelDomainService.ProcessRelease(_releaseWirePanel, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+
+
+                return _processResult;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        private (string, List<ReleaseGoodsEntity>) Validate(ReleaseEntity entity)
+        {
+            try
+            {
+                var _errorInfo = "";
+
+                var _tempList = new List<ReleaseGoodsEntity> {
+                new ReleaseGoodsEntity {ColName = "編號 1.", PartNo = entity.PartNo1, Count = entity.Count1 },
+                new ReleaseGoodsEntity {ColName = "編號 2.", PartNo = entity.PartNo2, Count = entity.Count2 },
+                new ReleaseGoodsEntity {ColName = "編號 3.", PartNo = entity.PartNo3, Count = entity.Count3 },
+                new ReleaseGoodsEntity {ColName = "編號 4.", PartNo = entity.PartNo4, Count = entity.Count4 },
+                new ReleaseGoodsEntity {ColName = "編號 5.", PartNo = entity.PartNo5, Count = entity.Count5 }
+            };
+
+                if (_tempList.Where(a => string.IsNullOrEmpty(a.PartNo)).Count() == 5)
+                    return ("無領用物料", null);
+
+
+                if (entity.CreateUser == "" || entity.CreateDate == null)
+                    _errorInfo += "領用人員 & 日期 必填 \n";
+
+                var _noPartNo = _tempList.Where(a => string.IsNullOrEmpty(a.PartNo) && a.Count != 0);
+                var _noCnt = _tempList.Where(a => !string.IsNullOrEmpty(a.PartNo) && a.Count == 0);
+
+                if (_noPartNo.Any())
+                    _noPartNo.ToList().ForEach(fe => _errorInfo += $"{fe.ColName} 物料編號必填\n");
+                if (_noCnt.Any())
+                    _noCnt.ToList().ForEach(fe => _errorInfo += $"{fe.ColName} 數量必填\n");
+
+                return (_errorInfo, _tempList.Where(w => !string.IsNullOrEmpty(w.PartNo) && w.Count > 0).ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
+}

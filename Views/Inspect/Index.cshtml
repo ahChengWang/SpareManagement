@@ -1,0 +1,142 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container">
+    <h3>檢驗管理</h3>
+    <div class="card">
+        <div class="card-header" style="background-color: slategrey; color: white; height: 45px;">
+            查詢
+        </div>
+        <div class="card-body">
+            <form id="form">
+                <div class="row col-12">
+                    <div class="form-group form-row col-sm-4">
+                        <label class="col-form-label-sm">物料序號：</label>
+                        <div>
+                            <input id="partNo" class="form-control-sm" type="text" value="" />
+                        </div>
+                    </div>
+                    <div id="categorySel" class="form-group form-row col-sm-2">
+                        <label class="col-form-label-sm">類別：</label>
+                        <select class="custom-select-sm" asp-items="ViewBag.Category">
+                            <option value=0 selected>選擇</option>
+                        </select>
+                    </div>
+                    <div id="overdueSel" class="form-group form-row col-sm-2">
+                        <label class="col-form-label-sm">是否逾期：</label>
+                        <select class="custom-select-sm" asp-items="ViewBag.Overdue">
+                        </select>
+                    </div>
+                    <div class="form-group form-row col-sm-2">
+                        <div>
+                            <input id="btnSearch" type="button" style="align-items:center" class="btn btn-info btn-sm" value="查詢">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <p></p>
+    <div id="outTable" class="card-body">
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnSearch').click(function (e) {
+            e.preventDefault();
+            var _categoryId = $('#categorySel').find("option:selected").val();
+            var _overdueId = $('#overdueSel').find("option:selected").val();
+
+            if (_categoryId == 0) {
+                alert("請選擇類別");
+                return false;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/Inspect/Search?categoryId=" + _categoryId + "&partNo=" + $('#partNo').val() + "&isOverdueInspect=" + _overdueId,
+                dataType: 'html',
+                success: function (result) {
+                    if (isJsonString(result)) {
+                        var _res = JSON.parse(result);
+                        if (result == '""') {
+                            alert('查無資料');
+                            $('#outTable').empty();
+                            $('#outTable').css('height', '');
+                            $('#outTable').css('overflow', '');
+                        }
+                        if ('isException' in _res) {
+                            alert(_res.msg);
+                            $('#outTable').empty();
+                            $('#outTable').css('height', '');
+                            $('#outTable').css('overflow', '');
+                            return false;
+                        }
+                    }
+                    else {
+                        alert('查詢成功');
+                        $('#outTable').html(result);
+                        var height = $(window).height();
+                        $('#outTable').css('height', height / 2);
+                        $('#outTable').css('overflow', 'scroll');
+                    }
+                },
+            });
+        });
+    });
+
+    function validate(id) {
+        var selChk = $(id);
+        if (selChk.children(":selected").val() == "") {
+            //If the "Please Select" option is selected display error.
+            alert("Please select an option!");
+            return false;
+        }
+        return true;
+    }
+
+    function onInspectClick(e) {
+
+        var _trid = "#" + e.id + "tr";
+        var _model = {};
+        _model['serialNo'] = e.id;
+        _model['categoryId'] = $('#categorySel').find("option:selected").val();
+        _model['partNo'] = $(_trid).find('#partNo').html();
+
+        var _insUser = $('#inspectUser').val();
+        var _insDTE = $('#inspectDate').val();
+
+        if (_insUser == '' || _insDTE == '') {
+            alert("操作人員、操作日期必填");
+            return false;
+        }
+        _model['updateUser'] = _insUser;
+        _model['updateDTE'] = _insDTE;
+
+        $.ajax({
+            type: "Patch",
+            url: "/Inspect/Update",
+            dataType: 'json',
+            data: _model,
+            beforeSend: function () {
+                return confirm("確定送檢驗?");
+            },
+            success: function (result) {
+                if (result == "") {
+                    alert('送檢驗成功');
+                    $('#' + e.id).attr('disabled', true);
+                    return true;
+                }
+                else {
+                    alert(result);
+                    return false;
+                }
+            },
+        });
+    }
+
+</script>

@@ -1,0 +1,106 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container">
+    <h2>設備零件管理</h2>
+    <div class="card">
+        <div class="card-header" style="background-color: slategrey; color: white; height: 40px; text-align:left;">
+            查詢
+        </div>
+        <div class="card-body">
+            <form id="form">
+                <div class="row">
+                    <div class="form-group form-row">
+                        <label class="col-form-label">物料編號: </label>
+                        <div>
+                            <input id="partNo" class="form-control col-sm-10" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group form-row">
+                        <label class="col-form-label">名稱：</label>
+                        <div>
+                            <input id="name" class="form-control col-sm-10" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group form-row">
+                        <label class="col-form-label">採購料號：</label>
+                        <div>
+                            <input id="purchaseId" class="form-control col-sm-10" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group form-row">
+                        <input id="btnSearch" type="submit" class="btn btn-info btn-sm" value="查詢">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <p></p>
+    <div id="outTable" class="card-body">
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#form').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "/Components/Components?partNo=" + $('#partNo').val() + "&name=" + $('#name').val() + "&purchaseId=" + $('#purchaseId').val(),
+                dataType: 'html',
+                success: function (result) {
+
+                    if (isJsonString(result)) {
+                        var _res = JSON.parse(result);
+                        if (result == '""') {
+                            alert('查無資料');
+                            $('#outTable').empty();
+                            $('#outTable').css('height', '');
+                            $('#outTable').css('overflow', '');
+                        }
+                        if ('isException' in _res) {
+                            alert(_res.msg);
+                            $('#outTable').empty();
+                            $('#outTable').css('height', '');
+                            $('#outTable').css('overflow', '');
+                            return false;
+                        }
+                    }
+                    else {
+                        alert('查詢成功');
+                        $('#outTable').html(result);
+                        var height = $(window).height();
+                        $('#outTable').css('height', height / 2);
+                        $('#outTable').css('overflow', 'scroll');
+                    }
+                },
+            });
+        });
+    });
+
+    function onHistoryClick(e) {
+
+        var _url = "/History/History?categoryId=2&partNo=" + e.id;
+
+        location.href = _url;
+
+        //window.open(_url, '_blank');
+
+        //$.ajax({
+        //    type: "GET",
+        //    url: "/Expendables/History?categoryId=1&partNo=" + e.id,
+        //    dataType: 'html',
+        //    success: function (result) {
+        //        if (result == "") {
+        //            alert('查詢錯誤');
+        //        }
+        //        else {
+        //        }
+        //    },
+        //});
+    }
+
+</script>

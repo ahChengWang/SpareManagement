@@ -1,0 +1,77 @@
+﻿@model JigsEditViewModel
+
+@{
+}
+
+
+<div class="container col-lg-10">
+    <div class="card-header col-lg-10" style="background-color: slategrey; color: white; height: 50px; text-align:left;">
+        編輯
+    </div>
+    <div class="card-body col-lg-10">
+        <form action="Edit" method="post">
+            <div class="row">
+                <div class="form-group col-lg-5">
+                    <label class="col-form-label" style="font-size:20px">@Html.DisplayNameFor(model => model.SerialNo)：</label>
+                    <label class="col-form-label" style="font-size:20px">@Model.SerialNo</label>
+                    <input asp-for="PartNo" class="form-control col-sm-10" type="hidden" value="@Model.PartNo" />
+                    <input asp-for="SerialNo" class="form-control col-sm-10" type="hidden" value="@Model.SerialNo" />
+                </div>
+                <div class="form-group col-lg-5">
+                    <label class="col-form-label" style="font-size:20px">@Html.DisplayNameFor(model => model.Name)：</label>
+                    <label class="col-form-label" style="font-size:20px">@Model.Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-5">
+                    <label class="col-form-label" style="font-size:20px">@Html.DisplayNameFor(model => model.InspectDate)：</label>
+                    @{
+                        if (@Model.InspectDate == null)
+                        {
+                            <input asp-for="InspectDate" class="form-control col-sm-10" type="date" value="" />
+                        }
+                        else
+                        {
+                            <label class="col-form-label" style="font-size:20px">@Model.InspectDate</label>
+                            <input asp-for="InspectDate" class="form-control col-sm-10" type="hidden" value="@Model.InspectDate" />
+                        }
+                    }
+                </div>
+                <div class="form-group col-lg-5">
+                    <label class="col-form-label" style="font-size:20px">@Html.DisplayNameFor(model => model.Placement)：</label>
+                    <input asp-for="Placement" class="form-control" type="text" value="@Model.Placement" />
+                </div>
+                <div class="form-group col-lg-5">
+                    <label class="col-form-label" style="font-size:20px">@Html.DisplayNameFor(model => model.IsTemporary)</label>
+                    @{
+                        if (@Model.IsTemporary)
+                        {
+                            <input name="IsTemporary" class="form-check" checked type="checkbox" value="false" onclick="onClick(this)" />
+                        }
+                        else
+                        {
+                            <input name="IsTemporary" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-5">
+                    <input type="submit" class="btn btn-info btn-sm" value="更新">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function onClick(el) {
+        if (el.value == 'false') {
+            el.value = 'true';
+        }
+        else {
+            el.value = 'false';
+        }
+    }
+</script>

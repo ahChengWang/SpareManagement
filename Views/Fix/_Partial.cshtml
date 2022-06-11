@@ -1,0 +1,41 @@
+﻿@model InspectSpareViewModel
+
+
+<div class="row col-12">
+    <div class="form-group form-row col-sm-4">
+        <label>操作人員：</label>
+        <input id="inspectUser" type="text" class="custom-control" />
+    </div>
+    <div class="form-group form-row col-sm-4">
+        <label>操作時間：</label>
+        <input id="inspectDate" type="date" class="custom-control" />
+    </div>
+    <input id="categoryId" type="hidden" value="@Model.Details.First().CategoryId" />
+    <input id="statusId" type="hidden" value="@Model.Details.First().StatusId" />
+</div>
+<table class="table">
+    <thead style="background-color: slategrey; color: white; ">
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().SerialNo)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Details)
+        {
+            var trid = @item.SerialNo + "tr";
+            <tr id="@trid">
+                <td id="partNo" class="row-data">@item.PartNo</td>
+                <td class="row-data">@item.Name</td>
+                <td class="row-data">@item.SerialNo</td>
+                <td class="row-data">@item.Spec</td>
+                <td>
+                    <input id="@item.SerialNo" type="button" onclick="onFixClick(this)" style="text-decoration:none;" class="btn btn-outline-secondary btn-sm" value="送修" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

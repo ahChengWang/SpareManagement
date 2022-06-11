@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]備品管理系統</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- include BlockUI -->
+    <script src="~/lib/jquery-blockUI/dist/jquery.blockUI.js"></script>
+
+    @RenderSection("Scripts", required: false)
+    <header>
+        <style>
+            /* highlights current hovered list item and the parent list items when hovering over sub menues */
+            #nav li:hover {
+                background: #dae8df;
+            }
+
+            #nav li a {
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            #dropdown a:hover {
+                background: #dae8df;
+            }
+        </style>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #ebf8fa ">
+            <div class="container">
+                <a class="navbar-brand" href="./">CarUX</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul id="nav" class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">　物料管理</a>
+                            <div id="dropdown" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="Spare" asp-action="Index">基本資訊</a>
+                                <a class="dropdown-item" asp-controller="Warehouse" asp-action="Index">入庫</a>
+                                <a class="dropdown-item" asp-controller="Release" asp-action="Index">領用</a>
+                                <a class="dropdown-item" asp-controller="Inspect" asp-action="Index">檢驗</a>
+                                <a class="dropdown-item" asp-controller="Fix" asp-action="Index">維修</a>
+                                <a class="dropdown-item" asp-controller="Return" asp-action="Index">歸還</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Expendables" asp-action="Index">　耗材　</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Components" asp-action="Index">　設備零件　</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Jigs" asp-action="Index">　治具　</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="WirePanel" asp-action="Index">　線板材　</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-5">
+            @RenderBody()
+        </main>
+    </div>
+    <script type="text/javascript">
+
+        function isJsonString(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - SpareManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+</body>
+</html>

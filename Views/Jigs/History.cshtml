@@ -1,0 +1,32 @@
+﻿@model HistoryViewModel
+
+@{
+}
+
+<h3>@Html.DisplayNameFor(model => model.PartNo): @Model.PartNo </h3>
+<div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(model => model.details.First().Date)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.details.First().Status)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.details.First().Quantity)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.details.First().Employee)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.details.First().Memo)</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.details)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.Status</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Employee</td>
+                    <td>@item.Memo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

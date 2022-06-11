@@ -1,0 +1,121 @@
+﻿@model ReleaseViewModel
+
+@{
+}
+
+<style>
+    label {
+        font-size: 15px
+    }
+</style>
+
+<div class="container">
+    @*<form id="thisForm" asp-controller="Warehouse" asp-action="Search" method="get">*@
+    <div class="card" style="width: 75%; margin: auto;">
+        <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px">
+            領用管理
+        </div>
+        <span style="font-size:15px;font-weight:bold" class="text-danger col-lg-10">※治具、線板材，物料編號請輸入序號，領用數量只能為 1 </span>
+        <div class="card-body">
+            @*<input id="timezoneOffset" asp-for="TimezoneOffset" class="form-control" type="hidden" />*@
+            <form id="form">
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo1"></label>
+                        <input asp-for="PartNo1" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count1"></label>
+                        <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo2"></label>
+                        <input asp-for="PartNo2" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count2"></label>
+                        <input asp-for="Count2" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo3"></label>
+                        <input asp-for="PartNo3" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count3"></label>
+                        <input asp-for="Count3" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo4"></label>
+                        <input asp-for="PartNo4" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count4"></label>
+                        <input asp-for="Count4" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo5"></label>
+                        <input asp-for="PartNo5" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count5"></label>
+                        <input asp-for="Count5" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="Memo"></label>
+                        <input asp-for="Memo" class="form-control" type="text" value="" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-6">
+                        <label asp-for="ReleaseUser"></label>
+                        @*<span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
+                        <input asp-for="ReleaseUser" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-6">
+                        <label asp-for="ReleaseDate"></label>
+                        @*<span asp-validation-for="CreateDate" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
+                        <input asp-for="ReleaseDate" class="form-control" type="datetime-local" value="" />
+                    </div>
+                </div>
+                <input id="btnInsert" type="submit" class="btn btn-primary btn-sm" value="領用">
+            </form>
+        </div>
+    </div>
+    @*</form>*@
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#form").submit(function (e) {
+            e.preventDefault();
+            $.blockUI();
+            $.ajax({
+                type: "POST",
+                url: "Release/Update",
+                dataType: 'json',
+                data: $('#form').serialize(),
+                success: function (result) {
+                    if (result == "") {
+                        $('input').attr("disabled", true);
+                        alert("領用成功");
+                        location.reload();
+                    }
+                    else {
+                        alert(result);
+                        $.unblockUI();
+                    }
+                }
+            });
+        })
+    })
+</script>

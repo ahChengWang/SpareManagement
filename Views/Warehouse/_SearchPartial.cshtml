@@ -1,0 +1,25 @@
+﻿@model WarehouseViewModel
+
+<h3>This is partial</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">編號</th>
+            <th scope="col">名稱</th>
+            <th scope="col">項目</th>
+            <th scope="col">流水號</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SpareList)
+        {
+            <tr>
+                <td>@item.No</td>
+                <td>@item.Name</td>
+                <td>@item.Manager</td>
+                <td>@item.PurchaseId</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,118 @@
+﻿@model WarehouseInsertViewModel
+
+@{
+}
+
+<style>
+    label {
+        font-size: 15px
+    }
+</style>
+
+<div class="container">
+    @*<form id="thisForm" asp-controller="Warehouse" asp-action="Search" method="get">*@
+    <div class="card" style="width: 75%; margin: auto;">
+        <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px">
+            入庫管理
+        </div>
+        <div class="card-body">
+            @*<input id="timezoneOffset" asp-for="TimezoneOffset" class="form-control" type="hidden" />*@
+            <form id="form" asp-action="Insert" method="post">
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo1"></label>
+                        <input asp-for="PartNo1" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count1"></label>
+                        <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo2"></label>
+                        <input asp-for="PartNo2" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count2"></label>
+                        <input asp-for="Count2" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo3"></label>
+                        <input asp-for="PartNo3" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count3"></label>
+                        <input asp-for="Count3" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo4"></label>
+                        <input asp-for="PartNo4" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count4"></label>
+                        <input asp-for="Count4" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="PartNo5"></label>
+                        <input asp-for="PartNo5" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-4">
+                        <label asp-for="Count5"></label>
+                        <input asp-for="Count5" class="form-control" type="number" value="0" min="0" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="Memo"></label>
+                        <input asp-for="Memo" class="form-control" type="text" value="" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-6">
+                        <label asp-for="CreateUser"></label>
+                        <input asp-for="CreateUser" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-6">
+                        <label asp-for="CreateDate"></label>
+                        <input asp-for="CreateDate" class="form-control" type="datetime-local" value="" />
+                    </div>
+                </div>
+                <input id="btnInsert" type="submit" class="btn btn-info btn-sm" value="新增">
+            </form>
+        </div>
+    </div>
+    @*</form>*@
+</div>
+
+<script type="text/javascript"> 
+    $(document).ready(function () {
+        $("#form").submit(function (e) {
+            e.preventDefault();
+            $.blockUI();
+            $.ajax({
+                type: "POST",
+                url: "Warehouse/Insert",
+                dataType: 'json',
+                data: $('#form').serialize(),
+                success: function (result) {
+                    if (result == "") {
+                        $('input').attr("disabled", true);
+                        alert("入庫成功");
+                        location.reload();
+                    }
+                    else {
+                        alert(result);
+                        $.unblockUI();
+                    }
+                }
+            });
+        })
+    })
+</script>
