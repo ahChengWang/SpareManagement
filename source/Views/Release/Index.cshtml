@@ -20,51 +20,71 @@
             @*<input id="timezoneOffset" asp-for="TimezoneOffset" class="form-control" type="hidden" />*@
             <form id="form">
                 <div class="form-row">
-                    <div class="form-group input-group-sm col-md-8">
+                    <div class="form-group input-group-sm col-md-5">
                         <label asp-for="PartNo1"></label>
                         <input asp-for="PartNo1" class="form-control" type="text" value="" />
                     </div>
-                    <div class="form-group input-group-sm col-md-4">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node1"></label>
+                        <input asp-for="Node1" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
                         <label asp-for="Count1"></label>
                         <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group input-group-sm col-md-8">
+                    <div class="form-group input-group-sm col-md-5">
                         <label asp-for="PartNo2"></label>
                         <input asp-for="PartNo2" class="form-control" type="text" value="" />
                     </div>
-                    <div class="form-group input-group-sm col-md-4">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node2"></label>
+                        <input asp-for="Node2" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
                         <label asp-for="Count2"></label>
                         <input asp-for="Count2" class="form-control" type="number" value="0" min="0" />
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group input-group-sm col-md-8">
+                    <div class="form-group input-group-sm col-md-5">
                         <label asp-for="PartNo3"></label>
                         <input asp-for="PartNo3" class="form-control" type="text" value="" />
                     </div>
-                    <div class="form-group input-group-sm col-md-4">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node3"></label>
+                        <input asp-for="Node3" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
                         <label asp-for="Count3"></label>
                         <input asp-for="Count3" class="form-control" type="number" value="0" min="0" />
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group input-group-sm col-md-8">
+                    <div class="form-group input-group-sm col-md-5">
                         <label asp-for="PartNo4"></label>
                         <input asp-for="PartNo4" class="form-control" type="text" value="" />
                     </div>
-                    <div class="form-group input-group-sm col-md-4">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node4"></label>
+                        <input asp-for="Node4" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
                         <label asp-for="Count4"></label>
                         <input asp-for="Count4" class="form-control" type="number" value="0" min="0" />
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group input-group-sm col-md-8">
+                    <div class="form-group input-group-sm col-md-5">
                         <label asp-for="PartNo5"></label>
                         <input asp-for="PartNo5" class="form-control" type="text" value="" />
                     </div>
-                    <div class="form-group input-group-sm col-md-4">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node5"></label>
+                        <input asp-for="Node5" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
                         <label asp-for="Count5"></label>
                         <input asp-for="Count5" class="form-control" type="number" value="0" min="0" />
                     </div>
@@ -106,14 +126,14 @@
                 data: $('#form').serialize(),
                 success: function (result) {
                     if (result == "") {
-                        $('input').attr("disabled", true);
-                        alert("領用成功");
-                        location.reload();
+                        alert("全部領用成功");
                     }
                     else {
                         alert(result);
                         $.unblockUI();
                     }
+                    $.unblockUI();
+                    location.reload();
                 }
             });
         })

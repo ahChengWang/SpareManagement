@@ -17,7 +17,8 @@
                         <th class="col-md-2" scope="col">@Html.DisplayNameFor(model => model.details.First().Date)</th>
                         <th class="col-md-2" scope="col">@Html.DisplayNameFor(model => model.details.First().Status)</th>
                         <th class="col-md-1" scope="col">@Html.DisplayNameFor(model => model.details.First().Quantity)</th>
-                        <th class="col-md-2"scope="col">@Html.DisplayNameFor(model => model.details.First().Employee)</th>
+                        <th class="col-md-1" scope="col">@Html.DisplayNameFor(model => model.details.First().Node)</th>
+                        <th class="col-md-2" scope="col">@Html.DisplayNameFor(model => model.details.First().Employee)</th>
                         <th scope="col">@Html.DisplayNameFor(model => model.details.First().Memo)</th>
                     </tr>
                 </thead>
@@ -28,6 +29,7 @@
                             <td>@item.Date</td>
                             <td>@item.Status</td>
                             <td>@item.Quantity</td>
+                            <td>@item.Node</td>
                             <td>@item.Employee</td>
                             <td>@item.Memo</td>
                         </tr>

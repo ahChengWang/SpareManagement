@@ -1,4 +1,5 @@
 ﻿using Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SpareManagement.DomainService;
@@ -12,6 +13,8 @@ using System.Linq;
 
 namespace PersonalWeb.Controllers
 {
+    [Authorize]
+
     public class ReturnController : Controller
     {
         private readonly ReturnDomainService _returnDomainService;

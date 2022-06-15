@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.Helper;
 using SpareManagement.Models;
@@ -8,6 +9,8 @@ using System.Linq;
 
 namespace PersonalWeb.Controllers
 {
+    [Authorize]
+
     public class ExpendablesController : Controller
     {
         private readonly ExpendablesDomainService _expendablesDomainService;

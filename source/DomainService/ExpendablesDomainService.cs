@@ -127,7 +127,7 @@ namespace SpareManagement.DomainService
         }
 
 
-        public string ProcessRelease(
+        public (string, int) ProcessRelease(
             IEnumerable<ReleaseGoodsEntity> releaseGoodsList,
             string createUser,
             DateTime createDate,
@@ -144,7 +144,7 @@ namespace SpareManagement.DomainService
                 var _notEnough = _releaseExpendables.Where(w => releaseGoodsList.FirstOrDefault(fd => fd.PartNo == w.PartNo).Count > w.Inventory);
 
                 if (!_releaseExpendables.Any())
-                    _errMsg += $"查無耗材 \n";
+                    _errMsg += $"{string.Join("、", releaseGoodsList.Select(s => s.PartNo))} 查無耗材 \n";
 
                 if (_notExist.Any())
                     _notExist.ToList().ForEach(fe => _errMsg += $"{fe.PartNo} 無此耗材 \n");
@@ -152,10 +152,10 @@ namespace SpareManagement.DomainService
                 if (_notEnough.Any())
                     _notEnough.ToList().ForEach(fe => _errMsg += $"{fe.PartNo} 庫存不足 \n");
 
-                if (!string.IsNullOrEmpty(_errMsg))
-                    return _errMsg;
+                //if (!string.IsNullOrEmpty(_errMsg))
+                //    return _errMsg;
 
-                _updExpendables = (from all in _releaseExpendables
+                _updExpendables = (from all in _releaseExpendables.Except(_notEnough)
                                    join release in releaseGoodsList
                                     on all.PartNo equals release.PartNo
                                    select new ExpendablesDao
@@ -164,14 +164,14 @@ namespace SpareManagement.DomainService
                                        Inventory = all.Inventory - release.Count
                                    }).ToList();
 
+                if (!_updExpendables.Any())
+                    return (_errMsg, 0);
+
                 using (var scope = new TransactionScope())
                 {
                     var _updResult = true;
 
-                    if (_updExpendables.Any())
-                    {
-                        _updResult = _expendablesRepository.Update(_updExpendables) == _updExpendables.Count;
-                    }
+                    _updResult = _expendablesRepository.Update(_updExpendables) == _updExpendables.Count;
 
                     var _insHistory = new List<HistoryEntity>();
 
@@ -185,7 +185,8 @@ namespace SpareManagement.DomainService
                             Quantity = fe.Count,
                             EmpName = createUser,
                             UpdateTime = createDate,
-                            Memo = memo
+                            Memo = memo,
+                            Node = fe.Node
                         });
                     });
 
@@ -194,10 +195,10 @@ namespace SpareManagement.DomainService
                     if (_updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success.";
+                        return ("Insert & Update not success.", 0);
                 }
 
-                return "";
+                return ("", _updExpendables.Count);
             }
             catch (Exception ex)
             {

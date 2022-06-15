@@ -47,6 +47,7 @@ namespace PersonalWeb.Controllers
                         Date = fe.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss"),
                         Status = fe.Status.GetDescription(),
                         Quantity = fe.Quantity.ToString(),
+                        Node = fe.Node?.ToString() ?? "",
                         Employee = fe.EmpName,
                         Memo = fe.Memo
                     });

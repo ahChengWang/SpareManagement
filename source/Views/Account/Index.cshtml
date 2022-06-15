@@ -1,0 +1,121 @@
+﻿@model LoginViewModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]備品管理系統</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- include BlockUI -->
+    <script src="~/lib/jquery-blockUI/dist/jquery.blockUI.js"></script>
+    <script type="text/javascript">
+        //寫在_Layout.cshtml 供其他頁面使用
+        //為所有的$.ajax呼叫設定預設值，當遇到StatusCode為401時，頁面導至登入頁
+            $.ajaxSetup({
+                statusCode: {
+                    401: function () {//未授權，Unauthorized
+                        //JS前端導頁
+                       window.location.href = "@Url.Action("Index","Account")";
+
+                    }
+                }
+            });
+    </script>
+    <header>
+        <style>
+            /* highlights current hovered list item and the parent list items when hovering over sub menues */
+            #nav li:hover {
+                background: #dae8df;
+            }
+
+            #nav li a {
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            #dropdown a:hover {
+                background: #dae8df;
+            }
+        </style>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #ebf8fa ">
+            <div class="container">
+                <a class="navbar-brand">CarUX</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-5">
+            <div class="container">
+                <div class="card" style="width: 25%; margin: auto;">
+                    <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px;">登錄</div>
+                    <div class="card-body">
+                        <form id="form">
+                            <div class="row">
+                                <div class="form-group input-group-sm col-md-12">
+                                    <label asp-for="Account"></label>
+                                    <span asp-validation-for="Account" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                                    <input id="acc" asp-for="Account" class="form-control" type="text" value="" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group input-group-sm col-md-12">
+                                    <label asp-for="Password"></label>
+                                    <span asp-validation-for="Password" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                                    <input id="pwd" asp-for="Password" class="form-control" type="password" value="" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class ="form-group input-group-sm col-md-12">
+                                    <input id="btn" type="button" class="btn btn-info btn-sm" value="登入" />
+                                </div>                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    $('#btn').click(function (e) {
+        if ($("#form").valid()) {
+            $.blockUI();
+            $.ajax({
+                type: "POST",
+                url: "/Account/Login",
+                dataType: 'json',
+                data: $("#form").serialize(),
+                success: function (result) {
+                    if (result != '') {
+                        alert(result);
+                        $.unblockUI();
+                    }
+                    else {
+                        alert('登錄成功');
+                        location.href = "/Home/Index";
+                    }
+                }
+            });
+        }
+    });
+</script>

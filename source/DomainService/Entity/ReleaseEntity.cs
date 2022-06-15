@@ -9,21 +9,31 @@ namespace SpareManagement.DomainService.Entity
 
         public int Count1 { get; set; }
 
+        public string Node1 { get; set; }
+
         public string PartNo2 { get; set; }
 
         public int Count2 { get; set; }
+
+        public string Node2 { get; set; }
 
         public string PartNo3 { get; set; }
 
         public int Count3 { get; set; }
 
+        public string Node3 { get; set; }
+
         public string PartNo4 { get; set; }
 
         public int Count4 { get; set; }
 
+        public string Node4 { get; set; }
+
         public string PartNo5 { get; set; }
 
         public int Count5 { get; set; }
+
+        public string Node5 { get; set; }
 
         public DateTime? CreateDate { get; set; }
 
@@ -41,5 +51,7 @@ namespace SpareManagement.DomainService.Entity
         public string PartNo { get; set; }
 
         public int Count { get; set; }
+
+        public string Node { get; set; }
     }
 }

@@ -370,7 +370,7 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public string ProcessRelease(
+        public (string, int) ProcessRelease(
             IEnumerable<ReleaseGoodsEntity> releaseJigsList,
             string createUser,
             DateTime createDate,
@@ -384,13 +384,14 @@ namespace SpareManagement.DomainService
                 var _stockJigs = _jigsRepository.SelectByConditions(serialNoList: releaseJigsList.Select(s => s.PartNo));
 
                 var _notExist = releaseJigsList.Where(w => !_stockJigs.Select(s => s.SerialNo).Contains(w.PartNo));
+                var _jigsConuntError = _stockJigs.Where(w => releaseJigsList.Where(w => w.Count > 1).Select(s => s.PartNo).Contains(w.SerialNo));
                 var _jigsStatusError = _stockJigs.Where(w => w.Status != StatusEnum.Stock || w.IsTemporary);
 
-                if (releaseJigsList.Any(a => a.Count > 1))
-                    _errMsg += $"單一治具領用數量不能 > 1 \n";
-
                 if (!_stockJigs.Any())
-                    _errMsg += $"查無治具 \n";
+                    _errMsg += $"{string.Join("、", releaseJigsList.Select(s => s.PartNo))} 查無治具 \n";
+
+                if (_jigsConuntError.Any())
+                    _jigsConuntError.ToList().ForEach(fe => _errMsg += $"{fe.SerialNo} 治具領用數量不能 > 1 \n");
 
                 if (_notExist.Any())
                     _notExist.ToList().ForEach(fe => _errMsg += $"{fe.PartNo} 確認治具序號及狀態 \n");
@@ -398,10 +399,10 @@ namespace SpareManagement.DomainService
                 if (_jigsStatusError.Any())
                     _jigsStatusError.ToList().ForEach(fe => _errMsg += $"{fe.SerialNo} 治具 [{fe.Status.GetDescription()}]或暫停使用 無法領用 \n");
 
-                if (!string.IsNullOrEmpty(_errMsg))
-                    return _errMsg;
+                //if (!string.IsNullOrEmpty(_errMsg))
+                //    return _errMsg;
 
-                _updJigs = (from all in _stockJigs
+                _updJigs = (from all in _stockJigs.Except(_jigsConuntError).Except(_jigsStatusError)
                             join release in releaseJigsList
                              on all.SerialNo equals release.PartNo
                             select new JigsDao
@@ -410,6 +411,9 @@ namespace SpareManagement.DomainService
                                 Status = StatusEnum.UnStock,
                                 Inventory = all.Inventory - release.Count
                             }).ToList();
+
+                if (!_updJigs.Any())
+                    return (_errMsg, 0);
 
                 var _insHistory = new List<HistoryEntity>();
 
@@ -423,7 +427,8 @@ namespace SpareManagement.DomainService
                         Quantity = fe.Count,
                         EmpName = createUser,
                         UpdateTime = createDate,
-                        Memo = memo
+                        Memo = memo,
+                        Node = fe.Node
                     });
                 });
 
@@ -431,20 +436,17 @@ namespace SpareManagement.DomainService
                 {
                     var _updResult = true;
 
-                    if (_updJigs.Any())
-                    {
-                        _updResult = _jigsRepository.UpdateRelease(_updJigs) == _updJigs.Count;
-                    }
+                    _updResult = _jigsRepository.UpdateRelease(_updJigs) == _updJigs.Count;
 
                     _historyDomainService.Insert(_insHistory);
 
                     if (_updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success.";
+                        return ("Insert & Update not success.", 0);
                 }
 
-                return "";
+                return ("", _updJigs.Count);
             }
             catch (Exception ex)
             {

@@ -370,7 +370,7 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public string ProcessRelease(
+        public (string, int) ProcessRelease(
             IEnumerable<ReleaseGoodsEntity> releaseWirePanelList,
             string createUser,
             DateTime createDate,
@@ -384,13 +384,14 @@ namespace SpareManagement.DomainService
                 var _stockWirePanel = _wirePanelRepository.SelectByConditions(serialNoList: releaseWirePanelList.Select(s => s.PartNo));
 
                 var _notExist = releaseWirePanelList.Where(w => !_stockWirePanel.Select(s => s.SerialNo).Contains(w.PartNo));
+                var _wirepanelConuntError = _stockWirePanel.Where(w => releaseWirePanelList.Where(w => w.Count > 1).Select(s => s.PartNo).Contains(w.SerialNo));
                 var _wirepanelStatusError = _stockWirePanel.Where(w => w.Status != StatusEnum.Stock || w.IsTemporary);
 
-                if (releaseWirePanelList.Any(a => a.Count > 1))
-                    _errMsg += $"單一線板材領用數量不能 > 1 \n";
-
                 if (!_stockWirePanel.Any())
-                    _errMsg += $"查無線板材 \n";
+                    _errMsg += $"{string.Join("、", releaseWirePanelList.Select(s => s.PartNo))} 查無線板材 \n";
+
+                if (_wirepanelConuntError.Any())
+                    _wirepanelConuntError.ToList().ForEach(fe => _errMsg += $"{fe.SerialNo} 線板材領用數量不能 > 1 \n");
 
                 if (_notExist.Any())
                     _notExist.ToList().ForEach(fe => _errMsg += $"{fe.PartNo} 確認線板材序號及狀態 \n");
@@ -398,10 +399,10 @@ namespace SpareManagement.DomainService
                 if (_wirepanelStatusError.Any())
                     _wirepanelStatusError.ToList().ForEach(fe => _errMsg += $"{fe.SerialNo} 線板材 [{fe.Status.GetDescription()}] 或暫停使用無法領用 \n");
 
-                if (!string.IsNullOrEmpty(_errMsg))
-                    return _errMsg;
+                //if (!string.IsNullOrEmpty(_errMsg))
+                //    return (_errMsg, 0);
 
-                _updWirePanel = (from all in _stockWirePanel
+                _updWirePanel = (from all in _stockWirePanel.Except(_wirepanelConuntError).Except(_wirepanelStatusError)
                                  join release in releaseWirePanelList
                                   on all.SerialNo equals release.PartNo
                                  select new WirePanelDao
@@ -410,6 +411,9 @@ namespace SpareManagement.DomainService
                                      Status = StatusEnum.UnStock,
                                      Inventory = all.Inventory - release.Count
                                  }).ToList();
+
+                if (!_updWirePanel.Any())
+                    return (_errMsg, 0);
 
                 var _insHistory = new List<HistoryEntity>();
 
@@ -423,7 +427,8 @@ namespace SpareManagement.DomainService
                         Quantity = fe.Count,
                         EmpName = createUser,
                         UpdateTime = createDate,
-                        Memo = memo
+                        Memo = memo,
+                        Node = fe.Node
                     });
                 });
 
@@ -431,20 +436,17 @@ namespace SpareManagement.DomainService
                 {
                     var _updResult = true;
 
-                    if (_updWirePanel.Any())
-                    {
-                        _updResult = _wirePanelRepository.UpdateRelease(_updWirePanel) == _updWirePanel.Count;
-                    }
+                    _updResult = _wirePanelRepository.UpdateRelease(_updWirePanel) == _updWirePanel.Count;
 
                     _historyDomainService.Insert(_insHistory);
 
                     if (_updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success.";
+                        return ("Insert & Update not success.", 0);
                 }
 
-                return "";
+                return ("", _updWirePanel.Count);
             }
             catch (Exception ex)
             {

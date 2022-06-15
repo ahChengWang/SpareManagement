@@ -1,4 +1,5 @@
 using Helper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using SpareManagement.DomainService;
 using SpareManagement.Helper;
 using SpareManagement.Repository;
+using System;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -36,6 +38,7 @@ namespace SpareManagement
             services.AddSingleton<ReturnDomainService>();
             services.AddSingleton<FixDomainService>();
             services.AddSingleton<HistoryDomainService>();
+            services.AddSingleton<AccountDomainService>();
 
             services.AddSingleton<BasicInformationRepository>();
             services.AddSingleton<ExpendablesRepository>();
@@ -43,6 +46,7 @@ namespace SpareManagement
             services.AddSingleton<JigsRepository>();
             services.AddSingleton<WirePanelRepository>();
             services.AddSingleton<HistoryRepository>();
+            services.AddSingleton<AccountRepository>();
 
             services.Add(new ServiceDescriptor(typeof(MSSqlDBHelper), new MSSqlDBHelper(Configuration)));
 
@@ -55,6 +59,12 @@ namespace SpareManagement
             //services.AddSingleton<ISystemSettingDomainService, SystemSettingDomainService>();
 
             services.AddControllersWithViews();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
+            {
+                x.LoginPath = "/Account/Index";
+                x.ExpireTimeSpan = TimeSpan.FromMinutes(540);
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +86,8 @@ namespace SpareManagement
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -84,7 +96,7 @@ namespace SpareManagement
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Index}/{id?}");
             });
         }
     }

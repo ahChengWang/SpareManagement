@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.DomainService.Entity;
 using SpareManagement.Models;
@@ -6,6 +7,8 @@ using System;
 
 namespace PersonalWeb.Controllers
 {
+    [Authorize]
+
     public class WarehouseController : Controller
     {
         private readonly WarehouseDomainService _warehouseDomainService;

@@ -37,6 +37,7 @@ INSERT INTO [dbo].[History]
            ,[PartNo]
            ,[Status]
            ,[Quantity]
+           ,[Node]
            ,[EmpName]
            ,[UpdateTime]
            ,[Memo])
@@ -45,6 +46,7 @@ INSERT INTO [dbo].[History]
            ,@PartNo
            ,@Status
            ,@Quantity
+           ,@Node
            ,@EmpName
            ,@UpdateTime
            ,@Memo)

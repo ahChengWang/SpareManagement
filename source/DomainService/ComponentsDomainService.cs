@@ -88,7 +88,7 @@ namespace SpareManagement.DomainService
                     var _updResult = true;
 
                     if (_insComponents.Any())
-                        _insResult =  _componentsRepository.Insert(_insComponents) == _insComponents.Count;                    
+                        _insResult = _componentsRepository.Insert(_insComponents) == _insComponents.Count;
 
                     if (_updComponents.Any())
                         _updResult = _componentsRepository.Update(_updComponents) == _updComponents.Count;
@@ -126,7 +126,7 @@ namespace SpareManagement.DomainService
         }
 
 
-        public string ProcessRelease(
+        public (string, int) ProcessRelease(
             IEnumerable<ReleaseGoodsEntity> releaseGoodsList,
             string createUser,
             DateTime createDate,
@@ -143,7 +143,7 @@ namespace SpareManagement.DomainService
                 var _notEnough = _releaseComponents.Where(w => releaseGoodsList.FirstOrDefault(fd => fd.PartNo == w.PartNo).Count > w.Inventory);
 
                 if (!_releaseComponents.Any())
-                    _errMsg += $"查無設備零件 \n";
+                    _errMsg += $"{string.Join("、", releaseGoodsList.Select(s => s.PartNo))} 查無設備零件 \n";
 
                 if (_notExist.Any())
                     _notExist.ToList().ForEach(fe => _errMsg += $"{fe.PartNo} 無此設備零件 \n");
@@ -151,10 +151,10 @@ namespace SpareManagement.DomainService
                 if (_notEnough.Any())
                     _notEnough.ToList().ForEach(fe => _errMsg += $"{fe.PartNo} 庫存不足 \n");
 
-                if (!string.IsNullOrEmpty(_errMsg))
-                    return _errMsg;
+                //if (!string.IsNullOrEmpty(_errMsg))
+                //    return _errMsg;
 
-                _updComponents = (from all in _releaseComponents
+                _updComponents = (from all in _releaseComponents.Except(_notEnough)
                                   join release in releaseGoodsList
                                    on all.PartNo equals release.PartNo
                                   select new ComponentsDao
@@ -163,14 +163,14 @@ namespace SpareManagement.DomainService
                                       Inventory = all.Inventory - release.Count
                                   }).ToList();
 
+                if (!_updComponents.Any())
+                    return (_errMsg, 0);
+
                 using (var scope = new TransactionScope())
                 {
                     var _updResult = true;
 
-                    if (_updComponents.Any())
-                    {
-                        _updResult = _componentsRepository.Update(_updComponents) == _updComponents.Count;
-                    }
+                    _updResult = _componentsRepository.Update(_updComponents) == _updComponents.Count;
 
                     var _insHistory = new List<HistoryEntity>();
 
@@ -184,7 +184,8 @@ namespace SpareManagement.DomainService
                             Quantity = fe.Count,
                             EmpName = createUser,
                             UpdateTime = createDate,
-                            Memo = memo
+                            Memo = memo,
+                            Node = fe.Node
                         });
                     });
 
@@ -193,10 +194,10 @@ namespace SpareManagement.DomainService
                     if (_updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success.";
+                        return ("Insert & Update not success.", 0);
                 }
 
-                return "";
+                return ("", _updComponents.Count);
             }
             catch (Exception ex)
             {

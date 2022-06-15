@@ -22,6 +22,9 @@ namespace SpareManagement.Models
         [DisplayName("數量")]
         public string Quantity { get; set; }
 
+        [DisplayName("站點")]
+        public string Node { get; set; }
+
         [DisplayName("人員")]
         public string Employee { get; set; }
 

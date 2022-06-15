@@ -1,4 +1,5 @@
 ﻿using Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.Models;
@@ -8,6 +9,8 @@ using System.Linq;
 
 namespace PersonalWeb.Controllers
 {
+    [Authorize]
+
     public class JigsController : Controller
     {
         private readonly JigsDomainService _jigsDomainService;

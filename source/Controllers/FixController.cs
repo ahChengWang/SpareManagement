@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SpareManagement.DomainService;
 using SpareManagement.DomainService.Entity;
@@ -10,6 +11,8 @@ using System.Linq;
 
 namespace PersonalWeb.Controllers
 {
+    [Authorize]
+
     public class FixController : Controller
     {
         private readonly FixDomainService _fixDomainService;

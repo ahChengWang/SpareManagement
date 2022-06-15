@@ -38,6 +38,8 @@ namespace SpareManagement.DomainService
 
                 var basicDataList = _basicInformationRepository.SelectByConditions(partNoList: _result.Item2.Select(s => s.PartNo).ToList());
                 var _processResult = "";
+                var _processCnt = 0;
+                (string, int) _tmpResult;
 
                 //var _nonExistPartNo = string.Join(',', _result.Item2.Select(s => s.PartNo).Where(w => !basicDataList.Select(s => s.PartNo).Contains(w)));
 
@@ -50,23 +52,34 @@ namespace SpareManagement.DomainService
                 var _releaseWirePanel = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "B");
 
                 if (_releaseExpendables.Any())
-                    _processResult +=
-                        _expendablesDomainService.ProcessRelease(_releaseExpendables, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                {
+                    _tmpResult = _expendablesDomainService.ProcessRelease(_releaseExpendables, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _processResult += _tmpResult.Item1;
+                    _processCnt += _tmpResult.Item2;
+                }
 
                 if (_releaseComponents.Any())
-                    _processResult +=
-                        _componentsDomainService.ProcessRelease(_releaseComponents, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                {
+                    _tmpResult = _componentsDomainService.ProcessRelease(_releaseComponents, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _processResult += _tmpResult.Item1;
+                    _processCnt += _tmpResult.Item2;
+                }
 
                 if (_releaseJigs.Any())
-                    _processResult +=
-                        _jigsDomainService.ProcessRelease(_releaseJigs, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                {
+                    _tmpResult = _jigsDomainService.ProcessRelease(_releaseJigs, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _processResult += _tmpResult.Item1;
+                    _processCnt += _tmpResult.Item2;
+                }
 
                 if (_releaseWirePanel.Any())
-                    _processResult +=
-                        _wirePanelDomainService.ProcessRelease(_releaseWirePanel, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                {
+                    _tmpResult = _wirePanelDomainService.ProcessRelease(_releaseWirePanel, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _processResult += _tmpResult.Item1;
+                    _processCnt += _tmpResult.Item2;
+                }
 
-
-                return _processResult;
+                return _processResult == "" ? "" : $"．成功嶺用物料項目：{_processCnt} \n\n．領用失敗物料，請負責人員再次確認：\n{_processResult}";
             }
             catch (Exception ex)
             {
@@ -81,13 +94,14 @@ namespace SpareManagement.DomainService
             {
                 var _errorInfo = "";
 
-                var _tempList = new List<ReleaseGoodsEntity> {
-                new ReleaseGoodsEntity {ColName = "編號 1.", PartNo = entity.PartNo1, Count = entity.Count1 },
-                new ReleaseGoodsEntity {ColName = "編號 2.", PartNo = entity.PartNo2, Count = entity.Count2 },
-                new ReleaseGoodsEntity {ColName = "編號 3.", PartNo = entity.PartNo3, Count = entity.Count3 },
-                new ReleaseGoodsEntity {ColName = "編號 4.", PartNo = entity.PartNo4, Count = entity.Count4 },
-                new ReleaseGoodsEntity {ColName = "編號 5.", PartNo = entity.PartNo5, Count = entity.Count5 }
-            };
+                var _tempList = new List<ReleaseGoodsEntity>
+                {
+                    new ReleaseGoodsEntity {ColName = "編號 1.", PartNo = entity.PartNo1, Count = entity.Count1 , Node = entity.Node1 ?? ""},
+                    new ReleaseGoodsEntity {ColName = "編號 2.", PartNo = entity.PartNo2, Count = entity.Count2 , Node = entity.Node2 ?? ""},
+                    new ReleaseGoodsEntity {ColName = "編號 3.", PartNo = entity.PartNo3, Count = entity.Count3 , Node = entity.Node3 ?? ""},
+                    new ReleaseGoodsEntity {ColName = "編號 4.", PartNo = entity.PartNo4, Count = entity.Count4 , Node = entity.Node4 ?? ""},
+                    new ReleaseGoodsEntity {ColName = "編號 5.", PartNo = entity.PartNo5, Count = entity.Count5 , Node = entity.Node5 ?? ""}
+                };
 
                 if (_tempList.Where(a => string.IsNullOrEmpty(a.PartNo)).Count() == 5)
                     return ("無領用物料", null);
