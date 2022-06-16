@@ -8,6 +8,8 @@ namespace SpareManagement.Models
 {
     public class ReleaseViewModel
     {
+        public List<ReleaseDetailViewModel> ReleaseList { get; set; }
+        
         [DisplayName("物料編號 1.")]
         public string PartNo1 { get; set; }
 
@@ -62,5 +64,17 @@ namespace SpareManagement.Models
         [DisplayName("備註")]
         public string Memo { get; set; }
 
+    }
+
+    public class ReleaseDetailViewModel
+    {
+        [DisplayName("物料編號")]
+        public string PartNo { get; set; }
+
+        [DisplayName("領用數量")]
+        public int Quantity { get; set; }
+
+        [DisplayName("使用站點")]
+        public string Node { get; set; }
     }
 }

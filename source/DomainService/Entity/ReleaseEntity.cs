@@ -5,6 +5,8 @@ namespace SpareManagement.DomainService.Entity
 {
     public class ReleaseEntity
     {
+        public List<ReleaseDetailEntity> ReleaseList { get; set; }
+
         public string PartNo1 { get; set; }
 
         public int Count1 { get; set; }
@@ -53,5 +55,12 @@ namespace SpareManagement.DomainService.Entity
         public int Count { get; set; }
 
         public string Node { get; set; }
+    }
+
+    public class ReleaseDetailEntity
+    {
+        public string PartNo { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

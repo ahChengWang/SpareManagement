@@ -7,3 +7,7 @@
 *.txt
 #*.xml
 source/.vs/SpareManagement/v16/.suo
+*.v2
+\.vs/
+\bin/
+\obj/
