@@ -8,6 +8,6 @@
 #*.xml
 source/.vs/SpareManagement/v16/.suo
 *.v2
-/.vs/*
-/bin/*
-/obj/*
+source/.vs/
+source/bin/
+source/obj/
