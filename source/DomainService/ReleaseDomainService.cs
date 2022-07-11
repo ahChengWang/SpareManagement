@@ -6,19 +6,19 @@ using System.Linq;
 
 namespace SpareManagement.DomainService
 {
-    public class ReleaseDomainService
+    public class ReleaseDomainService : IReleaseDomainService
     {
-        private readonly BasicInformationRepository _basicInformationRepository;
-        private readonly ExpendablesDomainService _expendablesDomainService;
-        private readonly ComponentsDomainService _componentsDomainService;
-        private readonly JigsDomainService _jigsDomainService;
-        private readonly WirePanelDomainService _wirePanelDomainService;
+        private readonly IBasicInformationRepository _basicInformationRepository;
+        private readonly IExpendablesDomainService _expendablesDomainService;
+        private readonly IComponentsDomainService _componentsDomainService;
+        private readonly IJigsDomainService _jigsDomainService;
+        private readonly IWirePanelDomainService _wirePanelDomainService;
 
-        public ReleaseDomainService(BasicInformationRepository basicInformationRepository,
-            ExpendablesDomainService expendablesDomainService,
-            ComponentsDomainService componentsDomainService,
-            JigsDomainService jigsDomainService,
-            WirePanelDomainService wirePanelDomainService)
+        public ReleaseDomainService(IBasicInformationRepository basicInformationRepository,
+            IExpendablesDomainService expendablesDomainService,
+            IComponentsDomainService componentsDomainService,
+            IJigsDomainService jigsDomainService,
+            IWirePanelDomainService wirePanelDomainService)
         {
             _basicInformationRepository = basicInformationRepository;
             _expendablesDomainService = expendablesDomainService;

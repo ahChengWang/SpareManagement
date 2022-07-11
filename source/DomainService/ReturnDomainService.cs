@@ -9,13 +9,13 @@ using System.Linq;
 
 namespace SpareManagement.DomainService
 {
-    public class ReturnDomainService
+    public class ReturnDomainService : IReturnDomainService
     {
-        private readonly JigsDomainService _jigsDomainService;
-        private readonly WirePanelDomainService _wirePanelDomainService;
+        private readonly IJigsDomainService _jigsDomainService;
+        private readonly IWirePanelDomainService _wirePanelDomainService;
 
-        public ReturnDomainService(JigsDomainService jigsDomainService,
-            WirePanelDomainService wirePanelDomainService)
+        public ReturnDomainService(IJigsDomainService jigsDomainService,
+            IWirePanelDomainService wirePanelDomainService)
         {
             _jigsDomainService = jigsDomainService;
             _wirePanelDomainService = wirePanelDomainService;

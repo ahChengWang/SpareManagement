@@ -7,21 +7,22 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Transactions;
 
 namespace SpareManagement.DomainService
 {
-    public class JigsDomainService
+    public class JigsDomainService : IJigsDomainService
     {
-        private readonly JigsRepository _jigsRepository;
-        private readonly HistoryDomainService _historyDomainService;
-        private readonly BasicInformationRepository _basicInformationRepository;
-        private readonly BasicInformationDomainService _basicInformationDomainService;
+        private readonly IJigsRepository _jigsRepository;
+        private readonly IHistoryDomainService _historyDomainService;
+        private readonly IBasicInformationRepository _basicInformationRepository;
+        private readonly IBasicInformationDomainService _basicInformationDomainService;
 
-        public JigsDomainService(JigsRepository jigsRepository,
-            HistoryDomainService historyDomainService,
-            BasicInformationRepository basicInformationRepository,
-            BasicInformationDomainService basicInformationDomainService)
+        public JigsDomainService(IJigsRepository jigsRepository,
+            IHistoryDomainService historyDomainService,
+            IBasicInformationRepository basicInformationRepository,
+            IBasicInformationDomainService basicInformationDomainService)
         {
             _jigsRepository = jigsRepository;
             _historyDomainService = historyDomainService;
@@ -153,6 +154,7 @@ namespace SpareManagement.DomainService
         {
             try
             {
+
                 List<JigsDao> _insJigs = new List<JigsDao>();
                 List<BasicInformationDao> _updBasicLastSerial = new List<BasicInformationDao>();
 
@@ -227,7 +229,7 @@ namespace SpareManagement.DomainService
                     if (_insResult && _updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success.";
+                        return "Insert & Update not success. \n";
                 }
 
                 return "";

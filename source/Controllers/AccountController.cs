@@ -15,9 +15,9 @@ namespace SpareManagement.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AccountDomainService _accountDomainService;
+        private readonly IAccountDomainService _accountDomainService;
 
-        public AccountController(AccountDomainService accountDomainService)
+        public AccountController(IAccountDomainService accountDomainService)
         {
             _accountDomainService = accountDomainService;
         }

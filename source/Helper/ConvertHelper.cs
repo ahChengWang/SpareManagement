@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SpareManagement.Helper
 {
@@ -30,24 +28,5 @@ namespace SpareManagement.Helper
 
             return targetBList;
         }
-
-        /*
-         * B b = new B();
-            // copy fields
-            var typeOfA = a.GetType();
-            var typeOfB = b.GetType();
-            foreach (var fieldOfA in typeOfA.GetFields())
-            {
-                var fieldOfB = typeOfB.GetField(fieldOfA.Name);
-                fieldOfB.SetValue(b, fieldOfA.GetValue(a));
-            }
-            // copy properties
-            foreach (var propertyOfA in typeOfA.GetProperties())
-            {
-                var propertyOfB = typeOfB.GetProperty(propertyOfA.Name);
-                propertyOfB.SetValue(b, propertyOfA.GetValue(a));
-            }
-
-         */
     }
 }

@@ -13,10 +13,10 @@ namespace PersonalWeb.Controllers
 
     public class ExpendablesController : Controller
     {
-        private readonly ExpendablesDomainService _expendablesDomainService;
+        private readonly IExpendablesDomainService _expendablesDomainService;
 
 
-        public ExpendablesController(ExpendablesDomainService expendablesDomainService)
+        public ExpendablesController(IExpendablesDomainService expendablesDomainService)
         {
             _expendablesDomainService = expendablesDomainService;
         }

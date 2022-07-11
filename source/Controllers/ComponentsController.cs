@@ -13,10 +13,10 @@ namespace PersonalWeb.Controllers
 
     public class ComponentsController : Controller
     {
-        private readonly ComponentsDomainService _componentsDomainService;
+        private readonly IComponentsDomainService _componentsDomainService;
 
 
-        public ComponentsController(ComponentsDomainService componentsDomainService)
+        public ComponentsController(IComponentsDomainService componentsDomainService)
         {
             _componentsDomainService = componentsDomainService;
         }

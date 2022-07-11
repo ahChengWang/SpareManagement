@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SpareManagement.Repository
 {
 
-    public class BasicInformationRepository : BaseRepository
+    public class BasicInformationRepository : BaseRepository, IBasicInformationRepository
     {
 
         public List<BasicInformationDao> SelectByConditions(List<string> partNoList = null,
@@ -73,10 +73,9 @@ namespace SpareManagement.Repository
             {
                 var sql = @"
 BEGIN TRAN  
-update Basic_information set LastSerialNo = @LastSerialNo where CategoryId = @CategoryId and PartNo = @PartNo ;  
-COMMIT TRAN;   
+update Basic_information set LastSerialNo = @LastSerialNo where CategoryId = @CategoryId and PartNo = @PartNo ; 
+COMMIT TRAN; 
 ";
-
                 var _result = _dbHelper.ExecuteNonQuery(sql, updateSerialNoList);
 
                 return _result;

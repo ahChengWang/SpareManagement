@@ -6,17 +6,18 @@ using SpareManagement.Repository.Dao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 
 namespace SpareManagement.DomainService
 {
-    public class ExpendablesDomainService
+    public class ExpendablesDomainService : IExpendablesDomainService
     {
-        private readonly ExpendablesRepository _expendablesRepository;
-        private readonly HistoryDomainService _historyDomainService;
+        private readonly IExpendablesRepository _expendablesRepository;
+        private readonly IHistoryDomainService _historyDomainService;
 
-        public ExpendablesDomainService(ExpendablesRepository expendablesRepository,
-            HistoryDomainService historyDomainService)
+        public ExpendablesDomainService(IExpendablesRepository expendablesRepository,
+            IHistoryDomainService historyDomainService)
         {
             _expendablesRepository = expendablesRepository;
             _historyDomainService = historyDomainService;
@@ -47,6 +48,7 @@ namespace SpareManagement.DomainService
         {
             try
             {
+
                 List<ExpendablesDao> _insExpendables = new List<ExpendablesDao>();
 
                 var _updExpendables = _expendablesRepository.SelectByConditions(partNoList: warehouseGoodsList.Select(s => s.PartNo));
@@ -115,7 +117,7 @@ namespace SpareManagement.DomainService
                     if (_insResult && _updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success.";
+                        return "Insert & Update not success. \n";
                 }
 
                 return "";

@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace SpareManagement.DomainService
 {
-    public class HistoryDomainService
+    public class HistoryDomainService : IHistoryDomainService
     {
-        private readonly HistoryRepository _historyRepository;
+        private readonly IHistoryRepository _historyRepository;
 
-        public HistoryDomainService(HistoryRepository historyRepository)
+        public HistoryDomainService(IHistoryRepository historyRepository)
         {
             _historyRepository = historyRepository;
         }

@@ -11,17 +11,17 @@ using System.Transactions;
 
 namespace SpareManagement.DomainService
 {
-    public class WirePanelDomainService
+    public class WirePanelDomainService : IWirePanelDomainService
     {
-        private readonly WirePanelRepository _wirePanelRepository;
-        private readonly HistoryDomainService _historyDomainService;
-        private readonly BasicInformationRepository _basicInformationRepository;
-        private readonly BasicInformationDomainService _basicInformationDomainService;
+        private readonly IWirePanelRepository _wirePanelRepository;
+        private readonly IHistoryDomainService _historyDomainService;
+        private readonly IBasicInformationRepository _basicInformationRepository;
+        private readonly IBasicInformationDomainService _basicInformationDomainService;
 
-        public WirePanelDomainService(WirePanelRepository wirePanelRepository,
-            HistoryDomainService historyDomainService,
-            BasicInformationRepository basicInformationRepository,
-            BasicInformationDomainService basicInformationDomainService)
+        public WirePanelDomainService(IWirePanelRepository wirePanelRepository,
+            IHistoryDomainService historyDomainService,
+            IBasicInformationRepository basicInformationRepository,
+            IBasicInformationDomainService basicInformationDomainService)
         {
             _wirePanelRepository = wirePanelRepository;
             _historyDomainService = historyDomainService;
@@ -153,6 +153,7 @@ namespace SpareManagement.DomainService
         {
             try
             {
+
                 List<WirePanelDao> _insWirePanel = new List<WirePanelDao>();
                 List<BasicInformationDao> _updBasicLastSerial = new List<BasicInformationDao>();
 
@@ -225,7 +226,7 @@ namespace SpareManagement.DomainService
                     if (_insResult && _updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success.";
+                        return "Insert & Update not success. \n";
                 }
 
                 return "";

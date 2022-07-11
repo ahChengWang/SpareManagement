@@ -2,15 +2,8 @@
 
 namespace SpareManagement.DomainService
 {
-    public class SerialNumberDomainService
+    public class SerialNumberDomainService : ISerialNumberDomainService
     {
-        private readonly BasicInformationRepository _basicInformationRepository;
-
-        public SerialNumberDomainService(BasicInformationRepository basicInformationRepository)
-        {
-            _basicInformationRepository = basicInformationRepository;
-        }
-
         public string GeneratePartNo(int categoryId, int categoryCnt)
         {
             //var _serialNumber = _serialNumberRepository.GetNumber(categoryId);

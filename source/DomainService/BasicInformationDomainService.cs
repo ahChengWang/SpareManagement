@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace SpareManagement.DomainService
 {
-    public class BasicInformationDomainService
+    public class BasicInformationDomainService : IBasicInformationDomainService
     {
         private readonly BasicInformationRepository _basicInformationRepository;
         private readonly SerialNumberDomainService _serialNumberDomainService;
@@ -63,7 +63,7 @@ namespace SpareManagement.DomainService
                 string _validateInfo = Validate(basicEntity);
 
                 if (_validateInfo != "")
-                    return _validateInfo;
+                    return _validateInfo += "**必填**";
 
                 // 查詢類別數量
                 var _categoryCnt = _basicInformationRepository.GetBasicInfoCategoryIdCount(basicEntity.CategoryId);
@@ -161,10 +161,25 @@ namespace SpareManagement.DomainService
             var _errorInfo = "";
 
             if ((new int[3] { 2, 3, 4 }).Contains(basicEntity.CategoryId) && string.IsNullOrEmpty(basicEntity.Equipment.Trim()))
-                _errorInfo += "適用機種必填 ";
+                _errorInfo += "適用機種 \n";
 
-            if ((new int[2] { 3, 4 }).Contains(basicEntity.CategoryId) && basicEntity.InspectCycle == 0)
-                _errorInfo += "檢驗週期為 0 ";
+            if ((new int[2] { 3, 4 }).Contains(basicEntity.CategoryId) && basicEntity.IsNeedInspect && basicEntity.InspectCycle == 0)
+                _errorInfo += "檢驗週期不能為 0 \n";
+
+            if (string.IsNullOrEmpty(basicEntity.Name))
+                _errorInfo += "名稱 \n";
+
+            if (string.IsNullOrEmpty(basicEntity.Spec))
+                _errorInfo += "規格 \n";
+
+            if (string.IsNullOrEmpty(basicEntity.PurchaseId))
+                _errorInfo += "採購料號 \n";
+
+            if (basicEntity.SafetyCount == 0)
+                _errorInfo += "安全庫存 \n";
+
+            if (string.IsNullOrEmpty(basicEntity.Placement) || string.IsNullOrEmpty(basicEntity.CreateUser) || string.IsNullOrEmpty(basicEntity.Manager))
+                _errorInfo += "儲位、建檔人員、管理人員 \n";
 
             return _errorInfo;
         }

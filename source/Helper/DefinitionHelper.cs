@@ -1,23 +1,14 @@
 ﻿using SpareManagement.Enum;
 using SpareManagement.Models;
-using SpareManagement.Repository;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace SpareManagement.Helper
 {
     public class DefinitionHelper
     {
-        private readonly BasicInformationRepository _basicInformationRepository;
-
-        public DefinitionHelper(BasicInformationRepository basicInformationRepository)
-        {
-            _basicInformationRepository = basicInformationRepository;
-        }
 
         public static List<SpareType> GetSpareType()
         => new List<SpareType> {
@@ -49,7 +40,7 @@ namespace SpareManagement.Helper
 
         public static List<SpareType> GetReturnStatusOption()
         {
-           return GetStatus().Where(w => w.TypeId != 1).ToList();
+            return GetStatus().Where(w => w.TypeId != 1).ToList();
         }
 
         //=> new List<SpareType> {

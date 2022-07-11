@@ -4,13 +4,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using SpareManagement.DomainService;
-using SpareManagement.Helper;
 using SpareManagement.Repository;
 using System;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
 
 namespace SpareManagement
 {
@@ -26,28 +22,27 @@ namespace SpareManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<BasicInformationDomainService>();
-            services.AddSingleton<SerialNumberDomainService>();
-            services.AddSingleton<WarehouseDomainService>();
-            services.AddSingleton<ReleaseDomainService>();
-            services.AddSingleton<ExpendablesDomainService>();
-            services.AddSingleton<ComponentsDomainService>();
-            services.AddSingleton<JigsDomainService>();
-            services.AddSingleton<WirePanelDomainService>();
-            services.AddSingleton<InspectDomainService>();
-            services.AddSingleton<ReturnDomainService>();
-            services.AddSingleton<FixDomainService>();
-            services.AddSingleton<HistoryDomainService>();
-            services.AddSingleton<AccountDomainService>();
+            services.AddSingleton<IBasicInformationDomainService, BasicInformationDomainService>();
+            services.AddSingleton<ISerialNumberDomainService, SerialNumberDomainService>();
+            services.AddSingleton<IWarehouseDomainService, WarehouseDomainService>();
+            services.AddSingleton<IReleaseDomainService, ReleaseDomainService>();
+            services.AddSingleton<IExpendablesDomainService, ExpendablesDomainService>();
+            services.AddSingleton<IComponentsDomainService, ComponentsDomainService>();
+            services.AddSingleton<IJigsDomainService, JigsDomainService>();
+            services.AddSingleton<IWirePanelDomainService, WirePanelDomainService>();
+            services.AddSingleton<IInspectDomainService, InspectDomainService>();
+            services.AddSingleton<IReturnDomainService, ReturnDomainService>();
+            services.AddSingleton<IFixDomainService, FixDomainService>();
+            services.AddSingleton<IHistoryDomainService, HistoryDomainService>();
+            services.AddSingleton<IAccountDomainService, AccountDomainService>();
 
-            services.AddSingleton<BasicInformationRepository>();
-            services.AddSingleton<ExpendablesRepository>();
-            services.AddSingleton<ComponentsRepository>();
-            services.AddSingleton<JigsRepository>();
-            services.AddSingleton<WirePanelRepository>();
-            services.AddSingleton<HistoryRepository>();
-            services.AddSingleton<AccountRepository>();
-            services.AddSingleton<CategoryRepository>();
+            services.AddSingleton<IBasicInformationRepository, BasicInformationRepository>();
+            services.AddSingleton<IExpendablesRepository, ExpendablesRepository>();
+            services.AddSingleton<IComponentsRepository, ComponentsRepository>();
+            services.AddSingleton<IJigsRepository, JigsRepository>();
+            services.AddSingleton<IWirePanelRepository, WirePanelRepository>();
+            services.AddSingleton<IHistoryRepository, HistoryRepository>();
+            services.AddSingleton<IAccountRepository, AccountRepository>();
 
             services.Add(new ServiceDescriptor(typeof(MSSqlDBHelper), new MSSqlDBHelper(Configuration)));
 

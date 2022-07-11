@@ -23,15 +23,15 @@ namespace SpareManagement.Helper
             switch (categoryId)
             {
                 case 1:
-                    return $"C_{(_serialNumber.LastMaterialNo + 1).ToString("000000")}";
+                    return $"C_{(_serialNumber.LastMaterialNo + 1).ToString("0000")}";
                 case 2:
-                    return $"E_{(_serialNumber.LastMaterialNo + 1).ToString("000000")}";
+                    return $"E_{(_serialNumber.LastMaterialNo + 1).ToString("0000")}";
                 case 3:
-                    return $"T_{(_serialNumber.LastMaterialNo + 1).ToString("000000")}_{(_serialNumber.LastSerialNo + 1).ToString("000000")}";
+                    return $"T_{(_serialNumber.LastMaterialNo + 1).ToString("0000")}_{(_serialNumber.LastSerialNo + 1).ToString("0000")}";
                 case 4:
-                    return $"B_{(_serialNumber.LastMaterialNo + 1).ToString("000000")}_{(_serialNumber.LastSerialNo + 1).ToString("000000")}";
+                    return $"B_{(_serialNumber.LastMaterialNo + 1).ToString("0000")}_{(_serialNumber.LastSerialNo + 1).ToString("0000")}";
                 default:
-                    return $"X_{(_serialNumber.LastMaterialNo + 1).ToString("000000")}_{(_serialNumber.LastSerialNo + 1).ToString("000000")}";
+                    return $"X_{(_serialNumber.LastMaterialNo + 1).ToString("0000")}_{(_serialNumber.LastSerialNo + 1).ToString("0000")}";
             }
         }
     }

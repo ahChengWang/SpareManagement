@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SpareManagement.Repository
 {
 
-    public class HistoryRepository : BaseRepository
+    public class HistoryRepository : BaseRepository, IHistoryRepository
     {
 
         public List<HistoryDao> SelectByConditions(int categoryId, string partNo)

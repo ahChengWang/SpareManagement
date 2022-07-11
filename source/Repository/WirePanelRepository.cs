@@ -7,7 +7,7 @@ using System.Linq;
 namespace SpareManagement.Repository
 {
 
-    public class WirePanelRepository : BaseRepository
+    public class WirePanelRepository : BaseRepository, IWirePanelRepository
     {
         public List<WirePanelDao> SelectByConditions(IEnumerable<string> partNoList = null,
             string partNo = "",
@@ -116,7 +116,7 @@ INSERT INTO [dbo].[WirePanel]
 
             return _result;
         }
-        
+
         public int Update(List<WirePanelDao> dao)
         {
 
