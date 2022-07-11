@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SpareManagement.Repository
 {
 
-    public class ExpendablesRepository : BaseRepository
+    public class ExpendablesRepository : BaseRepository, IExpendablesRepository
     {
 
         public List<ExpendablesDao> SelectByConditions(IEnumerable<string> partNoList = null,

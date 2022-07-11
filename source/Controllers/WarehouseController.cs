@@ -11,9 +11,9 @@ namespace PersonalWeb.Controllers
 
     public class WarehouseController : Controller
     {
-        private readonly WarehouseDomainService _warehouseDomainService;
+        private readonly IWarehouseDomainService _warehouseDomainService;
 
-        public WarehouseController(WarehouseDomainService warehouseDomainService)
+        public WarehouseController(IWarehouseDomainService warehouseDomainService)
         {
             _warehouseDomainService = warehouseDomainService;
         }

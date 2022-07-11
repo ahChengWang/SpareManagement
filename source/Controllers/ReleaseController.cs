@@ -9,9 +9,9 @@ namespace PersonalWeb.Controllers
 {
     public class ReleaseController : Controller
     {
-        private readonly ReleaseDomainService _releaseDomainService;
+        private readonly IReleaseDomainService _releaseDomainService;
 
-        public ReleaseController(ReleaseDomainService releaseDomainService)
+        public ReleaseController(IReleaseDomainService releaseDomainService)
         {
             _releaseDomainService = releaseDomainService;
         }

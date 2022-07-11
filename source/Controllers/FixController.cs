@@ -15,9 +15,9 @@ namespace PersonalWeb.Controllers
 
     public class FixController : Controller
     {
-        private readonly FixDomainService _fixDomainService;
+        private readonly IFixDomainService _fixDomainService;
 
-        public FixController(FixDomainService fixDomainService)
+        public FixController(IFixDomainService fixDomainService)
         {
             _fixDomainService = fixDomainService;
         }

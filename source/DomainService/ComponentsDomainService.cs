@@ -10,13 +10,13 @@ using System.Transactions;
 
 namespace SpareManagement.DomainService
 {
-    public class ComponentsDomainService
+    public class ComponentsDomainService : IComponentsDomainService
     {
-        private readonly ComponentsRepository _componentsRepository;
-        private readonly HistoryDomainService _historyDomainService;
+        private readonly IComponentsRepository _componentsRepository;
+        private readonly IHistoryDomainService _historyDomainService;
 
-        public ComponentsDomainService(ComponentsRepository componentsRepository,
-            HistoryDomainService historyDomainService)
+        public ComponentsDomainService(IComponentsRepository componentsRepository,
+            IHistoryDomainService historyDomainService)
         {
             _componentsRepository = componentsRepository;
             _historyDomainService = historyDomainService;
@@ -48,6 +48,7 @@ namespace SpareManagement.DomainService
         {
             try
             {
+
                 List<ComponentsDao> _insComponents = new List<ComponentsDao>();
 
                 var _updComponents = _componentsRepository.SelectByConditions(partNoList: warehouseGoodsList.Select(s => s.PartNo));
@@ -114,7 +115,7 @@ namespace SpareManagement.DomainService
                     if (_insResult && _updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success.";
+                        return "Insert & Update not success. \n";
                 }
 
                 return "";

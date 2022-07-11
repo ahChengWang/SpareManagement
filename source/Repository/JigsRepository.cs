@@ -7,7 +7,7 @@ using System.Linq;
 namespace SpareManagement.Repository
 {
 
-    public class JigsRepository : BaseRepository
+    public class JigsRepository : BaseRepository, IJigsRepository
     {
         public List<JigsDao> SelectByConditions(IEnumerable<string> partNoList = null,
             string partNo = "",
@@ -125,7 +125,7 @@ INSERT INTO [dbo].[Jigs]
 
             return _result;
         }
-        
+
         public int Update(List<JigsDao> dao)
         {
 
@@ -158,7 +158,8 @@ UPDATE [dbo].[Jigs]
 
             sql += " WHERE [SerialNo] = @SerialNo ";
 
-            var _result = _dbHelper.ExecuteNonQuery(sql, new {
+            var _result = _dbHelper.ExecuteNonQuery(sql, new
+            {
                 Status = dao.Status,
                 InspectDate = dao.InspectDate,
                 NextInspectDate = dao.NextInspectDate,

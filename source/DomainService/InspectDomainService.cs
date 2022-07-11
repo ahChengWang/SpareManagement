@@ -9,15 +9,15 @@ using System.Linq;
 
 namespace SpareManagement.DomainService
 {
-    public class InspectDomainService
+    public class InspectDomainService : IInspectDomainService
     {
-        private readonly BasicInformationDomainService _basicInformationDomainService;
-        private readonly JigsDomainService _jigsDomainService;
-        private readonly WirePanelDomainService _wirePanelDomainService;
+        private readonly IBasicInformationDomainService _basicInformationDomainService;
+        private readonly IJigsDomainService _jigsDomainService;
+        private readonly IWirePanelDomainService _wirePanelDomainService;
 
-        public InspectDomainService(BasicInformationDomainService basicInformationDomainService,
-            JigsDomainService jigsDomainService,
-            WirePanelDomainService wirePanelDomainService)
+        public InspectDomainService(IBasicInformationDomainService basicInformationDomainService,
+            IJigsDomainService jigsDomainService,
+            IWirePanelDomainService wirePanelDomainService)
         {
             _basicInformationDomainService = basicInformationDomainService;
             _jigsDomainService = jigsDomainService;

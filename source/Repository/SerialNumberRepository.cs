@@ -5,14 +5,15 @@ using System.Linq;
 
 namespace SpareManagement.Repository
 {
-    public class SerialNumberRepository : BaseRepository
+    public class SerialNumberRepository : BaseRepository, ISerialNumberRepository
     {
 
         public SerialNumberDao GetNumber(int categoryId)
         {
             var sql = $"select TOP 1 * from Serial_Number where CategoryId=@categoryId ";
-            
-            var _result = _dbHelper.ExecuteQuery<SerialNumberDao>(sql, new {
+
+            var _result = _dbHelper.ExecuteQuery<SerialNumberDao>(sql, new
+            {
                 categoryId = categoryId
             }).FirstOrDefault();
 
@@ -30,7 +31,7 @@ namespace SpareManagement.Repository
             }
             else
             {
-                sql += $" LastMaterialNo = LastMaterialNo + 1 ";                
+                sql += $" LastMaterialNo = LastMaterialNo + 1 ";
             }
             sql += "where CategoryId = @CategoryId; ";
 

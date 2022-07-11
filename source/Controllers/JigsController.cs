@@ -13,10 +13,10 @@ namespace PersonalWeb.Controllers
 
     public class JigsController : Controller
     {
-        private readonly JigsDomainService _jigsDomainService;
+        private readonly IJigsDomainService _jigsDomainService;
 
 
-        public JigsController(JigsDomainService jigsDomainService)
+        public JigsController(IJigsDomainService jigsDomainService)
         {
             _jigsDomainService = jigsDomainService;
         }

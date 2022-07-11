@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SpareManagement.Repository
 {
 
-    public class ComponentsRepository : BaseRepository
+    public class ComponentsRepository : BaseRepository, IComponentsRepository
     {
 
         public List<ComponentsDao> SelectByConditions(IEnumerable<string> partNoList = null,

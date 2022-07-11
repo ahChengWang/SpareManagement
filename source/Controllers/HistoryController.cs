@@ -10,9 +10,9 @@ namespace PersonalWeb.Controllers
 {
     public class HistoryController : Controller
     {
-        private readonly HistoryDomainService _historyDomainService;
+        private readonly IHistoryDomainService _historyDomainService;
 
-        public HistoryController(HistoryDomainService historyDomainService)
+        public HistoryController(IHistoryDomainService historyDomainService)
         {
             _historyDomainService = historyDomainService;
         }

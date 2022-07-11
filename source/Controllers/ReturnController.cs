@@ -17,9 +17,9 @@ namespace PersonalWeb.Controllers
 
     public class ReturnController : Controller
     {
-        private readonly ReturnDomainService _returnDomainService;
+        private readonly IReturnDomainService _returnDomainService;
 
-        public ReturnController(ReturnDomainService returnDomainService)
+        public ReturnController(IReturnDomainService returnDomainService)
         {
             _returnDomainService = returnDomainService;
         }

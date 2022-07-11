@@ -13,10 +13,10 @@ namespace PersonalWeb.Controllers
 
     public class WirePanelController : Controller
     {
-        private readonly WirePanelDomainService _wirePanelDomainService;
+        private readonly IWirePanelDomainService _wirePanelDomainService;
 
 
-        public WirePanelController(WirePanelDomainService wirePanelDomainService)
+        public WirePanelController(IWirePanelDomainService wirePanelDomainService)
         {
             _wirePanelDomainService = wirePanelDomainService;
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SpareManagement.Repository
 {
 
-    public class AccountRepository : BaseRepository
+    public class AccountRepository : BaseRepository, IAccountRepository
     {
 
         public List<AccountInfoDao> SelectByConditions(string accountId)

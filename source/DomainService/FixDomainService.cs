@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace SpareManagement.DomainService
 {
-    public class FixDomainService
+    public class FixDomainService : IFixDomainService
     {
-        private readonly JigsDomainService _jigsDomainService;
-        private readonly WirePanelDomainService _wirePanelDomainService;
+        private readonly IJigsDomainService _jigsDomainService;
+        private readonly IWirePanelDomainService _wirePanelDomainService;
 
-        public FixDomainService(JigsDomainService jigsDomainService,
-            WirePanelDomainService wirePanelDomainService)
+        public FixDomainService(IJigsDomainService jigsDomainService,
+            IWirePanelDomainService wirePanelDomainService)
         {
             _jigsDomainService = jigsDomainService;
             _wirePanelDomainService = wirePanelDomainService;

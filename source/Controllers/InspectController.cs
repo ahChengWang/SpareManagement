@@ -15,9 +15,9 @@ namespace PersonalWeb.Controllers
 
     public class InspectController : Controller
     {
-        private readonly InspectDomainService _inspectDomainService;
+        private readonly IInspectDomainService _inspectDomainService;
 
-        public InspectController(InspectDomainService inspectDomainService)
+        public InspectController(IInspectDomainService inspectDomainService)
         {
             _inspectDomainService = inspectDomainService;
         }

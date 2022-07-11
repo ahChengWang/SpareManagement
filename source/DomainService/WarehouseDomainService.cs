@@ -3,22 +3,23 @@ using SpareManagement.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SpareManagement.DomainService
 {
-    public class WarehouseDomainService
+    public class WarehouseDomainService : IWarehouseDomainService
     {
-        private readonly BasicInformationRepository _basicInformationRepository;
-        private readonly ExpendablesDomainService _expendablesDomainService;
-        private readonly ComponentsDomainService _componentsDomainService;
-        private readonly JigsDomainService _jigsDomainService;
-        private readonly WirePanelDomainService _wirePanelDomainService;
+        private readonly IBasicInformationRepository _basicInformationRepository;
+        private readonly IExpendablesDomainService _expendablesDomainService;
+        private readonly IComponentsDomainService _componentsDomainService;
+        private readonly IJigsDomainService _jigsDomainService;
+        private readonly IWirePanelDomainService _wirePanelDomainService;
 
-        public WarehouseDomainService(BasicInformationRepository basicInformationRepository,
-            ExpendablesDomainService expendablesDomainService,
-            ComponentsDomainService componentsDomainService,
-            JigsDomainService jigsDomainService,
-            WirePanelDomainService wirePanelDomainService)
+        public WarehouseDomainService(IBasicInformationRepository basicInformationRepository,
+            IExpendablesDomainService expendablesDomainService,
+            IComponentsDomainService componentsDomainService,
+            IJigsDomainService jigsDomainService,
+            IWirePanelDomainService wirePanelDomainService)
         {
             _basicInformationRepository = basicInformationRepository;
             _expendablesDomainService = expendablesDomainService;
@@ -43,20 +44,41 @@ namespace SpareManagement.DomainService
                 if (basicDataList.Count() == 0 || _nonExistPartNo != "")
                     return $"{_nonExistPartNo} 物料編號不存在";
 
+                Task<string> _expendablesInsTask = null;
+                Task<string> _componentsInsTask = null;
+                Task<string> _jigsInsTask = null;
+                Task<string> _wirePanelInsTask = null;
+
                 if (basicDataList.Where(w => w.CategoryId == 1).Any())
-                    _expendablesDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 1), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                {
+                    _expendablesInsTask = Task.Run(() =>
+                        _expendablesDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 1), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                }
 
                 if (basicDataList.Where(w => w.CategoryId == 2).Any())
-                    _componentsDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 2), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                {
+                    _componentsInsTask = Task.Run(() => 
+                        _componentsDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 2), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                }
 
                 if (basicDataList.Where(w => w.CategoryId == 3).Any())
-                    _jigsDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 3), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                {
+                    _jigsInsTask = Task.Run(() => 
+                        _jigsDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 3), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                }
 
                 if (basicDataList.Where(w => w.CategoryId == 4).Any())
-                    _wirePanelDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 4), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                {
+                    _wirePanelInsTask = Task.Run(() =>
+                        _wirePanelDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 4), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                }
 
+                _result.Item1 += _expendablesInsTask?.GetAwaiter().GetResult() ?? "";
+                _result.Item1 += _componentsInsTask?.GetAwaiter().GetResult() ?? "";
+                _result.Item1 += _jigsInsTask?.GetAwaiter().GetResult() ?? "";
+                _result.Item1 += _wirePanelInsTask?.GetAwaiter().GetResult() ?? "";
 
-                return "";
+                return _result.Item1;
             }
             catch (Exception ex)
             {

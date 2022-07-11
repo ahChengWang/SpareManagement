@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace SpareManagement.DomainService
 {
-    public class AccountDomainService
+    public class AccountDomainService : IAccountDomainService
     {
-        private readonly AccountRepository _accountRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public AccountDomainService(AccountRepository accountRepository)
+        public AccountDomainService(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }

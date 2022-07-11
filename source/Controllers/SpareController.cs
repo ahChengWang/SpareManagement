@@ -15,9 +15,9 @@ namespace PersonalWeb.Controllers
 
     public class SpareController : Controller
     {
-        private readonly BasicInformationDomainService _basicInformationDomainService;
+        private readonly IBasicInformationDomainService _basicInformationDomainService;
 
-        public SpareController(BasicInformationDomainService basicInformationDomainService)
+        public SpareController(IBasicInformationDomainService basicInformationDomainService)
         {
             _basicInformationDomainService = basicInformationDomainService;
         }
