@@ -62,21 +62,21 @@
         </nav>
     </header>
     <div class="container-fluid">
-        <main role="main" class="pb-5">
+        <main role="main" class="pb-lg-5">
             <div class="container">
-                <div class="card" style="width: 25%; margin: auto;">
+                <div class="card" style="width: 30%; margin: auto;">
                     <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px;">登錄</div>
                     <div class="card-body">
                         <form id="form">
                             <div class="row">
-                                <div class="form-group input-group-sm col-md-12">
+                                <div class="form-group input-group-lg col-md-12">
                                     <label asp-for="Account"></label>
                                     <span asp-validation-for="Account" style="font-size:10px;font-weight:700" class="text-danger"></span>
                                     <input id="acc" asp-for="Account" class="form-control" type="text" value="" />
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group input-group-sm col-md-12">
+                                <div class="form-group input-group-lg col-md-12">
                                     <label asp-for="Password"></label>
                                     <span asp-validation-for="Password" style="font-size:10px;font-weight:700" class="text-danger"></span>
                                     <input id="pwd" asp-for="Password" class="form-control" type="password" value="" />

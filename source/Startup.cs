@@ -47,6 +47,7 @@ namespace SpareManagement
             services.AddSingleton<WirePanelRepository>();
             services.AddSingleton<HistoryRepository>();
             services.AddSingleton<AccountRepository>();
+            services.AddSingleton<CategoryRepository>();
 
             services.Add(new ServiceDescriptor(typeof(MSSqlDBHelper), new MSSqlDBHelper(Configuration)));
 

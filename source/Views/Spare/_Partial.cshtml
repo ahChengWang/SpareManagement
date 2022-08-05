@@ -9,6 +9,7 @@
             <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PurchaseId)</th>
             <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Placement)</th>
             <th scope="col">@Html.DisplayNameFor(model => model.Details.First().CreateDate)</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,9 @@
                 <td class="row-data">@item.PurchaseId</td>
                 <td class="row-data">@item.Placement</td>
                 <td class="row-data">@item.CreateDate</td>
+                <td>
+                    <input id="@item.PartNo" type="button" onclick="onEditClick(this)" style="text-decoration:none;" class="btn btn-outline-success btn-sm" value="Edit" />
+                </td>
             </tr>
         }
     </tbody>

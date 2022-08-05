@@ -121,5 +121,34 @@ namespace PersonalWeb.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Edit([FromQuery] string partNo)
+        {
+            var res = _basicInformationDomainService.GetEditBasicInfo(new BasicInfoEntity { PartNo = partNo });
+
+            ViewData["NodeList"] = DefinitionHelper.GetNodeList();
+
+            return View(new SpareEditModel
+            {
+                Category = res.Category,
+                SpareDesc = res.SpareDesc,
+                Name = res.Name,
+                Spec = res.Spec,
+                PurchaseId = res.PurchaseId,
+                IsSpecial = res.IsSpecial,
+                IsKeySpare = res.IsKeySpare,
+                IsCommercial = res.IsCommercial,
+                Equipment = res.Equipment,
+                UseLocation = res.UseLocation,
+                PurchaseDelivery = res.PurchaseDelivery,
+                SafetyCount = res.SafetyCount,
+                IsNeedInspect = res.IsNeedInspect,
+                InspectCycle = res.InspectCycle,
+                Placement = res.Placement,
+                CreateUser = res.CreateUser,
+                Manager = res.Manager,
+                Memo = res.Memo,
+            });
+        }
     }
 }

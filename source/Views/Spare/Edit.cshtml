@@ -1,0 +1,157 @@
+﻿@model SpareManagement.Models.SpareEditModel
+
+
+
+
+<div class="container">
+    <h3>物料管理</h3>
+    <div class="card" style="width: 80%; margin: auto;">
+        <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px">建檔</div>
+        <div class="card-body">
+            <form id="form">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label asp-for="Category"></label>
+                        <label>@Model.Category</label>
+                    </div>
+                    <div class="form-group col-lg-8">
+                        <label style="margin-right:50%;">定義：</label>
+                        <label>@Model.SpareDesc</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label asp-for="Name"></label>
+                        <span asp-validation-for="Name" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        <input id="name" asp-for="Name" class="form-control" type="text" value="@Model.Name" disabled />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label asp-for="Spec"></label>
+                        <span asp-validation-for="Spec" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        <input id="spec" asp-for="Spec" class="form-control" type="text" value="@Model.Spec" disabled />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label asp-for="PurchaseId"></label>
+                        <span asp-validation-for="PurchaseId" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        <input id="purchaseId" asp-for="PurchaseId" class="form-control" value="@Model.PurchaseId" disabled />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label asp-for="IsKeySpare"></label>
+                        <input id="isKeySpare" asp-for="IsKeySpare" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="IsCommercial"></label>
+                        <input id="isCommercial" asp-for="IsCommercial" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="Equipment"></label>
+                        <span asp-validation-for="Equipment" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        <input id="equipment" asp-for="Equipment" class="form-control" type="text" value="@Model.Equipment" disabled />
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="UseLocation"></label>
+                        <span id="errMsg" hidden style="font-size: 10px; font-weight: 700; color:#dc3545">*必填</span>
+                        <br />
+                        @*<select id="selLoca" asp-for="UseLocation" asp-items="ViewBag.NodeList">*@
+                        @foreach (var node in ViewBag.NodeList)
+                        {
+                            var temp = "node" + @node.TypeId;
+                            <label>
+                                @{
+                                    var locVal = "";
+                                    if (Model.UseLocation.Contains(node.TypeId.ToString()))
+                                    {
+                                        locVal = "true";
+                                    }
+                                    else
+                                    {
+                                        locVal = "false";
+                                    }
+                                }
+                                <input id=@temp type="checkbox" class="location" value="@locVal" disabled /> @node.TypeName
+                            </label>
+                        }
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="PurchaseDelivery"></label>
+                        <input asp-for="PurchaseDelivery" class="form-control" type="number" value="@Model.PurchaseDelivery" disabled />
+                        <span style="margin-left:5px;">天</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="IsSpecial"></label>
+                        <input asp-for="IsSpecial" class="form-check" type="checkbox" value="false" />
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="SafetyCount"></label>
+                        <input asp-for="SafetyCount" class="form-control" type="number" value="@Model.SafetyCount" disabled />
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="IsNeedInspect"></label>
+                        <input id="isNeedInspect" asp-for="IsNeedInspect" class="form-check" type="checkbox" value="@Model.IsNeedInspect" disabled />
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        @*<label asp-for="InspectDate"></label>
+                            <input id="inspectDate" asp-for="InspectDate" class="form-control" type="date" value="" min="@DateTime.Now.ToString("yyyy-MM-dd")"/>*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="InspectCycle"></label>
+                        <input id="inspectCycle" asp-for="InspectCycle" class="form-control" type="number" value="@Model.InspectCycle" disabled />
+                        <span style="margin-left:5px;">天</span>
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="Placement"></label>
+                        <span asp-validation-for="Placement" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        <input id="placement" asp-for="Placement" class="form-control" type="text" value="@Model.Placement" disabled />
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="CreateUser"></label>
+                        <span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        <input id="createUser" asp-for="CreateUser" class="form-control" type="text" value="@Model.CreateUser" disabled />
+                    </div>
+                    <div class="form-group col-lg-3 col-md-3">
+                        <label asp-for="Manager"></label>
+                        <span asp-validation-for="Manager" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        <input id="manager" asp-for="Manager" class="form-control" type="text" value="@Model.Manager" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6 col-md-6">
+                        <label asp-for="Memo"></label>
+                        <input asp-for="Memo" class="form-control" type="text" value="@Model.Memo" disabled />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input id="btn" type="submit" class="btn btn-primary" value="建立" />
+                </div>
+            </form>
+            @*<div id="divList" class="card-header col-lg-10" style="background-color:ghostwhite;" hidden>新增物料</div>*@
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function setLocation() {
+            @{
+                var loc = "";
+                foreach (var node in ViewBag.NodeList)
+                {
+                    loc += "#node" + node.TypeId + ",";
+                }
+                loc = loc.Remove(loc.Length - 1);
+            }
+
+            $("@loc").each(function () {
+                if (this.value == "true") {
+                    this.attributes = "checked";
+                }
+            });
+        }
+    });
+</script>

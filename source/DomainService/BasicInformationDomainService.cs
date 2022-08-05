@@ -13,13 +13,16 @@ namespace SpareManagement.DomainService
     {
         private readonly BasicInformationRepository _basicInformationRepository;
         private readonly SerialNumberDomainService _serialNumberDomainService;
+        private readonly CategoryRepository _categoryRepository;
 
 
         public BasicInformationDomainService(BasicInformationRepository basicInformationRepository,
-            SerialNumberDomainService serialNumberDomainService)
+            SerialNumberDomainService serialNumberDomainService,
+            CategoryRepository categoryRepository)
         {
             _basicInformationRepository = basicInformationRepository;
             _serialNumberDomainService = serialNumberDomainService;
+            _categoryRepository = categoryRepository;
         }
 
         public List<BasicInfoEntity> Select(string partNo, string name, string purchaseId, string placement, string createTime)
@@ -41,6 +44,16 @@ namespace SpareManagement.DomainService
 
         public BasicInfoEntity GetInspectInfo(BasicInfoEntity basicEntity)
             => _basicInformationRepository.SelectByConditions(partNoList: new List<string> { basicEntity.PartNo }).CopyAToB<BasicInfoEntity>().FirstOrDefault();
+
+        public BasicInfoEntity GetEditBasicInfo(BasicInfoEntity basicEntity)
+        {
+            BasicInfoEntity _basicInfo = GetInspectInfo(basicEntity);
+            var _category = _categoryRepository.SelectByConditions(_basicInfo.CategoryId);
+            _basicInfo.Category = _category.FirstOrDefault().Name;
+            _basicInfo.SpareDesc = _category.FirstOrDefault().Description;
+
+            return _basicInfo;
+        }
 
         public string Create(BasicInfoEntity basicEntity)
         {
@@ -79,7 +92,7 @@ namespace SpareManagement.DomainService
                     CreateUser = basicEntity.CreateUser,
                     CreateDate = DateTime.Now,
                     Manager = basicEntity.Manager,
-                    Memo = basicEntity.Memo 
+                    Memo = basicEntity.Memo ?? ""
                 };
 
                 using (var scope = new TransactionScope())

@@ -86,13 +86,11 @@
         });
     });
 
-    //function isJsonString(str) {
-    //    try {
-    //        JSON.parse(str);
-    //    } catch (e) {
-    //        return false;
-    //    }
-    //    return true;
-    //}
+    function onEditClick(e) {
+
+        var _url = "/Spare/Edit?partNo=" + e.id;
+
+        location.href = _url;
+    }
 
 </script>
