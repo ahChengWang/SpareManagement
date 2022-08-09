@@ -18,15 +18,15 @@ namespace SpareManagement.DomainService
             switch (categoryId)
             {
                 case 1:
-                    return $"C_{(categoryCnt + 1).ToString("000000")}";
+                    return $"C_{(categoryCnt + 1).ToString("0000")}";
                 case 2:
-                    return $"E_{(categoryCnt + 1).ToString("000000")}";
+                    return $"E_{(categoryCnt + 1).ToString("0000")}";
                 case 3:
-                    return $"T_{(categoryCnt + 1).ToString("000000")}";
+                    return $"T_{(categoryCnt + 1).ToString("0000")}";
                 case 4:
-                    return $"B_{(categoryCnt + 1).ToString("000000")}";
+                    return $"B_{(categoryCnt + 1).ToString("0000")}";
                 default:
-                    return $"X_{(categoryCnt + 1).ToString("000000")}";
+                    return $"X_{(categoryCnt + 1).ToString("0000")}";
             }
         }
     }

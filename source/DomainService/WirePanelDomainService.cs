@@ -168,7 +168,7 @@ namespace SpareManagement.DomainService
                         {
                             PartNo = tmpBasic.PartNo,
                             Name = tmpBasic.Name,
-                            SerialNo = $"{tmpBasic.PartNo}_{(tmpBasic.LastSerialNo + (i + 1)).ToString("000000")}",
+                            SerialNo = $"{tmpBasic.PartNo}_{(tmpBasic.LastSerialNo + (i + 1)).ToString("0000")}",
                             Status = StatusEnum.Stock,
                             Spec = tmpBasic.Spec,
                             PurchaseId = tmpBasic.PurchaseId,

@@ -25,7 +25,7 @@
                     <div class="form-group col-lg-3">
                         <label asp-for="Name"></label>
                         <span asp-validation-for="Name" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="name" asp-for="Name" class="form-control" type="text" value=""/>
+                        <input id="name" asp-for="Name" class="form-control" type="text" value="" />
                     </div>
                     <div class="form-group col-lg-3">
                         <label asp-for="Spec"></label>
@@ -54,17 +54,24 @@
                     </div>
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="UseLocation"></label>
-                        <span id="errMsg" hidden style="font-size: 10px; font-weight: 700; color:#dc3545">*必填</span>
+                        <span asp-validation-for="UseLocation" style="font-size:10px;font-weight:700" class="text-danger"></span>
                         <br />
-                        @*<select id="selLoca" asp-for="UseLocation" asp-items="ViewBag.NodeList">*@
-                        @foreach (var node in ViewBag.NodeList)
-                        {
-                            var temp = "node" + @node.TypeId;
-                            <label>
-                                <input id=@temp type="checkbox" class="location" value=@node.TypeId /> @node.TypeName
-                            </label>
-                        }
-                        <input id="useLocation" asp-for="UseLocation" type="hidden" value="" />
+                        @*@foreach (var node in ViewBag.NodeList)
+                            {
+                                var temp = "node" + @node.TypeId;
+                                <label>
+                                    <input id=@temp type="checkbox" class="location" value=@node.TypeId /> @node.TypeName
+                                </label>
+                            }*@
+
+                        <select id="selLoc" multiple="multiple" asp-for="UseLocation">
+                            @foreach (var node in ViewBag.NodeList)
+                            {
+                                var temp = "node" + @node.TypeId;
+                                <option id=@temp value=@node.TypeId>@node.TypeName</option>
+                            }
+                        </select>
+                        @*<input id="useLocation" asp-for="UseLocation" type="hidden" value="" />*@
                     </div>
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="PurchaseDelivery"></label>
@@ -115,7 +122,7 @@
                 <div class="row">
                     <div class="form-group col-lg-6 col-md-6">
                         <label asp-for="Memo"></label>
-                        <input asp-for="Memo" class="form-control" type="text"  value="" />
+                        <input asp-for="Memo" class="form-control" type="text" value="" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -135,15 +142,15 @@
 
         $("#form").submit(function (e) {
             e.preventDefault();
-            var _loc = getLocation();
-            if (_loc == '') {
-                $("#errMsg").removeAttr('hidden');
-                return false;
-            }
-            else {
-                $("#errMsg").hide();
-            }
-            $('#useLocation').val(_loc);
+            //var _loc = getLocation();
+            //if (_loc == '') {
+            //    $("#errMsg").removeAttr('hidden');
+            //    return false;
+            //}
+            //else {
+            //    $("#errMsg").hide();
+            //}
+            //$('#useLocation').val(_loc);
 
             var _isValid = $('#form').valid();
             if (_isValid) {
@@ -182,6 +189,11 @@
                     }
                 });
             }
+        });
+
+
+        $("#selLoc").multiselect({
+            enableClickableOptGroups: true
         });
     });
 
@@ -278,5 +290,6 @@
         }
 
     }
+
 
 </script>

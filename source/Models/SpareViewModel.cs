@@ -41,7 +41,7 @@ namespace SpareManagement.Models
 
         [DisplayName("使用站點")]
         [Required(ErrorMessage = "*必填")]
-        public string UseLocation { get; set; }
+        public List<string> UseLocation { get; set; }
 
         [DisplayName("請購交期")]
         public int PurchaseDelivery { get; set; }

@@ -95,7 +95,7 @@ namespace PersonalWeb.Controllers
                     IsKeySpare = spareViewModel.IsKeySpare,
                     IsCommercial = spareViewModel.IsCommercial,
                     Equipment = spareViewModel.Equipment,
-                    UseLocation = spareViewModel.UseLocation,
+                    UseLocation = string.Join(",", spareViewModel.UseLocation),
                     PurchaseDelivery = spareViewModel.PurchaseDelivery,
                     SafetyCount = spareViewModel.SafetyCount,
                     IsNeedInspect = spareViewModel.IsNeedInspect,
@@ -130,6 +130,7 @@ namespace PersonalWeb.Controllers
 
             return View(new SpareEditModel
             {
+                PartNo = res.PartNo,
                 Category = res.Category,
                 SpareDesc = res.SpareDesc,
                 Name = res.Name,
@@ -150,5 +151,33 @@ namespace PersonalWeb.Controllers
                 Memo = res.Memo,
             });
         }
+
+
+        [HttpPost]
+        public IActionResult Edit([FromForm] SpareEditModel updModel)
+        {
+            try
+            {
+                var _res = _basicInformationDomainService.Update(new BasicInfoEntity
+                {
+                    PartNo = updModel.PartNo,
+                    PurchaseId = updModel.PurchaseId,
+                    Placement = updModel.Placement
+                });
+
+                if (_res != "")
+                {
+                    return Json(_res);
+                }
+
+                return Json("");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+
+        }
+
     }
 }

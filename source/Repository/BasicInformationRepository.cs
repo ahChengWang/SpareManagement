@@ -147,7 +147,31 @@ COMMIT TRAN;
                 throw ex;
             }
         }
+
+
+
+        public int Update(BasicInformationDao updDao)
+        {
+            try
+            {
+                var sql = @"
+BEGIN TRAN  
+update Basic_information set PurchaseId = @PurchaseId,Placement = @Placement where PartNo = @PartNo ;  
+COMMIT TRAN;   
+";
+
+                var _result = _dbHelper.ExecuteNonQuery(sql, new {
+                    PartNo = updDao.PartNo,
+                    PurchaseId = updDao.PurchaseId,
+                    Placement = updDao.Placement
+                });
+
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
-
-
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,6 +7,8 @@ namespace SpareManagement.Models
 {
     public class SpareEditModel
     {
+        public string PartNo { get; set; }
+
         [DisplayName("類別")]
         public string Category { get; set; }
 
@@ -13,11 +16,9 @@ namespace SpareManagement.Models
         public string SpareDesc { get; set; }
 
         [DisplayName("名稱")]
-        [Required(ErrorMessage = "*必填")]
         public string Name { get; set; }
 
         [DisplayName("規格")]
-        [Required(ErrorMessage = "*必填")]
         public string Spec { get; set; }
 
         [DisplayName("採購料號")]
@@ -35,11 +36,9 @@ namespace SpareManagement.Models
         public bool IsCommercial { get; set; }
 
         [DisplayName("適用機種")]
-        [Required(ErrorMessage = "*必填")]
         public string Equipment { get; set; }
 
         [DisplayName("使用站點")]
-        [Required(ErrorMessage = "*必填")]
         public string UseLocation { get; set; }
 
         [DisplayName("請購交期")]
@@ -62,11 +61,9 @@ namespace SpareManagement.Models
         public string Placement { get; set; }
 
         [DisplayName("建檔人員")]
-        [Required(ErrorMessage = "*必填")]
         public string CreateUser { get; set; }
 
         [DisplayName("管理人員")]
-        [Required(ErrorMessage = "*必填")]
         public string Manager { get; set; }
 
         [DisplayName("備註")]

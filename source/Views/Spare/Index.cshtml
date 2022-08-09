@@ -4,6 +4,38 @@
 @{
 }
 
+<style>
+    label {
+        font-size: 17px;
+        text-align: left;
+    }
+
+    input[type=text] {
+        float: right;
+        border: 2px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+        outline: none;
+        display: inline-block;
+        width: 60%;
+    }
+
+    input[type=date] {
+        float: right;
+        border: 2px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        -webkit-transition: 0.5s;
+        outline: none;
+        display: inline-block;
+        width: 60%;
+    }
+    input[type=text]:focus {
+        border: 2px solid #555;
+    }
+</style>
 
 <div class="container">
     <div>
@@ -20,33 +52,31 @@
         </div>
         <div class="card-body">
             <form id="form">
-                <div class="form-row">
-                    <div class="form-group form-row col-md-3">
-                        <label class="col-form-label-sm">物料編號：</label>
-                        <input id="partNo" class="form-control-sm" type="text" value="" />
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>物料編號：</label>
+                        <input id="partNo" type="text" value="" />
                     </div>
-                    <div class="form-group form-row col-md-3">
-                        <label class="col-form-label-sm">　名稱：</label>
-                        <input id="name" class="form-control-sm" type="text" value="" />
+                    <div class="col-md-3">
+                        <label>名稱：</label>
+                        <input id="name" type="text" value="" />
                     </div>
-                    <div class="form-group form-row col-md-3">
-                        <label class="col-form-label-sm">採購料號：</label>
-                        <input id="purchaseId" class="form-control-sm" type="text" value="" />
+                    <div class="col-md-3">
+                        <label>採購料號：</label>
+                        <input id="purchaseId" type="text" value="" />
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group form-row col-md-3">
-                        <label class="col-form-label-sm">　　儲位：</label>
-                        <input id="placement" class="form-control-sm" type="text" value="" />
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>儲位：</label>
+                        <input id="placement" type="text" value="" />
                     </div>
-                    <div class="form-group form-row col-md-3">
-                        <label class="col-form-label-sm">建檔日：</label>
-                        <input id="createTime" class="form-control-sm" type="date" value="" />
+                    <div class="col-md-3">
+                        <label>建檔日：</label>
+                        <input id="createTime" type="date" value="" />
                     </div>
-                    <div class="form-group form-row col-md-3">
-                        <div>
-                            <input id="btnSearch" type="submit" class="btn btn-info btn-sm" value="查詢">
-                        </div>
+                    <div class="col-md-2">
+                        <input id="btnSearch" type="submit" class="btn btn-info btn-sm" value="查詢">
                     </div>
                 </div>
             </form>

@@ -1,17 +1,17 @@
 ﻿@model SpareManagement.Models.SpareEditModel
 
 
-
-
 <div class="container">
     <h3>物料管理</h3>
     <div class="card" style="width: 80%; margin: auto;">
-        <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px">建檔</div>
+        <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px">編輯</div>
         <div class="card-body">
             <form id="form">
+                <input type="hidden" asp-for="PartNo" value="@Model.PartNo" />
                 <div class="row">
                     <div class="form-group col-lg-3">
-                        <label asp-for="Category"></label>
+                        <label asp-for="Category"></label>：
+                        <br />
                         <label>@Model.Category</label>
                     </div>
                     <div class="form-group col-lg-8">
@@ -33,17 +33,17 @@
                     <div class="form-group col-lg-3">
                         <label asp-for="PurchaseId"></label>
                         <span asp-validation-for="PurchaseId" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="purchaseId" asp-for="PurchaseId" class="form-control" value="@Model.PurchaseId" disabled />
+                        <input id="purchaseId" asp-for="PurchaseId" class="form-control" value="@Model.PurchaseId" />
                     </div>
                     <div class="form-group col-lg-3">
                         <label asp-for="IsKeySpare"></label>
-                        <input id="isKeySpare" asp-for="IsKeySpare" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
+                        <input id="isKeySpare" asp-for="IsKeySpare" class="form-check" type="checkbox" value="false" onclick="onClick(this)" disabled />
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="IsCommercial"></label>
-                        <input id="isCommercial" asp-for="IsCommercial" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
+                        <input id="isCommercial" asp-for="IsCommercial" class="form-check" type="checkbox" value="false" onclick="onClick(this)" disabled />
                     </div>
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="Equipment"></label>
@@ -52,27 +52,22 @@
                     </div>
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="UseLocation"></label>
-                        <span id="errMsg" hidden style="font-size: 10px; font-weight: 700; color:#dc3545">*必填</span>
+                        @*<span asp-validation-for="UseLocation" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
                         <br />
-                        @*<select id="selLoca" asp-for="UseLocation" asp-items="ViewBag.NodeList">*@
-                        @foreach (var node in ViewBag.NodeList)
-                        {
-                            var temp = "node" + @node.TypeId;
-                            <label>
-                                @{
-                                    var locVal = "";
-                                    if (Model.UseLocation.Contains(node.TypeId.ToString()))
-                                    {
-                                        locVal = "true";
-                                    }
-                                    else
-                                    {
-                                        locVal = "false";
-                                    }
+                        <select id="selLoc" multiple="multiple" asp-for="UseLocation">
+                            @foreach (var node in ViewBag.NodeList)
+                            {
+                                var temp = "node" + @node.TypeId;
+                                if (Model.UseLocation.Contains(node.TypeId.ToString()))
+                                {
+                                    <option id=@temp selected disabled>@node.TypeName</option>
                                 }
-                                <input id=@temp type="checkbox" class="location" value="@locVal" disabled /> @node.TypeName
-                            </label>
-                        }
+                                else
+                                {
+                                    <option id=@temp disabled>@node.TypeName</option>
+                                }
+                            }
+                        </select>
                     </div>
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="PurchaseDelivery"></label>
@@ -83,7 +78,7 @@
                 <div class="row">
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="IsSpecial"></label>
-                        <input asp-for="IsSpecial" class="form-check" type="checkbox" value="false" />
+                        <input asp-for="IsSpecial" class="form-check" type="checkbox" value="false" disabled />
                     </div>
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="SafetyCount"></label>
@@ -107,7 +102,7 @@
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="Placement"></label>
                         <span asp-validation-for="Placement" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="placement" asp-for="Placement" class="form-control" type="text" value="@Model.Placement" disabled />
+                        <input id="placement" asp-for="Placement" class="form-control" type="text" value="@Model.Placement" />
                     </div>
                     <div class="form-group col-lg-3 col-md-3">
                         <label asp-for="CreateUser"></label>
@@ -127,31 +122,43 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input id="btn" type="submit" class="btn btn-primary" value="建立" />
+                    <input id="btn" type="submit" class="btn btn-primary" value="儲存" />
                 </div>
             </form>
-            @*<div id="divList" class="card-header col-lg-10" style="background-color:ghostwhite;" hidden>新增物料</div>*@
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        function setLocation() {
-            @{
-                var loc = "";
-                foreach (var node in ViewBag.NodeList)
-                {
-                    loc += "#node" + node.TypeId + ",";
-                }
-                loc = loc.Remove(loc.Length - 1);
-            }
 
-            $("@loc").each(function () {
-                if (this.value == "true") {
-                    this.attributes = "checked";
-                }
-            });
-        }
+        $("#selLoc").multiselect({
+            enableClickableOptGroups: true
+        });
+
+        $('#form').submit(function (e) {
+            e.preventDefault();
+
+            var _isValid = $('#form').valid();
+            if (_isValid) {
+                $.blockUI();
+                $.ajax({
+                    type: "POST",
+                    url: "/Spare/Edit",
+                    dataType: 'json',
+                    data: $("#form").serialize(),
+                    success: function (result) {
+                        if (result != '') {
+                            alert(result);
+                            $.unblockUI();
+                        }
+                        else {
+                            alert('更新成功');
+                            location.href = "/Spare/Index";
+                        }
+                    }
+                });
+            }
+        });
     });
 </script>

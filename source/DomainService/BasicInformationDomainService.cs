@@ -119,6 +119,43 @@ namespace SpareManagement.DomainService
             }
         }
 
+        public string Update(BasicInfoEntity basicEntity)
+        {
+            try
+            {
+                var _oldData = _basicInformationRepository.SelectByConditions(partNo:basicEntity.PartNo);
+
+                if (_oldData.Count != 1)
+                    return "資料錯誤";
+
+                using (var scope = new TransactionScope())
+                {
+                    var _updResult = _basicInformationRepository.Update(new BasicInformationDao
+                    {
+                        PartNo = basicEntity.PartNo,
+                        PurchaseId = basicEntity.PurchaseId,
+                        Placement = basicEntity.Placement
+                    }) == 1;
+
+                    if (_updResult)
+                    {
+                        scope.Complete();
+                    }
+                    else
+                    {
+                        return "物料資訊更新失敗";
+                    }
+                }
+                
+
+                return "";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private string Validate(BasicInfoEntity basicEntity)
         {
             var _errorInfo = "";
