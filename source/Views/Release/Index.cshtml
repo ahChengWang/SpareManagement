@@ -1,6 +1,5 @@
 ﻿@model ReleaseViewModel
 
-@{ }
 
 <style>
     label {
@@ -16,7 +15,9 @@
         <span style="font-size:15px;font-weight:bold" class="text-danger col-lg-10">※治具、線板材，物料編號請輸入序號，領用數量只能為 1 </span>
         <div class="card-body">
             @*<input id="timezoneOffset" asp-for="TimezoneOffset" class="form-control" type="hidden" />*@
-            <div class="form-row">
+
+
+            <!--<div class="form-row">
                 <div class="form-group input-group-sm col-md-6">
                     <label asp-for="Memo"></label>
                     <input id="memo" asp-for="Memo" class="form-control" type="text" value="" />
@@ -24,14 +25,14 @@
             </div>
             <div class="form-row">
                 <div class="form-group input-group-sm col-md-6">
-                    <label asp-for="ReleaseUser"></label>
-                    @*<span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
-                    <input asp-for="ReleaseUser" class="form-control" type="text" value="" />
-                </div>
-                <div class="form-group input-group-sm col-md-6">
-                    <label asp-for="ReleaseDate"></label>
-                    @*<span asp-validation-for="CreateDate" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
-                    <input asp-for="ReleaseDate" class="form-control" type="datetime-local" value="" />
+                    <label asp-for="ReleaseUser"></label>-->
+            @*<span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
+            <!--<input asp-for="ReleaseUser" class="form-control" type="text" value="" />
+            </div>
+            <div class="form-group input-group-sm col-md-6">
+                <label asp-for="ReleaseDate"></label>-->
+            @*<span asp-validation-for="CreateDate" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
+            <!--<input asp-for="ReleaseDate" class="form-control" type="datetime-local" value="" />
                 </div>
             </div>
             <table id="instable" class="table table-borderless">
@@ -65,121 +66,122 @@
             </div>
             <div style="float: right;">
                 <input id="btnInsert" type="submit" class="btn btn-primary btn-sm" value="領用">
-            </div>
+            </div>-->
 
-            <!--<form id="form">
-            <div class="form-row">
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="PartNo1"></label>
-                    <input asp-for="PartNo1" class="form-control" type="text" value="" />
+            <form id="form">
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="PartNo1"></label>
+                        <input asp-for="PartNo1" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node1"></label>
+                        <input asp-for="Node1" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
+                        <label asp-for="Count1"></label>
+                        <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
+                    </div>
                 </div>
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="Node1"></label>
-                    <input asp-for="Node1" class="form-control" type="text" value="" />
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="PartNo2"></label>
+                        <input asp-for="PartNo2" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node2"></label>
+                        <input asp-for="Node2" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
+                        <label asp-for="Count2"></label>
+                        <input asp-for="Count2" class="form-control" type="number" value="0" min="0" />
+                    </div>
                 </div>
-                <div class="form-group input-group-sm col-md-2">
-                    <label asp-for="Count1"></label>
-                    <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="PartNo3"></label>
+                        <input asp-for="PartNo3" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node3"></label>
+                        <input asp-for="Node3" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
+                        <label asp-for="Count3"></label>
+                        <input asp-for="Count3" class="form-control" type="number" value="0" min="0" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="PartNo2"></label>
-                    <input asp-for="PartNo2" class="form-control" type="text" value="" />
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="PartNo4"></label>
+                        <input asp-for="PartNo4" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node4"></label>
+                        <input asp-for="Node4" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
+                        <label asp-for="Count4"></label>
+                        <input asp-for="Count4" class="form-control" type="number" value="0" min="0" />
+                    </div>
                 </div>
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="Node2"></label>
-                    <input asp-for="Node2" class="form-control" type="text" value="" />
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="PartNo5"></label>
+                        <input asp-for="PartNo5" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-5">
+                        <label asp-for="Node5"></label>
+                        <input asp-for="Node5" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-2">
+                        <label asp-for="Count5"></label>
+                        <input asp-for="Count5" class="form-control" type="number" value="0" min="0" />
+                    </div>
                 </div>
-                <div class="form-group input-group-sm col-md-2">
-                    <label asp-for="Count2"></label>
-                    <input asp-for="Count2" class="form-control" type="number" value="0" min="0" />
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-8">
+                        <label asp-for="Memo"></label>
+                        <input asp-for="Memo" class="form-control" type="text" value="" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="PartNo3"></label>
-                    <input asp-for="PartNo3" class="form-control" type="text" value="" />
-                </div>
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="Node3"></label>
-                    <input asp-for="Node3" class="form-control" type="text" value="" />
-                </div>
-                <div class="form-group input-group-sm col-md-2">
-                    <label asp-for="Count3"></label>
-                    <input asp-for="Count3" class="form-control" type="number" value="0" min="0" />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="PartNo4"></label>
-                    <input asp-for="PartNo4" class="form-control" type="text" value="" />
-                </div>
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="Node4"></label>
-                    <input asp-for="Node4" class="form-control" type="text" value="" />
-                </div>
-                <div class="form-group input-group-sm col-md-2">
-                    <label asp-for="Count4"></label>
-                    <input asp-for="Count4" class="form-control" type="number" value="0" min="0" />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="PartNo5"></label>
-                    <input asp-for="PartNo5" class="form-control" type="text" value="" />
-                </div>
-                <div class="form-group input-group-sm col-md-5">
-                    <label asp-for="Node5"></label>
-                    <input asp-for="Node5" class="form-control" type="text" value="" />
-                </div>
-                <div class="form-group input-group-sm col-md-2">
-                    <label asp-for="Count5"></label>
-                    <input asp-for="Count5" class="form-control" type="number" value="0" min="0" />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group input-group-sm col-md-8">
-                    <label asp-for="Memo"></label>
-                    <input asp-for="Memo" class="form-control" type="text" value="" />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group input-group-sm col-md-6">
-                    <label asp-for="ReleaseUser"></label>-->
-            @*<span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
-            <!--<input asp-for="ReleaseUser" class="form-control" type="text" value="" />
-            </div>
-            <div class="form-group input-group-sm col-md-6">
-                <label asp-for="ReleaseDate"></label>-->
-            @*<span asp-validation-for="CreateDate" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
-            <!--<input asp-for="ReleaseDate" class="form-control" type="datetime-local" value="" />
+                <div class="form-row">
+                    <div class="form-group input-group-sm col-md-6">
+                        <label asp-for="ReleaseUser"></label>
+                        @*<span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
+                        <input asp-for="ReleaseUser" class="form-control" type="text" value="" />
+                    </div>
+                    <div class="form-group input-group-sm col-md-6">
+                        <label asp-for="ReleaseDate"></label>
+                        @*<span asp-validation-for="CreateDate" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
+                        <input asp-for="ReleaseDate" class="form-control" type="datetime-local" value="" />
                     </div>
                 </div>
                 <input id="btnInsert" type="submit" class="btn btn-primary btn-sm" value="領用">
-            </form>-->
+            </form>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#btnInsert").click(function (e) {
-            var _model = {};
+        $("#form").submit(function (e) {
+            //$("#btnInsert").click(function (e) {
+            //    var _model = {};
 
-            var membersDetails = new Array();
-            $("#instable tbody tr").each(function () {
-                var row = $(this);
-                var memberDetails = {};
-                memberDetails.PartNo1 = row.find("td").eq(0).children().val();
-                memberDetails.Count1 = row.find("td").eq(1).children().val();
-                membersDetails.push(memberDetails);
-            });
+            //    var membersDetails = new Array();
+            //    $("#instable tbody tr").each(function () {
+            //        var row = $(this);
+            //        var memberDetails = {};
+            //        memberDetails.PartNo1 = row.find("td").eq(0).children().val();
+            //        memberDetails.Count1 = row.find("td").eq(1).children().val();
+            //        membersDetails.push(memberDetails);
+            //    });
 
-            _model['ReleaseList'] = membersDetails;
-            _model['ReleaseUser'] = $('#releaseUser').val();
-            _model['ReleaseDate'] = $('#releaseDate').val();
-            _model['Memo'] = $('#memo').val();
+            //    _model['ReleaseList'] = membersDetails;
+            //    _model['ReleaseUser'] = $('#releaseUser').val();
+            //    _model['ReleaseDate'] = $('#releaseDate').val();
+            //    _model['Memo'] = $('#memo').val();
 
             e.preventDefault();
             $.blockUI();
@@ -187,8 +189,8 @@
                 type: "POST",
                 url: "Release/Update",
                 dataType: 'json',
-                /*data: $('#form').serialize(),*/
-                data: { 'releaseViewModel': _model },
+                data: $('#form').serialize(),
+                /*data: { 'releaseViewModel': _model },*/
                 success: function (result) {
                     if (result == "") {
                         alert("全部領用成功");
