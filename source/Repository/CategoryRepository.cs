@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SpareManagement.Repository
 {
-    public class CategoryRepository : BaseRepository
+    public class CategoryRepository : BaseRepository, ICategoryRepository
     {
 
         public List<CategoryDao> SelectByConditions(int categoryId)

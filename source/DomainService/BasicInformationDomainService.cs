@@ -11,14 +11,14 @@ namespace SpareManagement.DomainService
 {
     public class BasicInformationDomainService : IBasicInformationDomainService
     {
-        private readonly BasicInformationRepository _basicInformationRepository;
-        private readonly SerialNumberDomainService _serialNumberDomainService;
-        private readonly CategoryRepository _categoryRepository;
+        private readonly IBasicInformationRepository _basicInformationRepository;
+        private readonly ISerialNumberDomainService _serialNumberDomainService;
+        private readonly ICategoryRepository _categoryRepository;
 
 
-        public BasicInformationDomainService(BasicInformationRepository basicInformationRepository,
-            SerialNumberDomainService serialNumberDomainService,
-            CategoryRepository categoryRepository)
+        public BasicInformationDomainService(IBasicInformationRepository basicInformationRepository,
+            ISerialNumberDomainService serialNumberDomainService,
+            ICategoryRepository categoryRepository)
         {
             _basicInformationRepository = basicInformationRepository;
             _serialNumberDomainService = serialNumberDomainService;

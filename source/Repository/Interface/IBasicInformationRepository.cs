@@ -10,5 +10,6 @@ namespace SpareManagement.Repository
         int Insert(BasicInformationDao basicDao);
         List<BasicInformationDao> SelectByConditions(List<string> partNoList = null, string partNo = "", string name = "", string purchaseId = "", string placement = "", DateTime? createStart = null, DateTime? createEnd = null);
         int UpdateLastSerialNo(List<BasicInformationDao> updateSerialNoList);
+        int Update(BasicInformationDao updDao);
     }
 }

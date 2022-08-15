@@ -14,6 +14,7 @@ namespace UnitTestSpareMgmt
     {
         private IBasicInformationRepository _basicInformationRepository;
         private ISerialNumberDomainService _serialNumberDomainService;
+        private ICategoryRepository _categoryRepository;
 
 
         [SetUp]
@@ -34,7 +35,8 @@ namespace UnitTestSpareMgmt
 
             var _fakeBasicInformationDomainService = new BasicInformationDomainService(
                 basicInformationRepository: _basicInformationRepository,
-                serialNumberDomainService: _serialNumberDomainService
+                serialNumberDomainService: _serialNumberDomainService,
+                categoryRepository: _categoryRepository
                 );
 
             var acturl = _fakeBasicInformationDomainService.Create(basicInfoEntity);
@@ -53,7 +55,8 @@ namespace UnitTestSpareMgmt
 
             var _fakeBasicInformationDomainService = new BasicInformationDomainService(
                 basicInformationRepository: _basicInformationRepository,
-                serialNumberDomainService: _serialNumberDomainService
+                serialNumberDomainService: _serialNumberDomainService,
+                categoryRepository: _categoryRepository
                 );
 
             var acturl = _fakeBasicInformationDomainService.Create(basicInfoEntity);
@@ -72,7 +75,8 @@ namespace UnitTestSpareMgmt
 
             var _fakeBasicInformationDomainService = new BasicInformationDomainService(
                 basicInformationRepository: _basicInformationRepository,
-                serialNumberDomainService: _serialNumberDomainService
+                serialNumberDomainService: _serialNumberDomainService,
+                categoryRepository: _categoryRepository
                 );
 
             var acturl = _fakeBasicInformationDomainService.Create(basicInfoEntity);
@@ -91,7 +95,8 @@ namespace UnitTestSpareMgmt
 
             var _fakeBasicInformationDomainService = new BasicInformationDomainService(
                 basicInformationRepository: _basicInformationRepository,
-                serialNumberDomainService: _serialNumberDomainService
+                serialNumberDomainService: _serialNumberDomainService,
+                categoryRepository: _categoryRepository
                 );
 
             var acturl = _fakeBasicInformationDomainService.Create(basicInfoEntity);
@@ -110,7 +115,8 @@ namespace UnitTestSpareMgmt
 
             var _fakeBasicInformationDomainService = new BasicInformationDomainService(
                 basicInformationRepository: _basicInformationRepository,
-                serialNumberDomainService: _serialNumberDomainService
+                serialNumberDomainService: _serialNumberDomainService,
+                categoryRepository: _categoryRepository
                 );
 
             var acturl = _fakeBasicInformationDomainService.Create(basicInfoEntity);

@@ -11,3 +11,5 @@ source/.vs/SpareManagement/v16/.suo
 source/.vs/
 source/bin/
 source/obj/
+UnitTestSpareMgmt/bin/
+UnitTestSpareMgmt/obj/
