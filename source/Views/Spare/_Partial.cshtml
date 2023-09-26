@@ -1,15 +1,15 @@
 ﻿@model BasicInfoViewModel
 
 
-<table class="table">
-    <thead class="thead-dark">
+<table class="table table-striped">
+    <thead>
         <tr>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PurchaseId)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Placement)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().CreateDate)</th>
-            <th scope="col"></th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().PurchaseId)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Placement)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().CreateDate)</th>
+            <th class="sticky-th1"></th>
         </tr>
     </thead>
     <tbody>

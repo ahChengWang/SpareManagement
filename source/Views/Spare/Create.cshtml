@@ -1,141 +1,221 @@
 ﻿@model SpareManagement.Models.SpareViewModel
 
-@{
-}
 
 <div class="container">
     <h3>物料管理</h3>
-    <div class="card" style="width: 80%; margin: auto;">
+    <div class="card">
         <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px">建檔</div>
         <div class="card-body">
             <form id="form">
-                <div class="row">
-                    <div class="form-group col-lg-3">
-                        <label asp-for="CategoryId"></label>
-                        <select asp-for="CategoryId" asp-items="ViewBag.SpareType" onchange="SpareTypeChange(this)">
-                            @*<option value=0 selected>無</option>*@
-                        </select>
+                <div class="row d-flex">
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-3">
+                            <label class="col-form-label" asp-for="CategoryId"></label>
+                        </div>
+                        <div class="col-lg-9">
+                            <select class="form-select" asp-for="CategoryId" asp-items="ViewBag.SpareType" onchange="SpareTypeChange(this)">
+                                @*<option value=0 selected>無</option>*@
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group col-lg-8">
-                        <label style="margin-right:50%;">定義：</label>
-                        <p id="SpareDesc" style="font-size:small;font-weight:600"></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-3">
-                        <label asp-for="Name"></label>
-                        <span asp-validation-for="Name" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="name" asp-for="Name" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label asp-for="Spec"></label>
-                        <span asp-validation-for="Spec" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="spec" asp-for="Spec" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label asp-for="PurchaseId"></label>
-                        <span asp-validation-for="PurchaseId" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="purchaseId" asp-for="PurchaseId" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label asp-for="IsKeySpare"></label>
-                        <input id="isKeySpare" asp-for="IsKeySpare" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
+                    <div class="col-lg-9" style="display:flex">
+                        <div class="col-lg-3">
+                            <label class="col-form-label">定義：</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <label id="SpareDesc" class="col-form-label" style="font-weight:600"></label>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="IsCommercial"></label>
-                        <input id="isCommercial" asp-for="IsCommercial" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-3">
+                            <label class="col-form-label" asp-for="Name"></label>
+                            <span asp-validation-for="Name" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-9">
+                            <input id="name" asp-for="Name" class="form-control" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="Equipment"></label>
-                        <span asp-validation-for="Equipment" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="equipment" asp-for="Equipment" class="form-control" type="text" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-3">
+                            <label class="col-form-label" asp-for="Spec"></label>
+                            <span asp-validation-for="Spec" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-9">
+                            <input id="spec" asp-for="Spec" class="form-control" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="UseLocation"></label>
-                        <span asp-validation-for="UseLocation" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <br />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label" asp-for="PurchaseId"></label>
+                            <span asp-validation-for="PurchaseId" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-7">
+                            <input id="purchaseId" asp-for="PurchaseId" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label" asp-for="Equipment"></label>
+                            <span asp-validation-for="Equipment" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-7">
+                            <input id="equipment" asp-for="Equipment" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label" asp-for="PurchaseDelivery"></label>
+                        </div>
+                        <div class="col-lg-7 d-flex">
+                            <div class="col-lg-11">
+                                <input asp-for="PurchaseDelivery" class="form-control" type="number" value="60" min="0" />
+                            </div>
+                            <div class="col-lg-1">
+                                <label class="col-form-label">天</label>
+                                @*<span style="margin-left:5px;"></span>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label" asp-for="UseLocation"></label>
+                            <span asp-validation-for="UseLocation" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-7">
+                            <select id="selLoc" multiple="multiple" asp-for="UseLocation">
+                                @foreach (var node in ViewBag.NodeList)
+                                {
+                                    var temp = "node" + @node.TypeId;
+                                    <option id=@temp value=@node.TypeId>@node.TypeName</option>
+                                }
+                            </select>
+                        </div>
                         @*@foreach (var node in ViewBag.NodeList)
-                            {
-                                var temp = "node" + @node.TypeId;
-                                <label>
-                                    <input id=@temp type="checkbox" class="location" value=@node.TypeId /> @node.TypeName
-                                </label>
-                            }*@
-
-                        <select id="selLoc" multiple="multiple" asp-for="UseLocation">
-                            @foreach (var node in ViewBag.NodeList)
-                            {
-                                var temp = "node" + @node.TypeId;
-                                <option id=@temp value=@node.TypeId>@node.TypeName</option>
-                            }
-                        </select>
+                {
+                    var temp = "node" + @node.TypeId;
+                    <label>
+                        <input id=@temp type="checkbox" class="location" value=@node.TypeId /> @node.TypeName
+                    </label>
+                }*@
                         @*<input id="useLocation" asp-for="UseLocation" type="hidden" value="" />*@
                     </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="PurchaseDelivery"></label>
-                        <input asp-for="PurchaseDelivery" class="form-control" type="number" value="60" min="0" />
-                        <span style="margin-left:5px;">天</span>
+                    <div class="col-lg-2 d-flex">
+                        <div class="col-lg-10">
+                            <label class="col-form-label" asp-for="IsCommercial"></label>
+                        </div>
+                        <div class="col-lg-1">
+                            <input id="isCommercial" asp-for="IsCommercial" class="custom-checkbox" type="checkbox" value="false" onclick="onClick(this)" />
+                        </div>
                     </div>
                 </div>
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-9">
+                            <label class="col-form-label" asp-for="IsNeedInspect"></label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input id="isNeedInspect" asp-for="IsNeedInspect" class="custom-checkbox" type="checkbox" value="false" onclick="onClick(this)" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label" asp-for="InspectCycle"></label>
+                        </div>
+                        <div class="col-lg-7 d-flex">
+                            <div class="col-lg-11">
+                                <input id="inspectCycle" asp-for="InspectCycle" class="form-control" type="number" value="0" min="0" />
+                            </div>
+                            <div class="col-lg-1">
+                                <label class="col-form-label">天</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-10">
+                            <label class="col-form-label" asp-for="IsSpecial"></label>
+                        </div>
+                        <div class="col-lg-1">
+                            <input asp-for="IsSpecial" class="custom-checkbox" type="checkbox" value="false" onclick="onClick(this)" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 d-flex">
+                        <div class="col-lg-10">
+                            <label class="col-form-label" asp-for="IsKeySpare"></label>
+                        </div>
+                        <div class="col-lg-1">
+                            <input id="isKeySpare" asp-for="IsKeySpare" class="custom-checkbox" type="checkbox" value="false" onclick="onClick(this)" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label" asp-for="SafetyCount"></label>
+                        </div>
+                        <div class="col-lg-7">
+                            <input asp-for="SafetyCount" class="form-control" type="number" value="0" min="0" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-3">
+                            <label class="col-form-label" asp-for="Placement"></label>
+                            <span asp-validation-for="Placement" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-9">
+                            <input id="placement" asp-for="Placement" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label" asp-for="CreateUser"></label>
+                            <span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-7">
+                            <input id="createUser" asp-for="CreateUser" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-5">
+                            <label asp-for="Manager"></label>
+                            <span asp-validation-for="Manager" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-7">
+                            <input id="manager" asp-for="Manager" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
                 <div class="row">
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="IsSpecial"></label>
-                        <input asp-for="IsSpecial" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
-                    </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="SafetyCount"></label>
-                        <input asp-for="SafetyCount" class="form-control" type="number" value="0" min="0" />
-                    </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="IsNeedInspect"></label>
-                        <input id="isNeedInspect" asp-for="IsNeedInspect" class="form-check" type="checkbox" value="false" onclick="onClick(this)" />
-                    </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        @*<label asp-for="InspectDate"></label>
-                            <input id="inspectDate" asp-for="InspectDate" class="form-control" type="date" value="" min="@DateTime.Now.ToString("yyyy-MM-dd")"/>*@
+                    <div class="col-lg-6 d-flex">
+                        <div class="col-lg-2">
+                            <label class="col-form-label" asp-for="Memo"></label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input asp-for="Memo" class="form-control" type="text" value="" />
+                        </div>
                     </div>
                 </div>
+                <br />
                 <div class="row">
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="InspectCycle"></label>
-                        <input id="inspectCycle" asp-for="InspectCycle" class="form-control" type="number" value="0" min="0" />
-                        <span style="margin-left:5px;">天</span>
+                    <div class="col-lg-2">
+                        <input id="btn" type="submit" class="btn btn-sm btn-primary" value="建立" />
                     </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="Placement"></label>
-                        <span asp-validation-for="Placement" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="placement" asp-for="Placement" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="CreateUser"></label>
-                        <span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="createUser" asp-for="CreateUser" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group col-lg-3 col-md-3">
-                        <label asp-for="Manager"></label>
-                        <span asp-validation-for="Manager" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                        <input id="manager" asp-for="Manager" class="form-control" type="text" value="" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label asp-for="Memo"></label>
-                        <input asp-for="Memo" class="form-control" type="text" value="" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input id="btn" type="submit" class="btn btn-primary" value="建立" />
                 </div>
             </form>
-            @*<div id="divList" class="card-header col-lg-10" style="background-color:ghostwhite;" hidden>新增物料</div>*@
         </div>
     </div>
 </div>
 
-
-<script type="text/javascript">
+@section Scripts{
+    <script type="text/javascript">
     $(document).ready(function () {
 
         SpareTypeChange({ value: "1" });
@@ -190,10 +270,8 @@
                 });
             }
         });
-
-
         $("#selLoc").multiselect({
-            enableClickableOptGroups: true
+            enableClickableOptGroups: true,
         });
     });
 
@@ -290,6 +368,6 @@
         }
 
     }
+    </script>
 
-
-</script>
+}

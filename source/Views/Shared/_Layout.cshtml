@@ -5,18 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]備品管理系統</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-multiselect.min.css" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap5/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/vendor/aos/aos.css">
+    <link href="~/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-multiselect.min.css" />
+    <!-- Template Main CSS File -->
+    <link href="~/css/style.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        #myHeader {
+            background: #37517e;
+            transition: all 0.5s;
+            z-index: 997;
+            padding: 0px 0;
+        }
+
+        section[name='headSec'] {
+            padding: 40px 0;
+        }
+
+        section[name='mainSec'], section[name='footSec'] {
+            padding: 0 0;
+        }
+
+        .layoutImg {
+            width: 60px;
+            height: 50px;
+        }
+
+        .container {
+            max-width: 85%;
+            height: 100%;
+        }
+
+        #outTable {
+            overflow-y: auto;
+            max-height: 800px;
+        }
+
+        .myCard {
+            box-shadow: 5px 5px 8px;
+            border-top: solid #9e9e9e 1px;
+            border-right: solid #9e9e9e 1px;
+            border-left: solid #9e9e9e 3px;
+            border-bottom: solid #9e9e9e 3px;
+        }
+
+        .sticky-th1 {
+            position: sticky;
+            background: #d5dee8;
+            top: -17px;
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <section name='headSec'>
+        <header id="myHeader" class="fixed-top d-flex">
+            <div class="container d-flex align-items-center" name="navBar">
+                <a class="navbar-brand">
+                    <img class="layoutImg" src="~/img/CarUX_Logo_n.png" />
+                </a>
+                <nav id="navbar" class="navbar">
+                    @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>*@
+                    <ul>
+                        <li class="dropdown">
+                            <a href="#"><span>物料管理</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li><a class="dropdown-item" asp-controller="Spare" asp-action="Index">基本資訊</a></li>
+                                <li><a class="dropdown-item" asp-controller="Warehouse" asp-action="Index">入庫</a></li>
+                                <li><a class="dropdown-item" asp-controller="Release" asp-action="Index">領用</a></li>
+                                <li><a class="dropdown-item" asp-controller="Inspect" asp-action="Index">檢驗</a></li>
+                                <li><a class="dropdown-item" asp-controller="Fix" asp-action="Index">維修</a></li>
+                                <li><a class="dropdown-item" asp-controller="Return" asp-action="Index">歸還</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="Expendables" asp-action="Index">　耗材　</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="Components" asp-action="Index">　設備零件　</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="Jigs" asp-action="Index">　治具　</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="WirePanel" asp-action="Index">　線板材　</a>
+                        </li>
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
+            </div>
+            <div class="d-flex align-items-center" style="margin-right:5px">
+                <a style="color:white">Hi @Context.User.Claims.FirstOrDefault(m => m.Type == "Account").Value　</a>
+                <a href="@Url.Action("Logout","Account")">登出</a>
+            </div>
+        </header>
+    </section>
+
+    <section name="mainSec">
+        @RenderBody()
+    </section>
+
+    @*<main id="main">
+            <section style="padding: 80px 0 0px 0;">
+                @RenderBody()
+            </section>
+        </main>*@
+
+    @*<section name="footSec">
+        <div class="container">
+            &copy; 2022 - SpareManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </section>*@
+
+    <script type="text/javascript">
+
+        function isJsonString(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/lib/bootstrap5/js/bootstrap.bundle.min.js"></script>*@
+    @*<script src="~/lib/bootstrap5/js/bootstrap.min.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap-multiselect.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap-multiselect.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <!-- include BlockUI -->
     <script src="~/lib/jquery-blockUI/dist/jquery.blockUI.js"></script>
+    <script src="~/vendor/aos/aos.js"></script>
+    <!-- Template Main JS File -->
+    <script src="~/js/main.js"></script>
     <script type="text/javascript">
         //寫在_Layout.cshtml 供其他頁面使用
         //為所有的$.ajax呼叫設定預設值，當遇到StatusCode為401時，頁面導至登入頁
@@ -32,83 +168,5 @@
     </script>
 
     @RenderSection("Scripts", required: false)
-    <header>
-        <style>
-            /* highlights current hovered list item and the parent list items when hovering over sub menues */
-            #nav li:hover {
-                background: #dae8df;
-            }
-
-            #nav li a {
-                font-size: 18px;
-                font-weight: 600;
-            }
-
-            #dropdown a:hover {
-                background: #dae8df;
-            }
-        </style>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #ebf8fa ">
-            <div class="container">
-                <a class="navbar-brand" href="./">CarUX</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul id="nav" class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">　物料管理</a>
-                            <div id="dropdown" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Spare" asp-action="Index">基本資訊</a>
-                                <a class="dropdown-item" asp-controller="Warehouse" asp-action="Index">入庫</a>
-                                <a class="dropdown-item" asp-controller="Release" asp-action="Index">領用</a>
-                                <a class="dropdown-item" asp-controller="Inspect" asp-action="Index">檢驗</a>
-                                <a class="dropdown-item" asp-controller="Fix" asp-action="Index">維修</a>
-                                <a class="dropdown-item" asp-controller="Return" asp-action="Index">歸還</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Expendables" asp-action="Index">　耗材　</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Components" asp-action="Index">　設備零件　</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Jigs" asp-action="Index">　治具　</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="WirePanel" asp-action="Index">　線板材　</a>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <a>Hi @Context.User.Claims.FirstOrDefault(m => m.Type == "Account").Value　</a>
-                    <a href="@Url.Action("Logout","Account")">登出</a>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container-fluid">
-        <main role="main" class="pb-5">
-            @RenderBody()
-        </main>
-    </div>
-    <script type="text/javascript">
-
-        function isJsonString(str) {
-            try {
-                JSON.parse(str);
-            } catch (e) {
-                return false;
-            }
-            return true;
-        }
-    </script>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - SpareManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
 </body>
 </html>

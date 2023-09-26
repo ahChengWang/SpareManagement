@@ -1,21 +1,21 @@
 ﻿@model ComponentsListViewModel
 
 
-<table class="table">
-    <thead style="background-color: slategrey; color: white;">
+<table class="table table-striped">
+    <thead>
         <tr>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PurchaseId)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().IsKeySpare)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().IsCommercial)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Equipment)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Placement)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Inventory)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().SafetyCount)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().PurchaseId)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().IsKeySpare)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().IsCommercial)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Equipment)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Placement)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Inventory)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().SafetyCount)</th>
             @*<th scope="col">@Html.DisplayNameFor(model => model.Details.First().Memo)</th>*@
-            <th scope="col"></th>
+            <th class="sticky-th1"></th>
         </tr>
     </thead>
     <tbody>
@@ -23,16 +23,16 @@
         @foreach (var item in Model.Details)
         {
             <tr>
-                <td class="row-data">@item.PartNo</td>
-                <td class="row-data">@item.Name</td>
-                <td class="row-data">@item.PurchaseId</td>
-                <td class="row-data">@item.Spec</td>
-                <td class="row-data">@item.IsKeySpare</td>
-                <td class="row-data">@item.IsCommercial</td>
-                <td class="row-data">@item.Equipment</td>
-                <td class="row-data">@item.Placement</td>
-                <td class="row-data">@item.Inventory</td>
-                <td class="row-data">@item.SafetyCount</td>
+                <td width="8%">@item.PartNo</td>
+                <td width="10%">@item.Name</td>
+                <td>@item.PurchaseId</td>
+                <td width="8%">@item.Spec</td>
+                <td width="5%">@item.IsKeySpare</td>
+                <td width="5%">@item.IsCommercial</td>
+                <td>@item.Equipment</td>
+                <td>@item.Placement</td>
+                <td>@item.Inventory</td>
+                <td width="5%">@item.SafetyCount</td>
                 @*<td class="row-data">@item.Memo</td>*@
                 <td>
                     <input id="@item.PartNo" type="button" onclick="onHistoryClick(this)" style="text-decoration:none;" class="btn btn-outline-danger btn-sm" value="History" />

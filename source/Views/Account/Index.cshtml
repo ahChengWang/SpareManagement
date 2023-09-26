@@ -9,8 +9,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]備品管理系統</title>
+    <link rel="stylesheet" href="~/css/font-awesome/font-awesome.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/custLogin.css">
+    <link rel="stylesheet" href="~/css/font-style/font.css">
 </head>
 <body>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -20,6 +24,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <!-- include BlockUI -->
     <script src="~/lib/jquery-blockUI/dist/jquery.blockUI.js"></script>
+    <script src="~/js/main.js"></script>
     <script type="text/javascript">
         //寫在_Layout.cshtml 供其他頁面使用
         //為所有的$.ajax呼叫設定預設值，當遇到StatusCode為401時，頁面導至登入頁
@@ -33,71 +38,81 @@
                 }
             });
     </script>
-    <header>
-        <style>
-            /* highlights current hovered list item and the parent list items when hovering over sub menues */
-            #nav li:hover {
-                background: #dae8df;
-            }
+    <style>
 
-            #nav li a {
-                font-size: 18px;
-                font-weight: 600;
-            }
+        .layoutImg {
+            width: 100px;
+            height: 80px;
+        }
 
-            #dropdown a:hover {
-                background: #dae8df;
+        p[name=title] {
+            font-family: "Audiowide", cursive;
+        }
+
+        .large {
+            font-size: 6rem;
+        }
+        
+        .rise {
+            text-shadow: -0.01em -0.01em 0.01em #000;
+            animation: rise 1s ease-in-out 0.5s forwards;
+        }
+        
+        @@keyframes rise {
+            to {
+                text-shadow: 0em 0.01em #d9d9d9, 0em 0.02em #d9d9d9, 0em 0.02em 0.03em #d9d9d9, -0.01em 0.01em #333, -0.02em 0.02em #333, -0.03em 0.03em #333, -0.04em 0.04em #333, -0.01em -0.01em 0.03em #000, -0.02em -0.02em 0.03em #000, -0.03em -0.03em 0.03em #000;
+                transform: translateY(-0.025em) translateX(0.04em);
             }
-        </style>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #ebf8fa ">
-            <div class="container">
-                <a class="navbar-brand">CarUX</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        }
+
+    </style>
+    <div>
+        <div style="text-align: center; width: 99%;">
+            <p name="title" class="large rise">備品管理系統</p>
+        </div>
+        <div class='box'>
+            <div class='box-form'>
+                <div class='box-login-tab'></div>
+                <div class='box-login-title'>
+                    <div class='i i-login'></div><h2>LOGIN</h2>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container-fluid">
-        <main role="main" class="pb-lg-5">
-            <div class="container">
-                <div class="card" style="width: 300px; margin: auto;">
-                    <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px;">登錄</div>
-                    <div class="card-body">
+                <div class='box-login'>
+                    <div class='fieldset-body' id='login_form'>
+                        <button onclick="openLoginInfo();" class='b b-form i i-more' title='Mais Informações'></button>
                         <form id="form">
-                            <div class="row">
-                                <div class="form-group input-group-lg col-md-12">
-                                    <label asp-for="Account"></label>
-                                    <span asp-validation-for="Account" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                                    <input id="acc" asp-for="Account" class="form-control" type="text" value="" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group input-group-lg col-md-12">
-                                    <label asp-for="Password"></label>
-                                    <span asp-validation-for="Password" style="font-size:10px;font-weight:700" class="text-danger"></span>
-                                    <input id="pwd" asp-for="Password" class="form-control" type="password" value="" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class ="form-group input-group-sm col-md-12">
-                                    <input id="btn" type="button" class="btn btn-info btn-sm" value="登入" />
-                                </div>                                
-                            </div>
+                            <p class='field'>
+                                <label asp-for="Account"></label>
+                                <span asp-validation-for="Account" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                                <input type='text' id='user' name='Account' title='Username' />
+                                @*<input id="acc" asp-for="Account" class="form-control" type="text" value="" />*@
+                            </p>
+                            <p class='field'>
+                                <label asp-for="Password"></label>
+                                <span asp-validation-for="Password" style="font-size:10px;font-weight:700" class="text-danger"></span>
+                                <input id="pwd" asp-for="Password" class="form-control" type="password" value="" />
+                            </p>
                         </form>
+                        <input type='submit' id='do_login' value='登錄' title='登錄' />
                     </div>
                 </div>
             </div>
-        </main>
+            <div class='box-info'>
+                <p>
+                    <button onclick="closeLoginInfo();" class='b b-info i i-left' title='Back to Sign In'></button><h3>Need Help?</h3>
+                </p>
+                <div class='line-wh'></div>
+                <button onclick="" class='b-support' title='Forgot Password?'> Forgot Password?</button>
+                <button onclick="" class='b-support' title='Contact Support'> Contact Support</button>
+                <div class='line-wh'></div>
+                <button onclick="" class='b-cta' title='Sign up now!'> CREATE ACCOUNT</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>
 
 <script type="text/javascript">
-    $('#btn').click(function (e) {
+    $('#do_login').click(function (e) {
         if ($("#form").valid()) {
             $.blockUI();
             $.ajax({

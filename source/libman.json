@@ -3,8 +3,25 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "bootstrap-multiselect@1.1.1",
-      "destination": "wwwroot/lib/bootstrap/dist/"
+      "library": "bootstrap@5.3.2",
+      "destination": "wwwroot/lib/bootstrap5/",
+      "files": [
+        "js/bootstrap.min.js",
+        "js/bootstrap.bundle.min.js",
+        "css/bootstrap.min.css"
+      ]
+    },
+    {
+      "library": "bootstrap-multiselect@1.1.2",
+      "destination": "wwwroot/lib/bootstrap-multiselect/",
+      "files": [
+        "js/bootstrap-multiselect.min.js"
+      ]
     }
-  ]
+  ,
+{
+  "library": "bootstrap-multiselect@1.1.2",
+  "destination": "wwwroot/lib/bootstrap-multiselect/"
+}
+]
 }

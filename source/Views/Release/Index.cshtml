@@ -8,7 +8,7 @@
 </style>
 
 <div class="container">
-    <div class="card" style="width: 75%; margin: auto;">
+    <div class="card" style="margin: auto;">
         <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px">
             領用管理
         </div>
@@ -69,94 +69,198 @@
             </div>-->
 
             <form id="form">
-                <div class="form-row">
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="PartNo1"></label>
-                        <input asp-for="PartNo1" class="form-control" type="text" value="" />
+                <div class="row d-flex">
+                    <div class="col-lg-5 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="PartNo1"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="PartNo1" class="form-control" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="Node1"></label>
-                        <input asp-for="Node1" class="form-control" type="text" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="Node1"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="Node1" class="form-control" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="form-group input-group-sm col-md-2">
-                        <label asp-for="Count1"></label>
-                        <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="PartNo2"></label>
-                        <input asp-for="PartNo2" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="Node2"></label>
-                        <input asp-for="Node2" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group input-group-sm col-md-2">
-                        <label asp-for="Count2"></label>
-                        <input asp-for="Count2" class="form-control" type="number" value="0" min="0" />
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-6">
+                            <label class="col-form-label" asp-for="Count1"></label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
+                        </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="PartNo3"></label>
-                        <input asp-for="PartNo3" class="form-control" type="text" value="" />
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-5 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="PartNo2"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="PartNo2" class="form-control" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="Node3"></label>
-                        <input asp-for="Node3" class="form-control" type="text" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="Node2"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="Node2" class="form-control" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="form-group input-group-sm col-md-2">
-                        <label asp-for="Count3"></label>
-                        <input asp-for="Count3" class="form-control" type="number" value="0" min="0" />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="PartNo4"></label>
-                        <input asp-for="PartNo4" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="Node4"></label>
-                        <input asp-for="Node4" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group input-group-sm col-md-2">
-                        <label asp-for="Count4"></label>
-                        <input asp-for="Count4" class="form-control" type="number" value="0" min="0" />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="PartNo5"></label>
-                        <input asp-for="PartNo5" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group input-group-sm col-md-5">
-                        <label asp-for="Node5"></label>
-                        <input asp-for="Node5" class="form-control" type="text" value="" />
-                    </div>
-                    <div class="form-group input-group-sm col-md-2">
-                        <label asp-for="Count5"></label>
-                        <input asp-for="Count5" class="form-control" type="number" value="0" min="0" />
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-6">
+                            <label class="col-form-label" asp-for="Count2"></label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input asp-for="Count2" class="form-control" type="number" value="0" min="0" />
+                        </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group input-group-sm col-md-8">
-                        <label asp-for="Memo"></label>
-                        <input asp-for="Memo" class="form-control" type="text" value="" />
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-5 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="PartNo3"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="PartNo3" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="Node3"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="Node3" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-6">
+                            <label class="col-form-label" asp-for="Count3"></label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input asp-for="Count3" class="form-control" type="number" value="0" min="0" />
+                        </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group input-group-sm col-md-6">
-                        <label asp-for="ReleaseUser"></label>
-                        @*<span asp-validation-for="CreateUser" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
-                        <input asp-for="ReleaseUser" class="form-control" type="text" value="" />
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-5 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="PartNo4"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="PartNo4" class="form-control" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="form-group input-group-sm col-md-6">
-                        <label asp-for="ReleaseDate"></label>
-                        @*<span asp-validation-for="CreateDate" style="font-size:10px;font-weight:700" class="text-danger"></span>*@
-                        <input asp-for="ReleaseDate" class="form-control" type="datetime-local" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="Node4"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="Node4" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-6">
+                            <label class="col-form-label" asp-for="Count4"></label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input asp-for="Count4" class="form-control" type="number" value="0" min="0" />
+                        </div>
                     </div>
                 </div>
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-5 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="PartNo5"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="PartNo5" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="Node5"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="Node5" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-6">
+                            <label class="col-form-label" asp-for="Count5"></label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input asp-for="Count5" class="form-control" type="number" value="0" min="0" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-5 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="PartNo1"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="PartNo1" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-4">
+                            <label class="col-form-label" asp-for="Node1"></label>
+                        </div>
+                        <div class="col-lg-8">
+                            <input asp-for="Node1" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-6">
+                            <label class="col-form-label" asp-for="Count1"></label>
+                        </div>
+                        <div class="col-lg-6">
+                            <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-8 d-flex">
+                        <div class="col-lg-2">
+                            <label asp-for="Memo"></label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input asp-for="Memo" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row d-flex">
+                    <div class="col-lg-6 d-flex">
+                        <div class="col-lg-3">
+                            <label asp-for="ReleaseUser"></label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input asp-for="ReleaseUser" class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex">
+                        <div class="col-lg-3">
+                            <label asp-for="ReleaseDate"></label>
+                        </div>
+                        <div class="col-lg-9">
+                            <input asp-for="ReleaseDate" class="form-control" type="datetime-local" value="" />
+                        </div>
+                    </div>
+                </div>
+                <br />
                 <input id="btnInsert" type="submit" class="btn btn-primary btn-sm" value="領用">
             </form>
         </div>

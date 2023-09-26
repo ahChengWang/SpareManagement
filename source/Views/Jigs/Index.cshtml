@@ -1,44 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+
 
 <div class="container">
-    <h2>治具管理</h2>
-    <div class="card">
-        <div class="card-header" style="background-color: slategrey; color: white; height: 40px; text-align:left;">
-            查詢
-        </div>
+    <div class="card myCard" style="width: 100%; ">
         <div class="card-body">
+            <div class="card-title" style="font-size: 25px; font-weight: 700; color: #787878; font-style: italic;">
+                治具管理
+            </div>
+            <hr />
             <form id="form">
                 <div class="row">
-                    <div class="form-group form-row">
-                        <label class="col-form-label">物料編號: </label>
-                        <div>
-                            <input id="partNo" class="form-control col-sm-10" type="text" value="" />
-                        </div>
+                    <div class="col-md-4">
+                        <label>物料編號：</label>
+                        <input id="partNo" type="text" value="" />
                     </div>
-                    <div class="form-group form-row">
-                        <label class="col-form-label">名稱：</label>
-                        <div>
-                            <input id="name" class="form-control col-sm-10" type="text" value="" />
-                        </div>
+                    <div class="col-md-4">
+                        <label>名稱：</label>
+                        <input id="name" type="text" value="" />
                     </div>
-                    <div class="form-group form-row">
-                        <label class="col-form-label">採購料號：</label>
-                        <div>
-                            <input id="purchaseId" class="form-control col-sm-10" type="text" value="" />
-                        </div>
+                    <div class="col-md-4">
+                        <label>採購料號：</label>
+                        <input id="purchaseId" type="text" value="" />
                     </div>
-                    <div class="form-group form-row">
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
                         <input id="btnSearch" type="submit" class="btn btn-info btn-sm" value="查詢">
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <p></p>
     <div id="outTable" class="card-body">
     </div>
 </div>
@@ -69,10 +61,10 @@
                         }
                     }
                     else {
-                        alert('查詢成功');
+                        //alert('查詢成功');
                         $('#outTable').html(result);
                         var height = $(window).height();
-                        $('#outTable').css('height', height / 2);
+                        $('#outTable').css('height', height / 1.5);
                         $('#outTable').css('overflow', 'scroll');
                     }
                 },
