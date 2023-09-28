@@ -5,7 +5,7 @@ using SpareManagement.Helper;
 using SpareManagement.Models;
 using System;
 
-namespace PersonalWeb.Controllers
+namespace SpareManagement.Controllers
 {
     public class ReleaseController : Controller
     {

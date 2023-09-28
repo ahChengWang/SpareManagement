@@ -8,7 +8,7 @@ namespace SpareManagement.DomainService
         string Create(BasicInfoEntity basicEntity);
         BasicInfoEntity GetInspectInfo(BasicInfoEntity basicEntity);
         BasicInfoEntity GetEditBasicInfo(BasicInfoEntity basicEntity);
-        List<BasicInfoEntity> Select(string partNo, string name, string purchaseId, string placement, string createTime);
+        List<BasicInfoEntity> Select(string categoryId, string partNo, string name, string purchaseId, string placement, string createTime);
         string Update(BasicInfoEntity basicEntity);
     }
 }

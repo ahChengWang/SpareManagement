@@ -1,4 +1,4 @@
-﻿namespace SpareManagement.Repository.Dao
+﻿namespace SpareManagement.Repository
 {
     public class CategoryDao
     {

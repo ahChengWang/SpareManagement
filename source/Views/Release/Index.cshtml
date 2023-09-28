@@ -298,13 +298,12 @@
                 success: function (result) {
                     if (result == "") {
                         alert("全部領用成功");
+                        location.reload();
                     }
                     else {
                         alert(result);
-                        $.unblockUI();
                     }
                     $.unblockUI();
-                    location.reload();
                 }
             });
         })

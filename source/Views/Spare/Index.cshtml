@@ -4,20 +4,21 @@
 
 <style>
     label {
-        font-size: 17px;
-        text-align: left;
+        /*font-size: 17px;
+        text-align: left;*/
     }
 
     input[type=text] {
-        float: right;
+        /*float: right;
         border: 2px solid #ccc;
         border-radius: 3px;
         box-sizing: border-box;
         -webkit-transition: 0.5s;
         transition: 0.5s;
         outline: none;
-        display: inline-block;
-        width: 60%;
+        display: inline-block;*/
+
+        width: 90%;
     }
 
     input[type=date] {
@@ -48,27 +49,56 @@
             <hr />
             <form id="form">
                 <div class="row">
-                    <div class="col-lg-3">
-                        <label>物料編號：</label>
-                        <input id="partNo" type="text" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label">類別：</label>
+                        </div>
+                        <div class="col-lg-7" style="display: flex; align-items: center;">
+                            <select class="form-select" id="category" asp-items="ViewBag.Category">
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-lg-3">
-                        <label>名稱：</label>
-                        <input id="name" type="text" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label">物料編號：</label>
+                        </div>
+                        <div class="col-lg-7" style="display: flex; align-items: center;">
+                            <input class="form-control-sm" id="partNo" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="col-lg-3">
-                        <label>採購料號：</label>
-                        <input id="purchaseId" type="text" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label">名稱：</label>
+                        </div>
+                        <div class="col-lg-7" style="display: flex; align-items: center;">
+                            <input class="form-control-sm" id="name" type="text" value="" />
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3">
-                        <label>儲位：</label>
-                        <input id="placement" type="text" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label">儲位：</label>
+                        </div>
+                        <div class="col-lg-7" style="display: flex; align-items: center;">
+                            <input class="form-control-sm" id="placement" type="text" value="" />
+                        </div>
                     </div>
-                    <div class="col-lg-3">
-                        <label>建檔日：</label>
-                        <input id="createTime" type="date" value="" />
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label">建檔日：</label>
+                        </div>
+                        <div class="col-lg-7" style="display: flex; align-items: center;">
+                            <input class="form-control-sm" id="createTime" type="date" value="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-flex">
+                        <div class="col-lg-5">
+                            <label class="col-form-label">採購料號：</label>
+                        </div>
+                        <div class="col-lg-7" style="display: flex; align-items: center;">
+                            <input class="form-control-sm" id="purchaseId" type="text" value="" />
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -91,7 +121,7 @@
             $.ajax({
                 type: "GET",
                 contentType: 'application/json; charset=utf-8',
-                url: "/Spare/Search?partNo=" + $('#partNo').val() + "&name=" + $('#name').val() + "&placement=" + $('#placement').val() + "&createTime=" + $('#createTime').val() + "&purchaseId=" + $('#purchaseId').val(),
+                url: "/Spare/Search?categoryId=" + $('#category').val() + "&partNo=" + $('#partNo').val() + "&name=" + $('#name').val() + "&placement=" + $('#placement').val() + "&createTime=" + $('#createTime').val() + "&purchaseId=" + $('#purchaseId').val(),
                 dataType: 'html',
                 success: function (result) {
                     if (isJsonString(result)) {

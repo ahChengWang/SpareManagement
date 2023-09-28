@@ -13,18 +13,21 @@ namespace SpareManagement.DomainService
         private readonly IComponentsDomainService _componentsDomainService;
         private readonly IJigsDomainService _jigsDomainService;
         private readonly IWirePanelDomainService _wirePanelDomainService;
+        private readonly ISampleDomainService _sampleDomainService;
 
         public ReleaseDomainService(IBasicInformationRepository basicInformationRepository,
             IExpendablesDomainService expendablesDomainService,
             IComponentsDomainService componentsDomainService,
             IJigsDomainService jigsDomainService,
-            IWirePanelDomainService wirePanelDomainService)
+            IWirePanelDomainService wirePanelDomainService,
+            ISampleDomainService sampleDomainService)
         {
             _basicInformationRepository = basicInformationRepository;
             _expendablesDomainService = expendablesDomainService;
             _componentsDomainService = componentsDomainService;
             _jigsDomainService = jigsDomainService;
             _wirePanelDomainService = wirePanelDomainService;
+            _sampleDomainService = sampleDomainService;
         }
 
         public string Release(ReleaseEntity entity)
@@ -50,6 +53,7 @@ namespace SpareManagement.DomainService
                 var _releaseComponents = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "E");
                 var _releaseJigs = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "T");
                 var _releaseWirePanel = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "B");
+                var _releaseSample = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "A");
 
                 if (_releaseExpendables.Any())
                 {
@@ -79,7 +83,14 @@ namespace SpareManagement.DomainService
                     _processCnt += _tmpResult.Item2;
                 }
 
-                return _processResult == "" ? "" : $"．成功嶺用物料項目：{_processCnt} \n\n．領用失敗物料，請負責人員再次確認：\n{_processResult}";
+                if (_releaseSample.Any())
+                {
+                    _tmpResult = _sampleDomainService.ProcessRelease(_releaseSample, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _processResult += _tmpResult.Item1;
+                    _processCnt += _tmpResult.Item2;
+                }
+
+                return _processResult == "" ? "" : $"．成功領用物料項目：{_processCnt} \n\n．領用失敗物料，請負責人員再次確認：\n{_processResult}";
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 ﻿using SpareManagement.DomainService.Entity;
 using SpareManagement.Enum;
-using SpareManagement.Repository.Dao;
+using SpareManagement.Repository;
 using System;
 using System.Collections.Generic;
 

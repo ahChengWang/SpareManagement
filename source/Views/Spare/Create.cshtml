@@ -1,5 +1,11 @@
 ﻿@model SpareManagement.Models.SpareViewModel
 
+<style>
+    input[type='checkbox'] {
+        width: 20px;
+        height: 20px;
+    }
+</style>
 
 <div class="container">
     <h3>物料管理</h3>
@@ -30,20 +36,20 @@
                 <hr />
                 <div class="row d-flex">
                     <div class="col-lg-4 d-flex">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <label class="col-form-label" asp-for="Name"></label>
                             <span asp-validation-for="Name" style="font-size:10px;font-weight:700" class="text-danger"></span>
                         </div>
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input id="name" asp-for="Name" class="form-control" type="text" value="" />
                         </div>
                     </div>
                     <div class="col-lg-4 d-flex">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <label class="col-form-label" asp-for="Spec"></label>
                             <span asp-validation-for="Spec" style="font-size:10px;font-weight:700" class="text-danger"></span>
                         </div>
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <input id="spec" asp-for="Spec" class="form-control" type="text" value="" />
                         </div>
                     </div>
@@ -68,7 +74,7 @@
                             <input id="equipment" asp-for="Equipment" class="form-control" type="text" value="" />
                         </div>
                     </div>
-                    <div class="col-lg-4 d-flex">
+                    <div class="col-lg-3 d-flex">
                         <div class="col-lg-5">
                             <label class="col-form-label" asp-for="PurchaseDelivery"></label>
                         </div>
@@ -83,11 +89,11 @@
                         </div>
                     </div>
                     <div class="col-lg-3 d-flex">
-                        <div class="col-lg-5">
+                        <div class="col-lg-6">
                             <label class="col-form-label" asp-for="UseLocation"></label>
                             <span asp-validation-for="UseLocation" style="font-size:10px;font-weight:700" class="text-danger"></span>
                         </div>
-                        <div class="col-lg-7">
+                        <div class="col-lg-6">
                             <select id="selLoc" multiple="multiple" asp-for="UseLocation">
                                 @foreach (var node in ViewBag.NodeList)
                                 {
@@ -97,19 +103,19 @@
                             </select>
                         </div>
                         @*@foreach (var node in ViewBag.NodeList)
-                {
-                    var temp = "node" + @node.TypeId;
-                    <label>
-                        <input id=@temp type="checkbox" class="location" value=@node.TypeId /> @node.TypeName
-                    </label>
-                }*@
+                            {
+                                var temp = "node" + @node.TypeId;
+                                <label>
+                                    <input id=@temp type="checkbox" class="location" value=@node.TypeId /> @node.TypeName
+                                </label>
+                            }*@
                         @*<input id="useLocation" asp-for="UseLocation" type="hidden" value="" />*@
                     </div>
-                    <div class="col-lg-2 d-flex">
-                        <div class="col-lg-10">
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-9">
                             <label class="col-form-label" asp-for="IsCommercial"></label>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-3" style="display: flex; align-items: center; justify-content: center ">
                             <input id="isCommercial" asp-for="IsCommercial" class="custom-checkbox" type="checkbox" value="false" onclick="onClick(this)" />
                         </div>
                     </div>
@@ -120,11 +126,11 @@
                         <div class="col-lg-9">
                             <label class="col-form-label" asp-for="IsNeedInspect"></label>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-3" style="display: flex; align-items: center; justify-content: center ">
                             <input id="isNeedInspect" asp-for="IsNeedInspect" class="custom-checkbox" type="checkbox" value="false" onclick="onClick(this)" />
                         </div>
                     </div>
-                    <div class="col-lg-4 d-flex">
+                    <div class="col-lg-3 d-flex">
                         <div class="col-lg-5">
                             <label class="col-form-label" asp-for="InspectCycle"></label>
                         </div>
@@ -138,18 +144,18 @@
                         </div>
                     </div>
                     <div class="col-lg-3 d-flex">
-                        <div class="col-lg-10">
+                        <div class="col-lg-9">
                             <label class="col-form-label" asp-for="IsSpecial"></label>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-3" style="display: flex; align-items: center; justify-content: center ">
                             <input asp-for="IsSpecial" class="custom-checkbox" type="checkbox" value="false" onclick="onClick(this)" />
                         </div>
                     </div>
-                    <div class="col-lg-2 d-flex">
-                        <div class="col-lg-10">
+                    <div class="col-lg-3 d-flex">
+                        <div class="col-lg-9">
                             <label class="col-form-label" asp-for="IsKeySpare"></label>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-3" style="display: flex; align-items: center; justify-content: center ">
                             <input id="isKeySpare" asp-for="IsKeySpare" class="custom-checkbox" type="checkbox" value="false" onclick="onClick(this)" />
                         </div>
                     </div>
@@ -205,8 +211,9 @@
                 </div>
                 <br />
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-2" style="padding-left: 20px;">
                         <input id="btn" type="submit" class="btn btn-sm btn-primary" value="建立" />
+                        <a href="../Spare" style="margin-left: 10px; text-decoration: underline; ">取消</a>
                     </div>
                 </div>
             </form>
@@ -295,6 +302,11 @@
                 break;
             case "4":
                 $("#SpareDesc").html('測試點燈線板材類');
+                setInput(false)
+                setInspect(false)
+                break;
+            case "5":
+                $("#SpareDesc").html('sample');
                 setInput(false)
                 setInspect(false)
                 break;

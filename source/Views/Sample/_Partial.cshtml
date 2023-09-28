@@ -1,4 +1,4 @@
-﻿@model JigsListViewModel
+﻿@model SampleViewModel
 
 
 <table class="table table-hover table-bordered"">
@@ -38,10 +38,6 @@
                 <td>@item.Memo</td>
                 <td>
                     <input id="@item.PartNo" type="button" onclick="onDetailClick(this)" style="text-decoration:none;" class="btn btn-outline-success btn-sm" value="Detail" />
-
-                    @*<a href="Expendables/History?categoryId=1&partNo=@item.PartNo" target=_blank style="text-decoration:none;">
-                            <span class="glyphicon glyphicon-list-alt"></span>
-                        </a>*@
                 </td>
             </tr>
         }

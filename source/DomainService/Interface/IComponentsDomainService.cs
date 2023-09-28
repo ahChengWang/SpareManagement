@@ -1,5 +1,5 @@
 ﻿using SpareManagement.DomainService.Entity;
-using SpareManagement.Repository.Dao;
+using SpareManagement.Repository;
 using System;
 using System.Collections.Generic;
 

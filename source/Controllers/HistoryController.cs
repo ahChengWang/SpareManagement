@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PersonalWeb.Controllers
+namespace SpareManagement.Controllers
 {
     public class HistoryController : Controller
     {

@@ -1,7 +1,7 @@
 ﻿using SpareManagement.Enum;
 using System;
 
-namespace SpareManagement.Repository.Dao
+namespace SpareManagement.Repository
 {
     public class HistoryDao
     {

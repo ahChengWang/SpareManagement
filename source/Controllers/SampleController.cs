@@ -11,14 +11,14 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class JigsController : Controller
+    public class SampleController : Controller
     {
-        private readonly IJigsDomainService _jigsDomainService;
+        private readonly ISampleDomainService _sampleDomainService;
 
 
-        public JigsController(IJigsDomainService jigsDomainService)
+        public SampleController(ISampleDomainService sampleDomainService)
         {
-            _jigsDomainService = jigsDomainService;
+            _sampleDomainService = sampleDomainService;
         }
 
 
@@ -29,20 +29,20 @@ namespace SpareManagement.Controllers
 
 
         [HttpGet]
-        public IActionResult Jigs([FromQuery] string partNo, string name, string purchaseId)
+        public IActionResult Search([FromQuery] string partNo, string name, string purchaseId)
         {
             try
             {
-                var res = _jigsDomainService.Get(partNo, name, purchaseId);
+                var res = _sampleDomainService.Get(partNo, name, purchaseId);
 
                 if (!res.Any())
                     return Json("");
 
-                List<JigsViewModel> detail = new List<JigsViewModel>();
+                List<SampleDetailViewModel> detail = new List<SampleDetailViewModel>();
 
                 res.ForEach(fe =>
                 {
-                    detail.Add(new JigsViewModel
+                    detail.Add(new SampleDetailViewModel
                     {
                         PartNo = fe.PartNo,
                         Name = fe.Name,
@@ -59,7 +59,7 @@ namespace SpareManagement.Controllers
                     });
                 });
 
-                JigsListViewModel response = new JigsListViewModel { Details = detail };
+                SampleViewModel response = new SampleViewModel { Details = detail };
 
                 return PartialView("_Partial", response);
             }
@@ -74,13 +74,13 @@ namespace SpareManagement.Controllers
         {
             try
             {
-                var res = _jigsDomainService.GetDetail(partNo);
+                var res = _sampleDomainService.GetDetail(partNo);
 
-                List<JigsViewModel> detail = new List<JigsViewModel>();
+                List<SampleDetailViewModel> detail = new List<SampleDetailViewModel>();
 
                 res.ForEach(fe =>
                 {
-                    detail.Add(new JigsViewModel
+                    detail.Add(new SampleDetailViewModel
                     {
                         PartNo = fe.PartNo,
                         Name = fe.Name,
@@ -99,7 +99,7 @@ namespace SpareManagement.Controllers
                     });
                 });
 
-                JigsListViewModel response = new JigsListViewModel { Details = detail };
+                SampleViewModel response = new SampleViewModel { Details = detail };
 
                 if (!res.Any())
                     return Json("");
@@ -117,9 +117,9 @@ namespace SpareManagement.Controllers
         {
             try
             {
-                var res = _jigsDomainService.GetEditData(partNo, serialNo);
+                var res = _sampleDomainService.GetEditData(partNo, serialNo);
 
-                JigsEditViewModel response = new JigsEditViewModel
+                SampleEditViewModel response = new SampleEditViewModel
                 {
                     PartNo = res.PartNo,
                     SerialNo = res.SerialNo,
@@ -138,14 +138,14 @@ namespace SpareManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit([FromForm] JigsEditViewModel jigsViewModel)
+        public IActionResult Edit([FromForm] SampleEditViewModel sampleViewModel)
         {
             try
             {
-                var _result = _jigsDomainService.UpdateInspectAndTemporary(
-                    jigsViewModel.PartNo, jigsViewModel.SerialNo, jigsViewModel.InspectDate, jigsViewModel.IsTemporary, jigsViewModel.Placement);
+                var _result = _sampleDomainService.UpdateInspectAndTemporary(
+                    sampleViewModel.PartNo, sampleViewModel.SerialNo, sampleViewModel.InspectDate, sampleViewModel.IsTemporary, sampleViewModel.Placement);
 
-                return RedirectToAction("Detail", "Jigs", new { partNo = jigsViewModel.PartNo });
+                return RedirectToAction("Detail", "Sample", new { partNo = sampleViewModel.PartNo });
             }
             catch (Exception ex)
             {

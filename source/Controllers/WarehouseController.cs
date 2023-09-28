@@ -5,7 +5,7 @@ using SpareManagement.DomainService.Entity;
 using SpareManagement.Models;
 using System;
 
-namespace PersonalWeb.Controllers
+namespace SpareManagement.Controllers
 {
     [Authorize]
 

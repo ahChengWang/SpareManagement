@@ -7,9 +7,20 @@ namespace SpareManagement.Repository
     public interface IBasicInformationRepository
     {
         int GetBasicInfoCategoryIdCount(int categoryId);
+
         int Insert(BasicInformationDao basicDao);
-        List<BasicInformationDao> SelectByConditions(List<string> partNoList = null, string partNo = "", string name = "", string purchaseId = "", string placement = "", DateTime? createStart = null, DateTime? createEnd = null);
+
+        List<BasicInformationDao> SelectByConditions(List<string> partNoList = null, 
+            string partNo = "", 
+            string name = "", 
+            string purchaseId = "", 
+            string placement = "", 
+            DateTime? createStart = null, 
+            DateTime? createEnd = null, 
+            int categoryId = 0);
+
         int UpdateLastSerialNo(List<BasicInformationDao> updateSerialNoList);
+
         int Update(BasicInformationDao updDao);
     }
 }

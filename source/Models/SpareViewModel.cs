@@ -39,7 +39,7 @@ namespace SpareManagement.Models
         [Required(ErrorMessage = "*必填")]
         public string Equipment { get; set; }
 
-        [DisplayName("使用站點")]
+        [DisplayName("適用製程")]
         [Required(ErrorMessage = "*必填")]
         public List<string> UseLocation { get; set; }
 

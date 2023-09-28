@@ -9,12 +9,20 @@ namespace SpareManagement.Repository
     {
 
         public List<BasicInformationDao> SelectByConditions(List<string> partNoList = null,
-            string partNo = "", string name = "", string purchaseId = "", string placement = "", DateTime? createStart = null, DateTime? createEnd = null)
+            string partNo = "", 
+            string name = "", 
+            string purchaseId = "", 
+            string placement = "", 
+            DateTime? createStart = null, 
+            DateTime? createEnd = null,
+            int categoryId = 0)
         {
             try
             {
                 var sql = @"select * from Basic_information where 1=1 ";
 
+                if (categoryId != 0)
+                    sql += " and CategoryId=@CategoryId ";
                 if (partNoList != null)
                     sql += " and PartNo in @PartNo ";
                 if (partNo != "")
@@ -31,6 +39,7 @@ namespace SpareManagement.Repository
 
                 var _result = _dbHelper.ExecuteQuery<BasicInformationDao>(sql, new
                 {
+                    CategoryId = categoryId,
                     PartNo = partNoList,
                     createStart = createStart,
                     createEnd = createEnd

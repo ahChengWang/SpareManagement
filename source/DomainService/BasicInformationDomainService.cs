@@ -25,14 +25,21 @@ namespace SpareManagement.DomainService
             _categoryRepository = categoryRepository;
         }
 
-        public List<BasicInfoEntity> Select(string partNo, string name, string purchaseId, string placement, string createTime)
+        public List<BasicInfoEntity> Select(string categoryId, string partNo, string name, string purchaseId, string placement, string createTime)
         {
             try
             {
                 DateTime? _dateStart = createTime != null ? DateTime.Parse(createTime) : (DateTime?)null;
                 DateTime? _dateEnd = createTime != null ? DateTime.Parse(createTime).Date.AddDays(1).AddSeconds(-1) : (DateTime?)null;
 
-                var _te = _basicInformationRepository.SelectByConditions(null, partNo ?? "", name ?? "", purchaseId ?? "", placement ?? "", _dateStart, _dateEnd);
+                var _te = _basicInformationRepository.SelectByConditions(null, 
+                    partNo ?? "", 
+                    name ?? "", 
+                    purchaseId ?? "", 
+                    placement ?? "", 
+                    _dateStart, 
+                    _dateEnd, 
+                    string.IsNullOrEmpty(categoryId) ? 0 : Convert.ToInt32(categoryId));
 
                 return _te.CopyAToB<BasicInfoEntity>();
             }

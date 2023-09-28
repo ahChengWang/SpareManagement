@@ -14,18 +14,21 @@ namespace SpareManagement.DomainService
         private readonly IComponentsDomainService _componentsDomainService;
         private readonly IJigsDomainService _jigsDomainService;
         private readonly IWirePanelDomainService _wirePanelDomainService;
+        private readonly ISampleDomainService _sampleDomainService;
 
         public WarehouseDomainService(IBasicInformationRepository basicInformationRepository,
             IExpendablesDomainService expendablesDomainService,
             IComponentsDomainService componentsDomainService,
             IJigsDomainService jigsDomainService,
-            IWirePanelDomainService wirePanelDomainService)
+            IWirePanelDomainService wirePanelDomainService,
+            ISampleDomainService sampleDomainService)
         {
             _basicInformationRepository = basicInformationRepository;
             _expendablesDomainService = expendablesDomainService;
             _componentsDomainService = componentsDomainService;
             _jigsDomainService = jigsDomainService;
             _wirePanelDomainService = wirePanelDomainService;
+            _sampleDomainService = sampleDomainService;
         }
 
         public string Insert(WarehouseInsertEntity entity)
@@ -48,6 +51,7 @@ namespace SpareManagement.DomainService
                 Task<string> _componentsInsTask = null;
                 Task<string> _jigsInsTask = null;
                 Task<string> _wirePanelInsTask = null;
+                Task<string> _sampleInsTask = null;
 
                 if (basicDataList.Where(w => w.CategoryId == 1).Any())
                 {
@@ -71,6 +75,12 @@ namespace SpareManagement.DomainService
                 {
                     _wirePanelInsTask = Task.Run(() =>
                         _wirePanelDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 4), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                }
+
+                if (basicDataList.Where(w => w.CategoryId == 5).Any())
+                {
+                    _sampleInsTask = Task.Run(() =>
+                        _sampleDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 5), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
                 }
 
                 _result.Item1 += _expendablesInsTask?.GetAwaiter().GetResult() ?? "";

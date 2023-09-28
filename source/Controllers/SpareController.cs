@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PersonalWeb.Controllers
+namespace SpareManagement.Controllers
 {
     [Authorize]
 
@@ -24,15 +24,17 @@ namespace PersonalWeb.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Category"] = new SelectList(DefinitionHelper.GetSpareType(), "TypeId", "TypeName");
+
             return View();
         }
 
         [HttpGet]
-        public IActionResult Search(string partNo, string name, string purchaseId, string placement, string createTime)
+        public IActionResult Search(string categoryId, string partNo, string name, string purchaseId, string placement, string createTime)
         {
             try
             {
-                var res = _basicInformationDomainService.Select(partNo, name, purchaseId, placement, createTime);
+                var res = _basicInformationDomainService.Select(categoryId, partNo, name, purchaseId, placement, createTime);
 
                 if (!res.Any())
                     return Json("");

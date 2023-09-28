@@ -1,9 +1,9 @@
 ﻿using SpareManagement.Enum;
 using System;
 
-namespace SpareManagement.Repository
+namespace SpareManagement.DomainService
 {
-    public class JigsDao
+    public class SampleEntity
     {
         public string PartNo { get; set; }
 
@@ -25,6 +25,8 @@ namespace SpareManagement.Repository
 
         public string Placement { get; set; }
 
+        public int Count { get; set; }
+
         public int Inventory { get; set; }
 
         public int SafetyCount { get; set; }
@@ -40,5 +42,6 @@ namespace SpareManagement.Repository
         public bool IsTemporary { get; set; }
 
         public string Memo { get; set; }
+
     }
 }

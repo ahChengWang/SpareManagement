@@ -15,6 +15,7 @@
     <style>
         html, body {
             height: 100%;
+            background-color: #ebebeb;
         }
 
         #myHeader {
@@ -57,9 +58,13 @@
 
         .sticky-th1 {
             position: sticky;
-            background: #d5dee8;
+            background: #7c92a6;
             top: -17px;
             opacity: 0.9;
+        }
+
+        .scrollto {
+            margin-left: 15px;
         }
     </style>
 </head>
@@ -89,16 +94,19 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-link scrollto" asp-area="" asp-controller="Expendables" asp-action="Index">　耗材　</a>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="Expendables" asp-action="Index">耗材</a>
                         </li>
                         <li>
-                            <a class="nav-link scrollto" asp-area="" asp-controller="Components" asp-action="Index">　設備零件　</a>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="Components" asp-action="Index">設備零件</a>
                         </li>
                         <li>
-                            <a class="nav-link scrollto" asp-area="" asp-controller="Jigs" asp-action="Index">　治具　</a>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="Jigs" asp-action="Index">治具</a>
                         </li>
                         <li>
-                            <a class="nav-link scrollto" asp-area="" asp-controller="WirePanel" asp-action="Index">　線板材　</a>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="WirePanel" asp-action="Index">線板材</a>
+                        </li>
+                        <li>
+                            <a class="nav-link scrollto" asp-area="" asp-controller="Sample" asp-action="Index">Sample</a>
                         </li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>

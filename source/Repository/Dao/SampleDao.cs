@@ -3,7 +3,7 @@ using System;
 
 namespace SpareManagement.Repository
 {
-    public class JigsDao
+    public class SampleDao
     {
         public string PartNo { get; set; }
 

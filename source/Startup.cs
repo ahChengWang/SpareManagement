@@ -35,6 +35,7 @@ namespace SpareManagement
             services.AddSingleton<IFixDomainService, FixDomainService>();
             services.AddSingleton<IHistoryDomainService, HistoryDomainService>();
             services.AddSingleton<IAccountDomainService, AccountDomainService>();
+            services.AddSingleton<ISampleDomainService, SampleDomainService>();
 
             services.AddSingleton<IBasicInformationRepository, BasicInformationRepository>();
             services.AddSingleton<IExpendablesRepository, ExpendablesRepository>();
@@ -44,6 +45,7 @@ namespace SpareManagement
             services.AddSingleton<IHistoryRepository, HistoryRepository>();
             services.AddSingleton<IAccountRepository, AccountRepository>();
             services.AddSingleton<ICategoryRepository, CategoryRepository>();
+            services.AddSingleton<ISampleRepository, SampleRepository>();
 
             services.Add(new ServiceDescriptor(typeof(MSSqlDBHelper), new MSSqlDBHelper(Configuration)));
 
