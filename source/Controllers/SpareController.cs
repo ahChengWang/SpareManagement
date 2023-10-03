@@ -24,7 +24,11 @@ namespace SpareManagement.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Category"] = new SelectList(DefinitionHelper.GetSpareType(), "TypeId", "TypeName");
+            List<SpareType> _catOption = new List<SpareType>();
+            _catOption.Add(new SpareType { TypeId = 0, TypeName = "" });
+            _catOption.AddRange(DefinitionHelper.GetSpareType());
+
+            ViewData["Category"] = new SelectList(_catOption, "TypeId", "TypeName");
 
             return View();
         }

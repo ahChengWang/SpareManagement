@@ -12,7 +12,6 @@ namespace SpareManagement.Helper
 
         public static List<SpareType> GetSpareType()
         => new List<SpareType> {
-                new SpareType { TypeId = 0, TypeName = ""},
                 new SpareType { TypeId = 1, TypeName = "一般耗材"},
                 new SpareType { TypeId = 2, TypeName = "設備零件"},
                 new SpareType { TypeId = 3, TypeName = "治具"},
@@ -37,7 +36,8 @@ namespace SpareManagement.Helper
         public static List<SpareType> GetInspectCategoryOption()
         => new List<SpareType> {
                 new SpareType { TypeId = 3, TypeName = "治具"},
-                new SpareType { TypeId = 4, TypeName = "線板材"}
+                new SpareType { TypeId = 4, TypeName = "線板材"},
+                new SpareType { TypeId = 5, TypeName = "Sample"}
         };
 
         public static List<SpareType> GetReturnStatusOption()

@@ -1,9 +1,13 @@
 ﻿@model WirePanelListViewModel
 
-@{
-}
 
 <h3>線板材明細　(@Html.DisplayNameFor(model => model.Details.First().PartNo): @Model.Details.First().PartNo)</h3>
+<div class="d-flex align-content-center">
+    <div><a style="background-color: #ad7211">入庫</a></div>
+    <div><a style="background-color: #a9d182; margin-left: 4px;">領用</a></div>
+    <div><a style="background-color: #ebdb63; margin-left: 4px;">檢驗</a></div>
+    <div><a style="background-color: #ed7e45; margin-left: 4px; ">維修</a></div>
+</div>
 <div id="mydiv">
     <table class="table table-bordered">
         <thead class="thead-dark">
@@ -37,17 +41,33 @@
 
                 <tr id="@trid" style="@overdueStyle">
                     <td id="partNo" class="row-data">@item.PartNo</td>
-                    <td class="row-data">@item.Name</td>
-                    <td id="serialNo" class="row-data">@item.SerialNo</td>
-                    <td class="row-data">@item.Status</td>
-                    <td class="row-data">@item.PurchaseId</td>
-                    <td class="row-data">@item.Spec</td>
-                    <td class="row-data">@item.Placement</td>
-                    <td class="row-data">@item.IsNeedInspect</td>
-                    <td class="row-data">@item.InspectDate</td>
-                    <td class="row-data">@item.NextInspectDate</td>
-                    <td class="row-data">@item.IsOverdueInspect</td>
-                    <td class="row-data">@item.IsTemporary</td>
+                    <td>@item.Name</td>
+                    <td id="serialNo">@item.SerialNo</td>
+                    @switch (item.StatusId)
+                    {
+                        case 1:
+                            <td style="background-color: #ad7211">@item.Status</td>
+                            break;
+                        case 2:
+                            <td style="background-color: #a9d182">@item.Status</td>
+                            break;
+                        case 3:
+                            <td style="background-color: #ebdb63">@item.Status</td>
+                            break;
+                        case 4:
+                            <td style="background-color: #ed7e45">@item.Status</td>
+                            break;
+                        default:
+                            break;
+                    }
+                    <td>@item.PurchaseId</td>
+                    <td>@item.Spec</td>
+                    <td>@item.Placement</td>
+                    <td>@item.IsNeedInspect</td>
+                    <td>@item.InspectDate</td>
+                    <td>@item.NextInspectDate</td>
+                    <td>@item.IsOverdueInspect</td>
+                    <td>@item.IsTemporary</td>
                     <td>
                         @{
                             if (item.StatusId == 1)

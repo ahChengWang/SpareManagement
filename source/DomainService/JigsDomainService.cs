@@ -326,6 +326,24 @@ namespace SpareManagement.DomainService
                 if (_origJigsData.IsTemporary)
                     return $"{serialNo} 暫停使用無法{errSummary}";
 
+                string _memo = "";
+
+                switch (oldStatusId)
+                {
+                    case StatusEnum.UnStock:
+                        _memo = "領用歸還";
+                        break;
+                    case StatusEnum.Inspecting:
+                        _memo = "檢驗歸還";
+                        break;
+                    case StatusEnum.Fixing:
+                        _memo = "維修歸還";
+                        break;
+                    default:
+                        _memo = newStatusId.GetDescription();
+                        break;
+                }
+
                 var _updJigsData = new JigsDao
                 {
                     SerialNo = serialNo,
@@ -347,7 +365,7 @@ namespace SpareManagement.DomainService
                     Quantity = 1,
                     EmpName = updateUser,
                     UpdateTime = updateDTE,
-                    Memo = ""
+                    Memo = _memo
                 };
 
                 using (var scope = new TransactionScope())

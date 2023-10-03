@@ -10,12 +10,15 @@ namespace SpareManagement.DomainService
     {
         private readonly IJigsDomainService _jigsDomainService;
         private readonly IWirePanelDomainService _wirePanelDomainService;
+        private readonly ISampleDomainService _sampleDomainService;
 
         public FixDomainService(IJigsDomainService jigsDomainService,
-            IWirePanelDomainService wirePanelDomainService)
+            IWirePanelDomainService wirePanelDomainService,
+            ISampleDomainService sampleDomainService)
         {
             _jigsDomainService = jigsDomainService;
             _wirePanelDomainService = wirePanelDomainService;
+            _sampleDomainService = sampleDomainService;
         }
 
         public List<InspectsEntity> SelectList(int categoryId, string partNo)
@@ -68,6 +71,26 @@ namespace SpareManagement.DomainService
                             });
                         });
                         break;
+                    case 5:
+                        var _sampleInspectData = _sampleDomainService.GetDetail(
+                            null,
+                            serialNo: partNo,
+                            statusId: (int)StatusEnum.Stock,
+                            beginInspectDate: beginDTE,
+                            endInspectDate: endDTE,
+                            isForMainPage: true);
+
+                        _sampleInspectData.ForEach(fe =>
+                        {
+                            _inspectsEntity.Add(new InspectsEntity
+                            {
+                                PartNo = fe.PartNo,
+                                Name = fe.Name,
+                                Spec = fe.Spec,
+                                SerialNo = fe.SerialNo
+                            });
+                        });
+                        break;
                 }
 
                 return _inspectsEntity;
@@ -99,6 +122,16 @@ namespace SpareManagement.DomainService
                     case 4:
                         _updResult =
                             _wirePanelDomainService.Update(
+                                inspectsEntity.SerialNo,
+                                StatusEnum.Stock,
+                                StatusEnum.Fixing,
+                                inspectsEntity.UpdateUser,
+                                inspectsEntity.UpdateDate,
+                                errSummary: "維修");
+                        break;
+                    case 5:
+                        _updResult =
+                            _sampleDomainService.Update(
                                 inspectsEntity.SerialNo,
                                 StatusEnum.Stock,
                                 StatusEnum.Fixing,

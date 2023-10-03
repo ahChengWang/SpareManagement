@@ -152,7 +152,8 @@ namespace SpareManagement.DomainService
         {
             try
             {
-
+                string _resp = "";
+                DateTime _nowTime = DateTime.Now;
                 List<SampleDao> _insSamples = new List<SampleDao>();
                 List<BasicInformationDao> _updBasicLastSerial = new List<BasicInformationDao>();
 
@@ -182,7 +183,7 @@ namespace SpareManagement.DomainService
                             IsTemporary = false,
                             IsNeedInspect = tmpBasic.IsNeedInspect,
                             InspectDate = null,
-                            NextInspectDate = null,
+                            NextInspectDate = tmpBasic.IsNeedInspect ? (DateTime?)_nowTime.AddDays(tmpBasic.InspectCycle) : null,
                             Memo = tmpBasic.Memo
                         });
                     }
@@ -201,7 +202,7 @@ namespace SpareManagement.DomainService
                 {
                     _insHistory.Add(new HistoryEntity
                     {
-                        CategoryId = 3,
+                        CategoryId = 5,
                         PartNo = fe.SerialNo,
                         Status = StatusEnum.Stock,
                         Quantity = fe.Inventory,
@@ -225,10 +226,10 @@ namespace SpareManagement.DomainService
                     if (_insResult && _updResult)
                         scope.Complete();
                     else
-                        return "Insert & Update not success. \n";
+                        _resp = "Insert & Update not success. \n";
                 }
 
-                return "";
+                return _resp;
             }
             catch (Exception ex)
             {
@@ -322,6 +323,24 @@ namespace SpareManagement.DomainService
                 if (_origSampleData.IsTemporary)
                     return $"{serialNo} 暫停使用無法{errSummary}";
 
+                string _memo = "";
+
+                switch (oldStatusId)
+                {
+                    case StatusEnum.UnStock:
+                        _memo = "領用歸還";
+                        break;
+                    case StatusEnum.Inspecting:
+                        _memo = "檢驗歸還";
+                        break;
+                    case StatusEnum.Fixing:
+                        _memo = "維修歸還";
+                        break;
+                    default:
+                        _memo = newStatusId.GetDescription();
+                        break;
+                }
+
                 var _updSampleData = new SampleDao
                 {
                     SerialNo = serialNo,
@@ -337,13 +356,13 @@ namespace SpareManagement.DomainService
 
                 var _insHistory = new HistoryEntity
                 {
-                    CategoryId = 3,
+                    CategoryId = 5,
                     PartNo = _updSampleData.SerialNo,
                     Status = newStatusId,
                     Quantity = 1,
                     EmpName = updateUser,
                     UpdateTime = updateDTE,
-                    Memo = ""
+                    Memo = _memo
                 };
 
                 using (var scope = new TransactionScope())

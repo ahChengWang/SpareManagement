@@ -53,6 +53,15 @@ namespace SpareManagement.DomainService
                 Task<string> _wirePanelInsTask = null;
                 Task<string> _sampleInsTask = null;
 
+                if (basicDataList.Where(w => w.CategoryId == 5).Any())
+                {
+                    if (_result.Item2.Where(w => basicDataList.Where(w => w.CategoryId == 5).ToList().Select(s => s.PartNo).Contains(w.PartNo)).Any(a => a.Count > 1))
+                        return "Sample 入庫數量不得 > 1";
+
+                    _sampleInsTask = Task.Run(() =>
+                        _sampleDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 5), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                }
+
                 if (basicDataList.Where(w => w.CategoryId == 1).Any())
                 {
                     _expendablesInsTask = Task.Run(() =>
@@ -77,16 +86,11 @@ namespace SpareManagement.DomainService
                         _wirePanelDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 4), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
                 }
 
-                if (basicDataList.Where(w => w.CategoryId == 5).Any())
-                {
-                    _sampleInsTask = Task.Run(() =>
-                        _sampleDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 5), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
-                }
-
                 _result.Item1 += _expendablesInsTask?.GetAwaiter().GetResult() ?? "";
                 _result.Item1 += _componentsInsTask?.GetAwaiter().GetResult() ?? "";
                 _result.Item1 += _jigsInsTask?.GetAwaiter().GetResult() ?? "";
                 _result.Item1 += _wirePanelInsTask?.GetAwaiter().GetResult() ?? "";
+                _result.Item1 += _sampleInsTask?.GetAwaiter().GetResult() ?? "";
 
                 return _result.Item1;
             }

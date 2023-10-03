@@ -11,15 +11,15 @@
         <input id="inspectDate" type="date" class="custom-control" />
     </div>
 </div>
-<table class="table">
+<table class="table table-hover table-bordered">
     <thead style="background-color: slategrey; color: white; ">
         <tr>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().SerialNo)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().NextInspectDate)</th>
-            <th scope="col"></th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().PartNo)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().SerialNo)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().NextInspectDate)</th>
+            <th class="sticky-th1"></th>
         </tr>
     </thead>
     <tbody>

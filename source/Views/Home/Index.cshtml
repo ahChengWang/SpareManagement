@@ -12,8 +12,8 @@
     }
 
     img {
-        min-height:100%;
-        min-width:100%;
+        min-height: 100%;
+        min-width: 100%;
         /*background-image: url("/img/storage.png");*/
         opacity: 0.3;
     }
@@ -21,5 +21,33 @@
 
 <div class="container">
     <img src="~/img/storage.png" />
+    <div id="annoModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">系統須知</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>⊙ 物料入庫流程：</p>
+                    <p>1. "物料管理" > "基本資訊" 建立物料資訊檔</p>
+                    <p>2. "物料管理" > "入庫" 指定物料序號，新增其數量至系統</p>
+                    <p>3. 至對應物料類別頁面查詢該數量與否成功入庫</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+@section Scripts{
+
+    <script type="text/javascript">
+        $(function () {
+
+            $('#annoModal').modal('show');
+        })
+    </script>
+
+}
