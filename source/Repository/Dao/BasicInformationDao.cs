@@ -45,5 +45,9 @@ namespace SpareManagement.Repository
         public string Memo { get; set; }
 
         public int LastSerialNo { get; set; }
+
+        public string UpdateUser { get; set; }
+
+        public DateTime UpdateDate { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SpareManagement.DomainService;
@@ -13,11 +14,13 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class SpareController : Controller
+    public class SpareController : BaseController
     {
         private readonly IBasicInformationDomainService _basicInformationDomainService;
 
-        public SpareController(IBasicInformationDomainService basicInformationDomainService)
+        public SpareController(IBasicInformationDomainService basicInformationDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _basicInformationDomainService = basicInformationDomainService;
         }
@@ -168,8 +171,9 @@ namespace SpareManagement.Controllers
                 {
                     PartNo = updModel.PartNo,
                     PurchaseId = updModel.PurchaseId,
-                    Placement = updModel.Placement
-                });
+                    SafetyCount = updModel.SafetyCount,
+                    Placement = updModel.Placement,
+                }, GetUserInfo());
 
                 if (_res != "")
                 {

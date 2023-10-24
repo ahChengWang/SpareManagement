@@ -1,6 +1,7 @@
 ﻿using Helper;
 using SpareManagement.DomainService.Entity;
 using SpareManagement.Enum;
+using SpareManagement.Helper;
 using SpareManagement.Repository;
 using SpareManagement.Repository.Dao;
 using System;
@@ -16,17 +17,14 @@ namespace SpareManagement.DomainService
         private readonly IWirePanelRepository _wirePanelRepository;
         private readonly IHistoryDomainService _historyDomainService;
         private readonly IBasicInformationRepository _basicInformationRepository;
-        private readonly IBasicInformationDomainService _basicInformationDomainService;
 
         public WirePanelDomainService(IWirePanelRepository wirePanelRepository,
             IHistoryDomainService historyDomainService,
-            IBasicInformationRepository basicInformationRepository,
-            IBasicInformationDomainService basicInformationDomainService)
+            IBasicInformationRepository basicInformationRepository)
         {
             _wirePanelRepository = wirePanelRepository;
             _historyDomainService = historyDomainService;
             _basicInformationRepository = basicInformationRepository;
-            _basicInformationDomainService = basicInformationDomainService;
         }
 
 
@@ -148,8 +146,10 @@ namespace SpareManagement.DomainService
             IEnumerable<BasicInformationDao> basicList,
             List<WarehouseGoodsEntity> warehouseGoodsList,
             string createUser,
-            DateTime createDate,
-            string memo)
+            DateTime? createDate,
+            string memo, 
+            DateTime nowTime, 
+            UserEntity userEntity)
         {
             try
             {
@@ -206,8 +206,8 @@ namespace SpareManagement.DomainService
                         PartNo = fe.SerialNo,
                         Status = StatusEnum.Stock,
                         Quantity = fe.Inventory,
-                        EmpName = createUser,
-                        UpdateTime = createDate,
+                        EmpName = string.IsNullOrEmpty(createUser) ? $"{userEntity.Account} {userEntity.Name}" : createUser,
+                        UpdateTime = createDate ?? nowTime,
                         Memo = memo
                     });
                 });
@@ -248,7 +248,7 @@ namespace SpareManagement.DomainService
                 if (inspectDate != null && DateTime.TryParseExact(inspectDate, "yyyy-MM-dd", null, DateTimeStyles.None, out convDate))
                     newInspectDate = convDate;
 
-                var _basicInfoeData = _basicInformationDomainService.GetInspectInfo(new BasicInfoEntity { PartNo = partNo });
+                var _basicInfoeData = _basicInformationRepository.SelectByConditions(partNoList: new List<string> { partNo }).CopyAToB<BasicInfoEntity>().FirstOrDefault(); 
                 var _oldwirePanelData = _wirePanelRepository.SelectByConditions(serialNo: serialNo).FirstOrDefault();
 
                 if (_oldwirePanelData.Status != StatusEnum.Stock)
@@ -310,7 +310,7 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public string Update(string serialNo, StatusEnum oldStatusId, StatusEnum newStatusId, string updateUser, DateTime updateDTE, int? inspectCycle = null, string errSummary = "")
+        public string Update(string serialNo, StatusEnum oldStatusId, StatusEnum newStatusId, string updateUser, DateTime? updateDTE, UserEntity userEntity, DateTime nowTime, int? inspectCycle = null, string errSummary = "")
         {
             try
             {
@@ -350,8 +350,8 @@ namespace SpareManagement.DomainService
 
                 if (inspectCycle != null)
                 {
-                    _updWirePanelData.InspectDate = updateDTE;
-                    _updWirePanelData.NextInspectDate = updateDTE.AddDays((int)inspectCycle);
+                    _updWirePanelData.InspectDate = updateDTE ?? nowTime;
+                    _updWirePanelData.NextInspectDate = updateDTE?.AddDays((int)inspectCycle) ?? nowTime;
                 }
 
                 var _insHistory = new HistoryEntity
@@ -360,8 +360,8 @@ namespace SpareManagement.DomainService
                     PartNo = _updWirePanelData.SerialNo,
                     Status = newStatusId,
                     Quantity = 1,
-                    EmpName = updateUser,
-                    UpdateTime = updateDTE,
+                    EmpName = updateUser ?? $"{userEntity.Account} {userEntity.Name}",
+                    UpdateTime = updateDTE ?? nowTime,
                     Memo = _memo
                 };
 
@@ -392,8 +392,10 @@ namespace SpareManagement.DomainService
         public (string, int) ProcessRelease(
             IEnumerable<ReleaseGoodsEntity> releaseWirePanelList,
             string createUser,
-            DateTime createDate,
-            string memo)
+            DateTime? createDate,
+            string memo,
+            DateTime nowTime,
+            UserEntity userEntity)
         {
             try
             {
@@ -444,8 +446,8 @@ namespace SpareManagement.DomainService
                         PartNo = fe.PartNo,
                         Status = StatusEnum.UnStock,
                         Quantity = fe.Count,
-                        EmpName = createUser,
-                        UpdateTime = createDate,
+                        EmpName = string.IsNullOrEmpty(createUser) ? userEntity.Account : createUser,
+                        UpdateTime = createDate ?? nowTime,
                         Memo = memo,
                         Node = fe.Node
                     });
@@ -466,6 +468,29 @@ namespace SpareManagement.DomainService
                 }
 
                 return ("", _updWirePanel.Count);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool UpdatePlacement(string partNo, string updPlacement, int saftyCnt)
+        {
+            try
+            {
+                bool _updRes = false;
+
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    if (_wirePanelRepository.UpdatePlacement(partNo, updPlacement, saftyCnt) == 1)
+                    {
+                        scope.Complete();
+                        _updRes = true;
+                    }
+                }
+
+                return _updRes;
             }
             catch (Exception ex)
             {

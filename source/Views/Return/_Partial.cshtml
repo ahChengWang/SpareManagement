@@ -1,16 +1,23 @@
 ﻿@model InspectSpareViewModel
 
 
-<div class="row col-12">
-    <div class="form-group form-row col-sm-4">
-        <label>操作人員：</label>
+<div class="row col-12 d-flex">
+    <div class="col-lg-2">
+        <label>操作人員:</label>
+    </div>
+    <div class="col-lg-3">
         <input id="inspectUser" type="text" class="custom-control" />
     </div>
-    <div class="form-group form-row col-sm-4">
-        <label>操作時間：</label>
-        <input id="inspectDate" type="date" class="custom-control" />
+    <div class="col-lg-2">
+        <label>操作時間:</label>
+    </div>
+    <div class="col-lg-3">
+        <input id="inspectDate" type="datetime-local" class="custom-control" />
     </div>
     <input id="categoryId" type="hidden" value="@Model.Details.First().CategoryId" />
+</div>
+<div>
+    <span class="note">※ "操作人員"及"時間"選填, 預設帶入登錄帳號及系統時間</span>
 </div>
 <table class="table">
     <thead style="background-color: slategrey; color: white; ">
@@ -34,12 +41,12 @@
                 <td class="row-data">@item.Spec</td>
                 <td class="row-data">
                     @item.Status
-                <p id="statusId" hidden>@item.StatusId</p>
-            </td>
-            <td>
-                <input id="@item.SerialNo" type="button" onclick="onReturnClick(this)" style="text-decoration:none;" class="btn btn-outline-secondary btn-sm" value="歸還" />
-            </td>
-        </tr>
-    }
+                    <p id="statusId" hidden>@item.StatusId</p>
+                </td>
+                <td>
+                    <input id="@item.SerialNo" type="button" onclick="onReturnClick(this)" style="text-decoration:none;" class="btn btn-outline-secondary btn-sm" value="歸還" />
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

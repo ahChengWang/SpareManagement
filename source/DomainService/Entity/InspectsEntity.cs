@@ -14,7 +14,7 @@ namespace SpareManagement.DomainService.Entity
         public int CategoryId { get; set; }
 
         public string UpdateUser { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
 
     }
 }

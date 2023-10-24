@@ -6,6 +6,6 @@ namespace SpareManagement.DomainService
     public interface IInspectDomainService
     {
         List<InspectsEntity> SelectList(int categoryId, string partNo, int isOverdueInspect);
-        string Update(InspectsEntity inspectsEntity);
+        string Update(InspectsEntity inspectsEntity, UserEntity userEntity);
     }
 }

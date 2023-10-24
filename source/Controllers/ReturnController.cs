@@ -1,5 +1,6 @@
 ﻿using Helper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SpareManagement.DomainService;
@@ -15,11 +16,13 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class ReturnController : Controller
+    public class ReturnController : BaseController
     {
         private readonly IReturnDomainService _returnDomainService;
 
-        public ReturnController(IReturnDomainService returnDomainService)
+        public ReturnController(IReturnDomainService returnDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _returnDomainService = returnDomainService;
         }
@@ -83,7 +86,7 @@ namespace SpareManagement.Controllers
                     Status = (StatusEnum)updateViewModel.StatusId,
                     UpdateUser = updateViewModel.UpdateUser,
                     UpdateDate = updateViewModel.UpdateDTE
-                });
+                }, GetUserInfo());
 
                 if (res != "")
                 {

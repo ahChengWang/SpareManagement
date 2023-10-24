@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.Helper;
@@ -11,12 +12,14 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class ExpendablesController : Controller
+    public class ExpendablesController : BaseController
     {
         private readonly IExpendablesDomainService _expendablesDomainService;
 
 
-        public ExpendablesController(IExpendablesDomainService expendablesDomainService)
+        public ExpendablesController(IExpendablesDomainService expendablesDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _expendablesDomainService = expendablesDomainService;
         }

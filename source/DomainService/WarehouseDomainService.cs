@@ -31,7 +31,7 @@ namespace SpareManagement.DomainService
             _sampleDomainService = sampleDomainService;
         }
 
-        public string Insert(WarehouseInsertEntity entity)
+        public string Insert(WarehouseInsertEntity entity, UserEntity userEntity)
         {
             try
             {
@@ -39,6 +39,8 @@ namespace SpareManagement.DomainService
 
                 if (_result.Item1 != "")
                     return _result.Item1;
+
+                DateTime _nowTime = DateTime.Now;
 
                 var basicDataList = _basicInformationRepository.SelectByConditions(partNoList: _result.Item2.Select(s => s.PartNo).ToList());
 
@@ -59,31 +61,31 @@ namespace SpareManagement.DomainService
                         return "Sample 入庫數量不得 > 1";
 
                     _sampleInsTask = Task.Run(() =>
-                        _sampleDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 5), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                        _sampleDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 5), _result.Item2, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity));
                 }
 
                 if (basicDataList.Where(w => w.CategoryId == 1).Any())
                 {
                     _expendablesInsTask = Task.Run(() =>
-                        _expendablesDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 1), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                        _expendablesDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 1), _result.Item2, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity));
                 }
 
                 if (basicDataList.Where(w => w.CategoryId == 2).Any())
                 {
-                    _componentsInsTask = Task.Run(() => 
-                        _componentsDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 2), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                    _componentsInsTask = Task.Run(() =>
+                        _componentsDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 2), _result.Item2, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity));
                 }
 
                 if (basicDataList.Where(w => w.CategoryId == 3).Any())
                 {
-                    _jigsInsTask = Task.Run(() => 
-                        _jigsDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 3), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                    _jigsInsTask = Task.Run(() =>
+                        _jigsDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 3), _result.Item2, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity));
                 }
 
                 if (basicDataList.Where(w => w.CategoryId == 4).Any())
                 {
                     _wirePanelInsTask = Task.Run(() =>
-                        _wirePanelDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 4), _result.Item2, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo));
+                        _wirePanelDomainService.ProcessWarehouse(basicDataList.Where(w => w.CategoryId == 4), _result.Item2, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity));
                 }
 
                 _result.Item1 += _expendablesInsTask?.GetAwaiter().GetResult() ?? "";
@@ -128,8 +130,8 @@ namespace SpareManagement.DomainService
                 return ("無須入庫物料", null);
 
 
-            if (entity.CreateUser == "" || entity.CreateDate == null)
-                _errorInfo += "入庫人員 & 日期 必填 \n";
+            //if (entity.CreateUser == "" || entity.CreateDate == null)
+            //    _errorInfo += "入庫人員 & 日期 必填 \n";
 
             var _noPartNo = _tempList.Where(a => string.IsNullOrEmpty(a.PartNo) && a.Count != 0);
             var _noCnt = _tempList.Where(a => !string.IsNullOrEmpty(a.PartNo) && a.Count == 0);

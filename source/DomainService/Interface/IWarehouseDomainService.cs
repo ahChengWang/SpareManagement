@@ -4,6 +4,6 @@ namespace SpareManagement.DomainService
 {
     public interface IWarehouseDomainService
     {
-        string Insert(WarehouseInsertEntity entity);
+        string Insert(WarehouseInsertEntity entity, UserEntity userEntity);
     }
 }

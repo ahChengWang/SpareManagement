@@ -7,6 +7,11 @@
     label {
         font-size: 15px
     }
+
+    .text-danger {
+        font-size: 15px;
+        font-weight: bold;
+    }
 </style>
 
 <div class="container">
@@ -15,6 +20,7 @@
         <div class="card-header" style="background-color: slategrey; color: white; font-size: 20px">
             入庫管理
         </div>
+        <span class="text-danger col-lg-10">※ "入庫人員"及"時間"選填, 預設帶入登錄帳號及系統時間</span>
         <div class="card-body">
             @*<input id="timezoneOffset" asp-for="TimezoneOffset" class="form-control" type="hidden" />*@
             <form id="form" asp-action="Insert" method="post">

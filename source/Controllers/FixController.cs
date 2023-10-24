@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SpareManagement.DomainService;
@@ -13,11 +14,13 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class FixController : Controller
+    public class FixController : BaseController
     {
         private readonly IFixDomainService _fixDomainService;
 
-        public FixController(IFixDomainService fixDomainService)
+        public FixController(IFixDomainService fixDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _fixDomainService = fixDomainService;
         }
@@ -76,7 +79,7 @@ namespace SpareManagement.Controllers
                     CategoryId = updateViewModel.CategoryId,
                     UpdateUser = updateViewModel.UpdateUser,
                     UpdateDate = updateViewModel.UpdateDTE
-                });
+                }, GetUserInfo());
 
                 if (res != "")
                 {

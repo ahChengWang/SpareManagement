@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.DomainService.Entity;
 using SpareManagement.Helper;
@@ -7,11 +8,13 @@ using System;
 
 namespace SpareManagement.Controllers
 {
-    public class ReleaseController : Controller
+    public class ReleaseController : BaseController
     {
         private readonly IReleaseDomainService _releaseDomainService;
 
-        public ReleaseController(IReleaseDomainService releaseDomainService)
+        public ReleaseController(IReleaseDomainService releaseDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _releaseDomainService = releaseDomainService;
         }
@@ -49,7 +52,7 @@ namespace SpareManagement.Controllers
                     Memo = releaseViewModel.Memo ?? ""
                 };
 
-                var response = _releaseDomainService.Release(_entity);
+                var response = _releaseDomainService.Release(_entity, GetUserInfo());
 
                 return Json(response);
                 //return PartialView("_SearchPartial", res);

@@ -43,8 +43,10 @@ namespace SpareManagement.DomainService
             IEnumerable<BasicInformationDao> basicList,
             List<WarehouseGoodsEntity> warehouseGoodsList,
             string createUser,
-            DateTime createDate,
-            string memo)
+            DateTime? createDate,
+            string memo,
+            DateTime nowTime,
+            UserEntity userEntity)
         {
             try
             {
@@ -106,8 +108,8 @@ namespace SpareManagement.DomainService
                             PartNo = fe.PartNo,
                             Status = StatusEnum.Stock,
                             Quantity = fe.Inventory,
-                            EmpName = createUser,
-                            UpdateTime = createDate,
+                            EmpName = string.IsNullOrEmpty(createUser) ? $"{userEntity.Account} {userEntity.Name}" : createUser,
+                            UpdateTime = createDate ?? nowTime,
                             Memo = memo
                         });
                     });
@@ -132,8 +134,10 @@ namespace SpareManagement.DomainService
         public (string, int) ProcessRelease(
             IEnumerable<ReleaseGoodsEntity> releaseGoodsList,
             string createUser,
-            DateTime createDate,
-            string memo)
+            DateTime? createDate,
+            string memo,
+            DateTime nowTime,
+            UserEntity userEntity)
         {
             try
             {
@@ -185,8 +189,8 @@ namespace SpareManagement.DomainService
                             PartNo = fe.PartNo,
                             Status = StatusEnum.UnStock,
                             Quantity = fe.Count,
-                            EmpName = createUser,
-                            UpdateTime = createDate,
+                            EmpName = string.IsNullOrEmpty(createUser) ? userEntity.Account : createUser,
+                            UpdateTime = createDate ?? nowTime,
                             Memo = memo,
                             Node = fe.Node
                         });
@@ -201,6 +205,29 @@ namespace SpareManagement.DomainService
                 }
 
                 return ("", _updExpendables.Count);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool UpdatePlacement(string partNo, string updPlacement, int saftyCnt)
+        {
+            try
+            {
+                bool _updRes = false;
+
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    if (_expendablesRepository.UpdatePlacement(partNo, updPlacement, saftyCnt) == 1)
+                    {
+                        scope.Complete();
+                        _updRes = true;
+                    }
+                }
+
+                return _updRes;
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using Helper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.Models;
@@ -11,12 +12,14 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class WirePanelController : Controller
+    public class WirePanelController : BaseController
     {
         private readonly IWirePanelDomainService _wirePanelDomainService;
 
 
-        public WirePanelController(IWirePanelDomainService wirePanelDomainService)
+        public WirePanelController(IWirePanelDomainService wirePanelDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _wirePanelDomainService = wirePanelDomainService;
         }

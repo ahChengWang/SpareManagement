@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SpareManagement.DomainService;
@@ -13,11 +14,13 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class InspectController : Controller
+    public class InspectController : BaseController
     {
         private readonly IInspectDomainService _inspectDomainService;
 
-        public InspectController(IInspectDomainService inspectDomainService)
+        public InspectController(IInspectDomainService inspectDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _inspectDomainService = inspectDomainService;
         }
@@ -78,7 +81,7 @@ namespace SpareManagement.Controllers
                     CategoryId = updateViewModel.CategoryId,
                     UpdateUser = updateViewModel.UpdateUser,
                     UpdateDate = updateViewModel.UpdateDTE
-                });
+                }, GetUserInfo());
 
                 if (res != "")
                 {

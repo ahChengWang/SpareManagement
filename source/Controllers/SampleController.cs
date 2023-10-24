@@ -1,5 +1,6 @@
 ﻿using Helper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.Models;
@@ -11,12 +12,14 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class SampleController : Controller
+    public class SampleController : BaseController
     {
         private readonly ISampleDomainService _sampleDomainService;
 
 
-        public SampleController(ISampleDomainService sampleDomainService)
+        public SampleController(ISampleDomainService sampleDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _sampleDomainService = sampleDomainService;
         }
@@ -48,8 +51,8 @@ namespace SpareManagement.Controllers
                         Name = fe.Name,
                         PurchaseId = fe.PurchaseId,
                         Spec = fe.Spec,
-                        IsKeySpare = fe.IsKeySpare ? "是" : "否",
-                        IsCommercial = fe.IsCommercial ? "是" : "否",
+                        //IsKeySpare = fe.IsKeySpare ? "是" : "否",
+                        //IsCommercial = fe.IsCommercial ? "是" : "否",
                         Equipment = fe.Equipment,
                         //Placement = fe.Placement,
                         Count = fe.Count,

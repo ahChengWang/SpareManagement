@@ -175,5 +175,31 @@ UPDATE [dbo].[WirePanel]
 
             return _result;
         }
+
+        public int UpdatePlacement(string partNo, string updPlacement, int saftyCnt)
+        {
+            try
+            {
+                var sql = @" 
+UPDATE [dbo].[WirePanel]
+     SET [Placement] = @Placement,
+         [SafetyCount] = @SafetyCount
+     WHERE [PartNo] = @PartNo
+";
+
+                var _result = _dbHelper.ExecuteNonQuery(sql, new
+                {
+                    Placement = updPlacement,
+                    SafetyCount = saftyCnt,
+                    PartNo = partNo
+                });
+
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

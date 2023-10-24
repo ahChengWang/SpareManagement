@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.DomainService.Entity;
@@ -9,11 +10,13 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class WarehouseController : Controller
+    public class WarehouseController : BaseController
     {
         private readonly IWarehouseDomainService _warehouseDomainService;
 
-        public WarehouseController(IWarehouseDomainService warehouseDomainService)
+        public WarehouseController(IWarehouseDomainService warehouseDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _warehouseDomainService = warehouseDomainService;
         }
@@ -48,7 +51,7 @@ namespace SpareManagement.Controllers
                     Memo = warehouseInsertViewModel.Memo ?? ""
                 };
 
-                var response = _warehouseDomainService.Insert(_entity);
+                var response = _warehouseDomainService.Insert(_entity, GetUserInfo());
 
                 return Json(response);
             }

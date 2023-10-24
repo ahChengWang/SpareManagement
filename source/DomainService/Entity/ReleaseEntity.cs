@@ -36,7 +36,6 @@ namespace SpareManagement.DomainService.Entity
         public int Count5 { get; set; }
 
         public string Node5 { get; set; }
-
         public DateTime? CreateDate { get; set; }
 
         public string CreateUser { get; set; }

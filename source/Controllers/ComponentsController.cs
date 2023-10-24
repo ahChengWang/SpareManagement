@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.Helper;
@@ -11,12 +12,14 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class ComponentsController : Controller
+    public class ComponentsController : BaseController
     {
         private readonly IComponentsDomainService _componentsDomainService;
 
 
-        public ComponentsController(IComponentsDomainService componentsDomainService)
+        public ComponentsController(IComponentsDomainService componentsDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _componentsDomainService = componentsDomainService;
         }

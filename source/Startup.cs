@@ -22,6 +22,13 @@ namespace SpareManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
+            {
+                x.LoginPath = "/Account/Index";
+                x.ExpireTimeSpan = TimeSpan.FromMinutes(540);
+
+            });
+
             services.AddSingleton<IBasicInformationDomainService, BasicInformationDomainService>();
             services.AddSingleton<ISerialNumberDomainService, SerialNumberDomainService>();
             services.AddSingleton<IWarehouseDomainService, WarehouseDomainService>();
@@ -56,14 +63,9 @@ namespace SpareManagement
             //}));
 
             //services.AddSingleton<ISystemSettingDomainService, SystemSettingDomainService>();
-
+            services.AddHttpContextAccessor();
+            services.AddSession();
             services.AddControllersWithViews();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x =>
-            {
-                x.LoginPath = "/Account/Index";
-                x.ExpireTimeSpan = TimeSpan.FromMinutes(540);
-
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,18 +86,17 @@ namespace SpareManagement
             //app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            app.UseAuthentication();
-
+            app.UseSession();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}");
             });
         }
     }

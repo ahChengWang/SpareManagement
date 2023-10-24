@@ -115,12 +115,13 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public string Update(InspectsEntity inspectsEntity)
+        public string Update(InspectsEntity inspectsEntity, UserEntity userEntity)
         {
             try
             {
                 var _basicInfo = _basicInformationDomainService.GetInspectInfo(new BasicInfoEntity { PartNo = inspectsEntity.PartNo });
                 var _updResult = "";
+                DateTime _nowTime = DateTime.Now;
 
                 switch (inspectsEntity.CategoryId)
                 {
@@ -132,6 +133,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Inspecting,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 inspectCycle: _basicInfo.InspectCycle,
                                 errSummary: "檢驗");
                         break;
@@ -143,6 +146,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Inspecting,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 inspectCycle: _basicInfo.InspectCycle,
                                 errSummary: "檢驗");
                         break;
@@ -154,6 +159,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Inspecting,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 inspectCycle: _basicInfo.InspectCycle,
                                 errSummary: "檢驗");
                         break;

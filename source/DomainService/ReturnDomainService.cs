@@ -1,8 +1,5 @@
 ﻿using SpareManagement.DomainService.Entity;
 using SpareManagement.Enum;
-using SpareManagement.Helper;
-using SpareManagement.Repository;
-using SpareManagement.Repository.Dao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,11 +104,12 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public string Update(InspectsEntity inspectsEntity)
+        public string Update(InspectsEntity inspectsEntity, UserEntity userEntity)
         {
             try
             {
                 var _updResult = "";
+                DateTime _nowTime = DateTime.Now;
 
                 switch (inspectsEntity.CategoryId)
                 {
@@ -123,6 +121,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Stock,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 errSummary: "歸還");
                         break;
                     case 4:
@@ -133,6 +133,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Stock,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 errSummary: "歸還");
                         break;
                     case 5:
@@ -143,6 +145,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Stock,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 errSummary: "歸還");
                         break;
                 }

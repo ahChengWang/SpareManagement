@@ -8,8 +8,8 @@
             <th class="sticky-th1">名稱</th>
             <th class="sticky-th1">採購編號</th>
             <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
-            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().IsKeySpare)</th>
-            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().IsCommercial)</th>
+            @*<th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().IsKeySpare)</th>
+            <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().IsCommercial)</th>*@
             <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Equipment)</th>
             @*<th>@Html.DisplayNameFor(model => model.Details.First().Placement)</th>*@
             <th class="sticky-th1">@Html.DisplayNameFor(model => model.Details.First().Count)</th>
@@ -26,10 +26,10 @@
             <tr>
                 <td width="8%">@item.PartNo</td>
                 <td width="10%">@item.Name</td>
-                <td>@item.PurchaseId</td>
-                <td width="9%">@item.Spec</td>
-                <td width="5%">@item.IsKeySpare</td>
-                <td width="5%">@item.IsCommercial</td>
+                <td width="7%">@item.PurchaseId</td>
+                <td width="7%">@item.Spec</td>
+                @*<td width="5%">@item.IsKeySpare</td>
+                <td width="5%">@item.IsCommercial</td>*@
                 <td>@item.Equipment</td>
                 @*<td>@item.Placement</td>*@
                 <td>@item.Count</td>

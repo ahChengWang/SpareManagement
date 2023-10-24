@@ -35,7 +35,7 @@ namespace SpareManagement.Models
 
         public string UpdateUser { get; set; }
 
-        public DateTime UpdateDTE { get; set; }
+        public DateTime? UpdateDTE { get; set; }
 
 
     }

@@ -101,11 +101,12 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public string Update(InspectsEntity inspectsEntity)
+        public string Update(InspectsEntity inspectsEntity, UserEntity userEntity)
         {
             try
             {
                 var _updResult = "";
+                DateTime _nowTime = DateTime.Now;
 
                 switch (inspectsEntity.CategoryId)
                 {
@@ -117,6 +118,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Fixing,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 errSummary: "維修");
                         break;
                     case 4:
@@ -127,6 +130,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Fixing,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 errSummary: "維修");
                         break;
                     case 5:
@@ -137,6 +142,8 @@ namespace SpareManagement.DomainService
                                 StatusEnum.Fixing,
                                 inspectsEntity.UpdateUser,
                                 inspectsEntity.UpdateDate,
+                                userEntity,
+                                _nowTime,
                                 errSummary: "維修");
                         break;
                 }

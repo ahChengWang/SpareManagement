@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -113,7 +115,7 @@
                 </nav>
             </div>
             <div class="d-flex align-items-center" style="margin-right:5px">
-                <a style="color:white">Hi @Context.User.Claims.FirstOrDefault(m => m.Type == "Account").Value　</a>
+                <a style="color:white">Hi @Context.User.Claims.FirstOrDefault(m => m.Type == ClaimTypes.Sid).Value　</a>
                 <a href="@Url.Action("Logout","Account")">登出</a>
             </div>
         </header>
@@ -130,10 +132,10 @@
         </main>*@
 
     @*<section name="footSec">
-        <div class="container">
-            &copy; 2022 - SpareManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </section>*@
+            <div class="container">
+                &copy; 2022 - SpareManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </section>*@
 
     <script type="text/javascript">
 

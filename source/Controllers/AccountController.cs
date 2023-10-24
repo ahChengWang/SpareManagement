@@ -46,8 +46,8 @@ namespace SpareManagement.Controllers
                 var claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.NameIdentifier, Convert.ToString(_result.AccountInfo.Account)),
-                    new Claim("Name", _result.AccountInfo.Name),
-                    new Claim("Account", _result.AccountInfo.Account),
+                    new Claim(ClaimTypes.Name, _result.AccountInfo.Name),
+                    new Claim(ClaimTypes.Sid, _result.AccountInfo.Account.ToLower()),
                     //new Claim(ClaimTypes.Role, user.Role)
                 };
                 //Initialize a new instance of the ClaimsIdentity with the claims and authentication scheme    

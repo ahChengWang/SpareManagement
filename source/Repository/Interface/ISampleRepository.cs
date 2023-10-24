@@ -12,5 +12,6 @@ namespace SpareManagement.Repository
         int Update(List<SampleDao> dao);
         int UpdateRelease(List<SampleDao> dao);
         int UpdateStatus(SampleDao dao);
+        int UpdatePlacement(string partNo, string updPlacement, int saftyCnt);
     }
 }

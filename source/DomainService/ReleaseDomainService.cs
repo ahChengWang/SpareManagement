@@ -30,10 +30,11 @@ namespace SpareManagement.DomainService
             _sampleDomainService = sampleDomainService;
         }
 
-        public string Release(ReleaseEntity entity)
+        public string Release(ReleaseEntity entity, UserEntity userEntity)
         {
             try
             {
+                DateTime _nowTime = DateTime.Now;
                 var _result = Validate(entity);
 
                 if (_result.Item1 != "")
@@ -57,35 +58,35 @@ namespace SpareManagement.DomainService
 
                 if (_releaseExpendables.Any())
                 {
-                    _tmpResult = _expendablesDomainService.ProcessRelease(_releaseExpendables, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _tmpResult = _expendablesDomainService.ProcessRelease(_releaseExpendables, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
                     _processResult += _tmpResult.Item1;
                     _processCnt += _tmpResult.Item2;
                 }
 
                 if (_releaseComponents.Any())
                 {
-                    _tmpResult = _componentsDomainService.ProcessRelease(_releaseComponents, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _tmpResult = _componentsDomainService.ProcessRelease(_releaseComponents, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
                     _processResult += _tmpResult.Item1;
                     _processCnt += _tmpResult.Item2;
                 }
 
                 if (_releaseJigs.Any())
                 {
-                    _tmpResult = _jigsDomainService.ProcessRelease(_releaseJigs, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _tmpResult = _jigsDomainService.ProcessRelease(_releaseJigs, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
                     _processResult += _tmpResult.Item1;
                     _processCnt += _tmpResult.Item2;
                 }
 
                 if (_releaseWirePanel.Any())
                 {
-                    _tmpResult = _wirePanelDomainService.ProcessRelease(_releaseWirePanel, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _tmpResult = _wirePanelDomainService.ProcessRelease(_releaseWirePanel, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
                     _processResult += _tmpResult.Item1;
                     _processCnt += _tmpResult.Item2;
                 }
 
                 if (_releaseSample.Any())
                 {
-                    _tmpResult = _sampleDomainService.ProcessRelease(_releaseSample, entity.CreateUser, (DateTime)entity.CreateDate, entity.Memo);
+                    _tmpResult = _sampleDomainService.ProcessRelease(_releaseSample, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
                     _processResult += _tmpResult.Item1;
                     _processCnt += _tmpResult.Item2;
                 }
@@ -117,9 +118,8 @@ namespace SpareManagement.DomainService
                 if (_tempList.Where(a => string.IsNullOrEmpty(a.PartNo)).Count() == 5)
                     return ("無領用物料", null);
 
-
-                if (entity.CreateUser == "" || entity.CreateDate == null)
-                    _errorInfo += "領用人員 & 日期 必填 \n";
+                //if (entity.CreateUser == "" || entity.CreateDate == null)
+                //    _errorInfo += "領用人員 & 日期 必填 \n";
 
                 var _noPartNo = _tempList.Where(a => string.IsNullOrEmpty(a.PartNo) && a.Count != 0);
                 var _noCnt = _tempList.Where(a => !string.IsNullOrEmpty(a.PartNo) && a.Count == 0);

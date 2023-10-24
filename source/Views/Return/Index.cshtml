@@ -1,8 +1,10 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+<style>
+    .note {
+        font-size: 10px;
+        color: darkred;
+    }
+</style>
 
 <div class="container">
     <h3>歸還管理</h3>
@@ -110,15 +112,15 @@
         _model['partNo'] = $(_trid).find('#partNo').html();
         _model['statusId'] = $(_trid).find('#statusId').html();
 
-        var _insUser = $('#inspectUser').val();
-        var _insDTE = $('#inspectDate').val();
+        //var _insUser = $('#inspectUser').val();
+        //var _insDTE = $('#inspectDate').val();
 
-        if (_insUser == '' || _insDTE == '') {
-            alert("操作人員、操作日期必填");
-            return false;
-        }
-        _model['updateUser'] = _insUser;
-        _model['updateDTE'] = _insDTE;
+        //if (_insUser == '' || _insDTE == '') {
+        //    alert("操作人員、操作日期必填");
+        //    return false;
+        //}
+        _model['updateUser'] = $('#inspectUser').val();
+        _model['updateDTE'] = $('#inspectDate').val();
 
         $.ajax({
             type: "Patch",

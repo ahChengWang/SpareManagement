@@ -14,15 +14,30 @@ namespace SpareManagement.DomainService
         private readonly IBasicInformationRepository _basicInformationRepository;
         private readonly ISerialNumberDomainService _serialNumberDomainService;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IExpendablesDomainService _expendablesDomainService;
+        private readonly IComponentsDomainService _componentsDomainService;
+        private readonly IJigsDomainService _jigsDomainService;
+        private readonly IWirePanelDomainService _wirePanelDomainService;
+        private readonly ISampleDomainService _sampleDomainService;
 
 
         public BasicInformationDomainService(IBasicInformationRepository basicInformationRepository,
             ISerialNumberDomainService serialNumberDomainService,
-            ICategoryRepository categoryRepository)
+            ICategoryRepository categoryRepository,
+            IExpendablesDomainService expendablesDomainService,
+            IComponentsDomainService componentsDomainService,
+            IJigsDomainService jigsDomainService,
+            IWirePanelDomainService wirePanelDomainService,
+            ISampleDomainService sampleDomainService)
         {
             _basicInformationRepository = basicInformationRepository;
             _serialNumberDomainService = serialNumberDomainService;
             _categoryRepository = categoryRepository;
+            _expendablesDomainService = expendablesDomainService;
+            _componentsDomainService = componentsDomainService;
+            _jigsDomainService = jigsDomainService;
+            _wirePanelDomainService = wirePanelDomainService;
+            _sampleDomainService = sampleDomainService;
         }
 
         public List<BasicInfoEntity> Select(string categoryId, string partNo, string name, string purchaseId, string placement, string createTime)
@@ -32,13 +47,13 @@ namespace SpareManagement.DomainService
                 DateTime? _dateStart = createTime != null ? DateTime.Parse(createTime) : (DateTime?)null;
                 DateTime? _dateEnd = createTime != null ? DateTime.Parse(createTime).Date.AddDays(1).AddSeconds(-1) : (DateTime?)null;
 
-                var _te = _basicInformationRepository.SelectByConditions(null, 
-                    partNo ?? "", 
-                    name ?? "", 
-                    purchaseId ?? "", 
-                    placement ?? "", 
-                    _dateStart, 
-                    _dateEnd, 
+                var _te = _basicInformationRepository.SelectByConditions(null,
+                    partNo ?? "",
+                    name ?? "",
+                    purchaseId ?? "",
+                    placement ?? "",
+                    _dateStart,
+                    _dateEnd,
                     string.IsNullOrEmpty(categoryId) ? 0 : Convert.ToInt32(categoryId));
 
                 return _te.CopyAToB<BasicInfoEntity>();
@@ -126,23 +141,51 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public string Update(BasicInfoEntity basicEntity)
+        public string Update(BasicInfoEntity basicEntity, UserEntity userEntity)
         {
             try
             {
-                var _oldData = _basicInformationRepository.SelectByConditions(partNo:basicEntity.PartNo);
+                var _oldData = _basicInformationRepository.SelectByConditions(partNo: basicEntity.PartNo);
 
-                if (_oldData.Count != 1)
+                if (_oldData == null || !_oldData.Any() || _oldData.Count > 1)
                     return "資料錯誤";
+
+                BasicInformationDao _currBasicInfo = _oldData.FirstOrDefault();
+
+                BasicInformationDao _updBasicInfo = new BasicInformationDao
+                {
+                    PartNo = basicEntity.PartNo,
+                    PurchaseId = basicEntity.PurchaseId,
+                    Placement = basicEntity.Placement,
+                    SafetyCount = basicEntity.SafetyCount,
+                    UpdateDate = DateTime.Now,
+                    UpdateUser = userEntity.Name
+                };
 
                 using (var scope = new TransactionScope())
                 {
-                    var _updResult = _basicInformationRepository.Update(new BasicInformationDao
+                    var _updResult = _basicInformationRepository.Update(_updBasicInfo) == 1;
+
+                    switch (_oldData.FirstOrDefault().CategoryId)
                     {
-                        PartNo = basicEntity.PartNo,
-                        PurchaseId = basicEntity.PurchaseId,
-                        Placement = basicEntity.Placement
-                    }) == 1;
+                        case 1:
+                            _updResult = _expendablesDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            break;
+                        case 2:
+                            _updResult = _componentsDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            break;
+                        case 3:
+                            _updResult = _jigsDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            break;
+                        case 4:
+                            _updResult = _wirePanelDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            break;
+                        case 5:
+                            _updResult = _sampleDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            break;
+                        default:
+                            break;
+                    }
 
                     if (_updResult)
                     {
@@ -153,7 +196,7 @@ namespace SpareManagement.DomainService
                         return "物料資訊更新失敗";
                     }
                 }
-                
+
 
                 return "";
             }

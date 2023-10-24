@@ -164,14 +164,15 @@ COMMIT TRAN;
             {
                 var sql = @"
 BEGIN TRAN  
-update Basic_information set PurchaseId = @PurchaseId,Placement = @Placement where PartNo = @PartNo ;  
+update Basic_information set PurchaseId = @PurchaseId,Placement = @Placement,SafetyCount=@SafetyCount where PartNo = @PartNo ;  
 COMMIT TRAN;   
 ";
 
                 var _result = _dbHelper.ExecuteNonQuery(sql, new {
                     PartNo = updDao.PartNo,
                     PurchaseId = updDao.PurchaseId,
-                    Placement = updDao.Placement
+                    Placement = updDao.Placement,
+                    SafetyCount = updDao.SafetyCount
                 });
 
                 return _result;

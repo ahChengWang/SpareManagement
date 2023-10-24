@@ -6,6 +6,6 @@ namespace SpareManagement.DomainService
     public interface IReturnDomainService
     {
         List<InspectsEntity> SelectList(int categoryId, string partNo, int statusId);
-        string Update(InspectsEntity inspectsEntity);
+        string Update(InspectsEntity inspectsEntity, UserEntity userEntity);
     }
 }

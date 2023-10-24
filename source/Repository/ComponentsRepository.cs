@@ -1,4 +1,5 @@
 ﻿using SpareManagement.Repository.Dao;
+using System;
 using System.Collections.Generic;
 
 namespace SpareManagement.Repository
@@ -88,6 +89,33 @@ UPDATE [dbo].[Components]
             var _result = _dbHelper.ExecuteNonQuery(sql, dao);
 
             return _result;
+        }
+
+        public int UpdatePlacement(string partNo, string updPlacement, int saftyCnt)
+        {
+            try
+            {
+                var sql = @"
+UPDATE [dbo].[Components]
+     SET [Placement] = @Placement,
+         [SafetyCount] = @SafetyCount
+     WHERE [PartNo] = @PartNo
+";
+
+                var _result = _dbHelper.ExecuteNonQuery(sql, new
+                {
+                    Placement = updPlacement,
+                    SafetyCount = saftyCnt,
+                    PartNo = partNo
+                });
+
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 

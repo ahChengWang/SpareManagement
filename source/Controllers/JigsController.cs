@@ -1,5 +1,6 @@
 ﻿using Helper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpareManagement.DomainService;
 using SpareManagement.Models;
@@ -11,12 +12,14 @@ namespace SpareManagement.Controllers
 {
     [Authorize]
 
-    public class JigsController : Controller
+    public class JigsController : BaseController
     {
         private readonly IJigsDomainService _jigsDomainService;
 
 
-        public JigsController(IJigsDomainService jigsDomainService)
+        public JigsController(IJigsDomainService jigsDomainService,
+            IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _jigsDomainService = jigsDomainService;
         }

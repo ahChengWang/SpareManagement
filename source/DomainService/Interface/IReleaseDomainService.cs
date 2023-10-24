@@ -4,6 +4,6 @@ namespace SpareManagement.DomainService
 {
     public interface IReleaseDomainService
     {
-        string Release(ReleaseEntity entity);
+        string Release(ReleaseEntity entity, UserEntity userEntity);
     }
 }
