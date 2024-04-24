@@ -90,13 +90,14 @@ UPDATE [dbo].[Expendables]
             return _result;
         }
 
-        public int UpdatePlacement(string partNo, string updPlacement, int saftyCnt)
+        public int UpdatePlacement(string partNo, string updPlacement, int saftyCnt, string purchaseId)
         {
             try
             {
                 var sql = @"
 UPDATE [dbo].[Expendables]
      SET [Placement] = @Placement,
+         [PurchaseId] = @PurchaseId,
          [SafetyCount] = @SafetyCount
      WHERE [PartNo] = @PartNo
 ";
@@ -104,6 +105,7 @@ UPDATE [dbo].[Expendables]
                 var _result = _dbHelper.ExecuteNonQuery(sql, new
                 {
                     Placement = updPlacement,
+                    PurchaseId = purchaseId,
                     SafetyCount = saftyCnt,
                     PartNo = partNo
                 });

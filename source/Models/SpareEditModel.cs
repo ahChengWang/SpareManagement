@@ -22,7 +22,7 @@ namespace SpareManagement.Models
         public string Spec { get; set; }
 
         [DisplayName("採購料號")]
-        [RegularExpression(@"^[A-Za-z0-9]+$", ErrorMessage = "*英數字")]
+        [RegularExpression(@"^[A-Za-z0-9_]+$", ErrorMessage = "*英數字")]
         [Required(ErrorMessage = "*必填")]
         public string PurchaseId { get; set; }
 

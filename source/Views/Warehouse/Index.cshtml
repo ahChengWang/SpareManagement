@@ -150,16 +150,16 @@
                 </div>
                 <hr />
                 <div class="row col-lg-3">
-                    <input id="btnInsert" type="submit" class="btn btn-info btn-sm" value="新增">
+                    <input id="btnInsert" type="button" class="btn btn-info btn-sm" value="新增">
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
     $(document).ready(function () {
-        $("#form").submit(function (e) {
+        $("#btnInsert").click(function (e) {
             e.preventDefault();
             $.blockUI();
             $.ajax({

@@ -11,6 +11,6 @@ namespace SpareManagement.Repository
         int Update(List<WirePanelDao> dao);
         int UpdateRelease(List<WirePanelDao> dao);
         int UpdateStatus(WirePanelDao dao);
-        int UpdatePlacement(string partNo, string updPlacement, int saftyCnt);
+        int UpdatePlacement(string partNo, string updPlacement, int saftyCnt, string purchaseId);
     }
 }

@@ -59,7 +59,7 @@ namespace SpareManagement.Repository
         {
             try
             {
-                var sql = @"select Count(*) from Basic_information where CategoryId = @CategoryId group by CategoryId; ";
+                var sql = @"select top 1 CONVERT(int,SUBSTRING(PartNo,3,LEN(PartNo))) from Basic_information where CategoryId = @CategoryId order by PartNo desc; ";
 
                 var _result = _dbHelper.ExecuteScalar<int>(sql, new
                 {

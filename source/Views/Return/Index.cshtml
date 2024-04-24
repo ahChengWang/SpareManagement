@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group form-row col-sm-2">
                         <div>
-                            <input id="btnSearch" type="button" style="align-items:center" class="btn btn-info btn-sm" value="查詢">
+                            <input id="btnSearch" type="submit" style="align-items:center" class="btn btn-info btn-sm" value="查詢">
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,12 @@
             var _statusId = $('#statusSel').find("option:selected").val();
 
             if (_categoryId == 0) {
-                alert("請選擇類別");
+                Swal.fire({
+                    title: '請先選擇類別(Please select category first.)',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1200,
+                });
                 return false;
             }
 

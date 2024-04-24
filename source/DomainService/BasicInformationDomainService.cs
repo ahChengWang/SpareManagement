@@ -169,19 +169,19 @@ namespace SpareManagement.DomainService
                     switch (_oldData.FirstOrDefault().CategoryId)
                     {
                         case 1:
-                            _updResult = _expendablesDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            _updResult = _expendablesDomainService.UpdatePlacement(_updBasicInfo);
                             break;
                         case 2:
-                            _updResult = _componentsDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            _updResult = _componentsDomainService.UpdatePlacement(_updBasicInfo);
                             break;
                         case 3:
-                            _updResult = _jigsDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            _updResult = _jigsDomainService.UpdatePlacement(_updBasicInfo);
                             break;
                         case 4:
-                            _updResult = _wirePanelDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            _updResult = _wirePanelDomainService.UpdatePlacement(_updBasicInfo);
                             break;
                         case 5:
-                            _updResult = _sampleDomainService.UpdatePlacement(_updBasicInfo.PartNo, _updBasicInfo.Placement, _updBasicInfo.SafetyCount);
+                            _updResult = _sampleDomainService.UpdatePlacement(_updBasicInfo);
                             break;
                         default:
                             break;

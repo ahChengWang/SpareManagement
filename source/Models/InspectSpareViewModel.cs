@@ -20,6 +20,9 @@ namespace SpareManagement.Models
         [DisplayName("序號")]
         public string SerialNo { get; set; }
 
+        [DisplayName("採購料號")]
+        public string PurchaseId { get; set; }
+
         [DisplayName("規格")]
         public string Spec { get; set; }
 

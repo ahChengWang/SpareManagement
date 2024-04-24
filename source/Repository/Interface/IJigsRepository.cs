@@ -12,6 +12,6 @@ namespace SpareManagement.Repository
         int Update(List<JigsDao> dao);
         int UpdateRelease(List<JigsDao> dao);
         int UpdateStatus(JigsDao dao);
-        int UpdatePlacement(string partNo, string updPlacement, int saftyCnt);
+        int UpdatePlacement(string partNo, string updPlacement, int saftyCnt, string purchaseId);
     }
 }

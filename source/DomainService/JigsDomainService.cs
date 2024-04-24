@@ -468,7 +468,7 @@ namespace SpareManagement.DomainService
                         return ("Insert & Update not success.", 0);
                 }
 
-                return ("", _updJigs.Count);
+                return (_errMsg, _updJigs.Count);
             }
             catch (Exception ex)
             {
@@ -476,22 +476,13 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public bool UpdatePlacement(string partNo, string updPlacement, int saftyCnt)
+        public bool UpdatePlacement(BasicInformationDao updDao)
         {
             try
             {
-                bool _updRes = false;
+                _jigsRepository.UpdatePlacement(updDao.PartNo, updDao.Placement, updDao.SafetyCount, updDao.PurchaseId);
 
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    if (_jigsRepository.UpdatePlacement(partNo, updPlacement, saftyCnt) == 1)
-                    {
-                        scope.Complete();
-                        _updRes = true;
-                    }
-                }
-
-                return _updRes;
+                return true;
             }
             catch (Exception ex)
             {

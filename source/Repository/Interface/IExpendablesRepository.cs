@@ -8,6 +8,6 @@ namespace SpareManagement.Repository
         int Insert(List<ExpendablesDao> dao);
         List<ExpendablesDao> SelectByConditions(IEnumerable<string> partNoList = null, string partNo = "", string name = "", string purchaseId = "");
         int Update(List<ExpendablesDao> dao);
-        int UpdatePlacement(string partNo, string updPlacement, int saftyCnt);
+        int UpdatePlacement(string partNo, string updPlacement, int saftyCnt, string purchaseId);
     }
 }

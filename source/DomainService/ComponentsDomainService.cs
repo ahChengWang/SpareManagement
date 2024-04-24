@@ -202,7 +202,7 @@ namespace SpareManagement.DomainService
                         return ("Insert & Update not success.", 0);
                 }
 
-                return ("", _updComponents.Count);
+                return (_errMsg, _updComponents.Count);
             }
             catch (Exception ex)
             {
@@ -210,7 +210,7 @@ namespace SpareManagement.DomainService
             }
         }
 
-        public bool UpdatePlacement(string partNo, string updPlacement, int saftyCnt)
+        public bool UpdatePlacement(BasicInformationDao updDao)
         {
             try
             {
@@ -218,7 +218,7 @@ namespace SpareManagement.DomainService
 
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    if (_componentsRepository.UpdatePlacement(partNo, updPlacement, saftyCnt) == 1)
+                    if (_componentsRepository.UpdatePlacement(updDao.PartNo, updDao.Placement, updDao.SafetyCount, updDao.PurchaseId) == 1)
                     {
                         scope.Complete();
                         _updRes = true;

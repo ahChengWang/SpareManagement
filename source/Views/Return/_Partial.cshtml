@@ -26,6 +26,7 @@
             <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Name)</th>
             <th scope="col">@Html.DisplayNameFor(model => model.Details.First().SerialNo)</th>
             <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Spec)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Details.First().PurchaseId)</th>
             <th scope="col">@Html.DisplayNameFor(model => model.Details.First().Status)</th>
             <th scope="col"></th>
         </tr>
@@ -39,6 +40,7 @@
                 <td class="row-data">@item.Name</td>
                 <td class="row-data">@item.SerialNo</td>
                 <td class="row-data">@item.Spec</td>
+                <td class="row-data">@item.PurchaseId</td>
                 <td class="row-data">
                     @item.Status
                     <p id="statusId" hidden>@item.StatusId</p>

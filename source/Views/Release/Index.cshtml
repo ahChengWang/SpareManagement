@@ -209,33 +209,33 @@
                         </div>
                     </div>
                 </div>
-                <hr />
-                <div class="row d-flex">
-                    <div class="col-lg-5 d-flex">
-                        <div class="col-lg-4">
-                            <label class="col-form-label" asp-for="PartNo1"></label>
+                @*<hr />
+                    <div class="row d-flex">
+                        <div class="col-lg-5 d-flex">
+                            <div class="col-lg-4">
+                                <label class="col-form-label" asp-for="PartNo1"></label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input asp-for="PartNo1" class="form-control" type="text" value="" />
+                            </div>
                         </div>
-                        <div class="col-lg-8">
-                            <input asp-for="PartNo1" class="form-control" type="text" value="" />
+                        <div class="col-lg-4 d-flex">
+                            <div class="col-lg-4">
+                                <label class="col-form-label" asp-for="Node1"></label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input asp-for="Node1" class="form-control" type="text" value="" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 d-flex">
-                        <div class="col-lg-4">
-                            <label class="col-form-label" asp-for="Node1"></label>
+                        <div class="col-lg-3 d-flex">
+                            <div class="col-lg-6">
+                                <label class="col-form-label" asp-for="Count1"></label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
+                            </div>
                         </div>
-                        <div class="col-lg-8">
-                            <input asp-for="Node1" class="form-control" type="text" value="" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3 d-flex">
-                        <div class="col-lg-6">
-                            <label class="col-form-label" asp-for="Count1"></label>
-                        </div>
-                        <div class="col-lg-6">
-                            <input asp-for="Count1" class="form-control" type="number" value="0" min="0" />
-                        </div>
-                    </div>
-                </div>
+                    </div>*@
                 <hr />
                 <div class="row">
                     <div class="col-lg-8 d-flex">
@@ -267,7 +267,7 @@
                     </div>
                 </div>
                 <br />
-                <input id="btnInsert" type="submit" class="btn btn-primary btn-sm" value="領用">
+                <input id="btnInsert" type="button" class="btn btn-primary btn-sm" value="領用">
             </form>
         </div>
     </div>
@@ -275,7 +275,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#form").submit(function (e) {
+        $("#btnInsert").click(function (e) {
             //$("#btnInsert").click(function (e) {
             //    var _model = {};
 
@@ -293,6 +293,22 @@
             //    _model['ReleaseDate'] = $('#releaseDate').val();
             //    _model['Memo'] = $('#memo').val();
 
+            const _form = $("#form")[0];
+
+            if ((_form[0].value != '' && _form[2].value == '0') ||
+                (_form[3].value != '' && _form[5].value == '0') ||
+                (_form[6].value != '' && _form[8].value == '0') ||
+                (_form[9].value != '' && _form[11].value == '0') ||
+                (_form[12].value != '' && _form[14].value == '0')) {
+                Swal.fire({
+                    title: '請確認有輸入領用編號的數量',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+                return false;
+            }
+
             e.preventDefault();
             $.blockUI();
             $.ajax({
@@ -302,13 +318,15 @@
                 data: $('#form').serialize(),
                 /*data: { 'releaseViewModel': _model },*/
                 success: function (result) {
-                    if (result == "") {
-                        alert("全部領用成功");
-                        location.reload();
-                    }
-                    else {
-                        alert(result);
-                    }
+
+                    Swal.fire({
+                        title: result,
+                        icon: 'info'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
                     $.unblockUI();
                 }
             });

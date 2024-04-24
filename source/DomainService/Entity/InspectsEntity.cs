@@ -9,6 +9,7 @@ namespace SpareManagement.DomainService.Entity
         public string Name { get; set; }
         public string Spec { get; set; }
         public string SerialNo { get; set; }
+        public string PurchaseId { get; set; }
         public StatusEnum Status { get; set; }
         public DateTime NextInspectDate { get; set; }
         public int CategoryId { get; set; }

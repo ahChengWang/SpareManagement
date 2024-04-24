@@ -15,6 +15,6 @@ namespace SpareManagement.DomainService
         string ProcessWarehouse(IEnumerable<BasicInformationDao> basicList, List<WarehouseGoodsEntity> warehouseGoodsList, string createUser, DateTime? createDate, string memo, DateTime nowTime, UserEntity userEntity);
         string Update(string serialNo, StatusEnum oldStatusId, StatusEnum newStatusId, string updateUser, DateTime? updateDTE, UserEntity userEntity, DateTime nowTime, int? inspectCycle = null, string errSummary = "");
         string UpdateInspectAndTemporary(string partNo, string serialNo, string inspectDate, bool temporary, string placement);
-        bool UpdatePlacement(string partNo, string updPlacement, int saftyCnt);
+        bool UpdatePlacement(BasicInformationDao updDao);
     }
 }

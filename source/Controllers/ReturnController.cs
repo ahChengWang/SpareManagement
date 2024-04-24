@@ -58,6 +58,7 @@ namespace SpareManagement.Controllers
                         Spec = fe.Spec,
                         Status = fe.Status.GetDescription(),
                         StatusId = (int)fe.Status,
+                        PurchaseId = fe.PurchaseId,
                         CategoryId = categoryId
                     });
                 });

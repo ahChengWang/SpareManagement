@@ -48,6 +48,7 @@ namespace SpareManagement.DomainService
                                 Name = fe.Name,
                                 Spec = fe.Spec,
                                 SerialNo = fe.SerialNo,
+                                PurchaseId = fe.PurchaseId,
                                 Status = fe.Status
                             });
                         });
@@ -69,6 +70,7 @@ namespace SpareManagement.DomainService
                                 Name = fe.Name,
                                 Spec = fe.Spec,
                                 SerialNo = fe.SerialNo,
+                                PurchaseId = fe.PurchaseId,
                                 Status = fe.Status
                             });
                         });
@@ -90,6 +92,7 @@ namespace SpareManagement.DomainService
                                 Name = fe.Name,
                                 Spec = fe.Spec,
                                 SerialNo = fe.SerialNo,
+                                PurchaseId = fe.PurchaseId,
                                 Status = fe.Status
                             });
                         });

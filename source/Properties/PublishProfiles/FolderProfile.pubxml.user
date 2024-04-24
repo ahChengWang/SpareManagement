@@ -4,7 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>D:\Repostories\SpareManagement\source\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
-    <History>True|2023-10-24T06:17:08.8324157Z;True|2023-10-20T13:12:08.0781358+08:00;True|2023-10-15T13:24:30.5255509+08:00;True|2023-10-02T11:42:20.8914565+08:00;True|2023-09-28T16:18:43.1680227+08:00;True|2023-09-28T16:15:47.5692282+08:00;True|2023-09-28T15:53:10.8688275+08:00;True|2022-07-08T14:53:12.0528053+08:00;</History>
+    <_PublishTargetUrl>E:\Repostories\SpareManagement\source\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <History>True|2024-03-08T02:44:23.3131937Z;True|2024-01-11T15:54:56.5129405+08:00;True|2024-01-11T15:54:40.6756025+08:00;True|2024-01-11T15:29:14.6481242+08:00;True|2024-01-11T15:24:03.9410753+08:00;True|2024-01-11T11:52:02.0919669+08:00;True|2023-10-24T14:17:08.8324157+08:00;True|2023-10-20T13:12:08.0781358+08:00;True|2023-10-15T13:24:30.5255509+08:00;True|2023-10-02T11:42:20.8914565+08:00;True|2023-09-28T16:18:43.1680227+08:00;True|2023-09-28T16:15:47.5692282+08:00;True|2023-09-28T15:53:10.8688275+08:00;True|2022-07-08T14:53:12.0528053+08:00;</History>
+    <LastFailureDetails />
   </PropertyGroup>
 </Project>

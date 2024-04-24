@@ -3,6 +3,7 @@ using SpareManagement.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SpareManagement.DomainService
 {
@@ -40,7 +41,7 @@ namespace SpareManagement.DomainService
                 if (_result.Item1 != "")
                     return _result.Item1;
 
-                var basicDataList = _basicInformationRepository.SelectByConditions(partNoList: _result.Item2.Select(s => s.PartNo).ToList());
+                var basicDataList = _basicInformationRepository.SelectByConditions(partNoList: _result.Item2.Select(s => s.PartNo.Substring(0, (s.PartNo.Length >= 7 ? 7 : 6))).ToList());
                 var _processResult = "";
                 var _processCnt = 0;
                 (string, int) _tmpResult;
@@ -50,6 +51,8 @@ namespace SpareManagement.DomainService
                 //if (basicDataList.Count() == 0 || _nonExistPartNo != "")
                 //    return $"{_nonExistPartNo} 物料編號不存在";
 
+                List<Task> _taskList = new List<Task>();
+
                 var _releaseExpendables = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "C");
                 var _releaseComponents = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "E");
                 var _releaseJigs = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "T");
@@ -57,41 +60,49 @@ namespace SpareManagement.DomainService
                 var _releaseSample = _result.Item2.Where(w => w.PartNo.Substring(0, 1) == "A");
 
                 if (_releaseExpendables.Any())
-                {
-                    _tmpResult = _expendablesDomainService.ProcessRelease(_releaseExpendables, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
-                    _processResult += _tmpResult.Item1;
-                    _processCnt += _tmpResult.Item2;
-                }
+                    _taskList.Add(Task.Run(() =>
+                    {
+                        _tmpResult = _expendablesDomainService.ProcessRelease(_releaseExpendables, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
+                        _processResult += _tmpResult.Item1;
+                        _processCnt += _tmpResult.Item2;
+                    }));
 
                 if (_releaseComponents.Any())
-                {
-                    _tmpResult = _componentsDomainService.ProcessRelease(_releaseComponents, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
-                    _processResult += _tmpResult.Item1;
-                    _processCnt += _tmpResult.Item2;
-                }
+                    _taskList.Add(Task.Run(() =>
+                    {
+                        _tmpResult = _componentsDomainService.ProcessRelease(_releaseComponents, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
+                        _processResult += _tmpResult.Item1;
+                        _processCnt += _tmpResult.Item2;
+                    }));
 
                 if (_releaseJigs.Any())
-                {
-                    _tmpResult = _jigsDomainService.ProcessRelease(_releaseJigs, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
-                    _processResult += _tmpResult.Item1;
-                    _processCnt += _tmpResult.Item2;
-                }
+                    _taskList.Add(Task.Run(() =>
+                    {
+                        _tmpResult = _jigsDomainService.ProcessRelease(_releaseJigs, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
+                        _processResult += _tmpResult.Item1;
+                        _processCnt += _tmpResult.Item2;
+                    }));
 
                 if (_releaseWirePanel.Any())
-                {
-                    _tmpResult = _wirePanelDomainService.ProcessRelease(_releaseWirePanel, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
-                    _processResult += _tmpResult.Item1;
-                    _processCnt += _tmpResult.Item2;
-                }
+                    _taskList.Add(Task.Run(() =>
+                    {
+                        _tmpResult = _wirePanelDomainService.ProcessRelease(_releaseWirePanel, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
+                        _processResult += _tmpResult.Item1;
+                        _processCnt += _tmpResult.Item2;
+                    }));
 
                 if (_releaseSample.Any())
-                {
-                    _tmpResult = _sampleDomainService.ProcessRelease(_releaseSample, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
-                    _processResult += _tmpResult.Item1;
-                    _processCnt += _tmpResult.Item2;
-                }
+                    _taskList.Add(Task.Run(() =>
+                    {
+                        _tmpResult = _sampleDomainService.ProcessRelease(_releaseSample, entity.CreateUser, entity.CreateDate, entity.Memo, _nowTime, userEntity);
+                        _processResult += _tmpResult.Item1;
+                        _processCnt += _tmpResult.Item2;
+                    }));
 
-                return _processResult == "" ? "" : $"．成功領用物料項目：{_processCnt} \n\n．領用失敗物料，請負責人員再次確認：\n{_processResult}";
+                if (_taskList.Any())
+                    Task.WaitAll(_taskList.ToArray());
+
+                return $"<a style='font-size:13px;'>．成功領用物料項目: {_processCnt} </a>\n<a style='font-size:13px;color:red'>．領用失敗物料,請負責人員再次確認:</a> \n <a style='font-size:13px;'>{_processResult}</a>";
             }
             catch (Exception ex)
             {
